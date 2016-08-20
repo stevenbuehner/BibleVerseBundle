@@ -4,9 +4,8 @@ namespace StevenBuehner\BibleVerseBundle\Tests\Service;
 
 use StevenBuehner\BibleVerseBundle\Entity\BibleVerse;
 use StevenBuehner\BibleVerseBundle\Service\BibleVerseService;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class BibleVerseServiceTest extends WebTestCase {
+class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 
     /**
      * @var BibleVerseService
@@ -658,9 +657,9 @@ class BibleVerseServiceTest extends WebTestCase {
     }
 
     protected function setUp() {
-        self::bootKernel();
+        //  self::bootKernel();
 
-        $this->bibleVerseService = static::$kernel->getContainer()
-            ->get('bible_verse.helper');
+//        $this->bibleVerseService = static::$kernel->getContainer()->get('bible_verse.helper');
+        $this->bibleVerseService = new BibleVerseService();
     }
 }
