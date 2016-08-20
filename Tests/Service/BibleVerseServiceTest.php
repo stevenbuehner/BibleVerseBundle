@@ -630,11 +630,13 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 
     public function testStupidWriting() {
         // This is actually not correct syntax. But commonly used
+        $bv = array();
         $bv = $this->bibleVerseService->stringToBibleVerse('1.Mose 12ff');
         // Ment to be "1. Mose 12,1ff)
         $this->assertTrue(count($bv) == 1);
 
-        $bv[] = $this->bibleVerseService->stringToBibleVerse('1.Mose 12ff.')[0];
+        $bv_temp = $this->bibleVerseService->stringToBibleVerse('1.Mose 12ff.');
+        $bv[]    = $bv_temp[0];
         $this->assertTrue(count($bv) == 2);
 
         foreach ($bv as $verse) {
