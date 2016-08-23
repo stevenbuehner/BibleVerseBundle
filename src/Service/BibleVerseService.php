@@ -2277,7 +2277,7 @@ class BibleVerseService {
 
             // (?<![a-zA-Z0-9]) -> negative lookbehind (is not allowed to start directly with a letter or number)
             $ges                     = substr($ges, 0, strlen($ges) - 1);
-            $this->firstSearchString = '~(?<![a-zA-Z])(' . $ges . ')[.]?[ ]?([0-9]{1,3})([:,][ ]?([0-9]{1,3}))?(([ ]?[+.,:-][ ]?[0-9]{1,3}[ ]?|f)+)?~i';
+            $this->firstSearchString = '~(?<![a-zA-Z])(' . $ges . ')[.]?[ ]?([0-9]{1,3})([:,][ ]?([0-9]{1,3}))?(([ ]?[+.,:-][ ]?[0-9]{1,3}(?![0-9])[ ]?|f)+)?~i';
         }
 
         return $this->firstSearchString;
