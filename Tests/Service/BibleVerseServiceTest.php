@@ -649,9 +649,27 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
         }
     }
 
-    public function conjunctionOfVerses() {
+    public function testConjunctionOfVerses() {
+        $bv = $this->bibleVerseService->stringToBibleVerse('1Kor 10,14-22, 1Kor 10,25-28, Ethische Grenzen');
+
+        $this->assertCount(2, $bv);
+
+        $this->assertEquals(46, $bv[0]->getBookId());
+        $this->assertEquals(10, $bv[0]->getFromChapter());
+        $this->assertEquals(14, $bv[0]->getFromVerse());
+        $this->assertEquals(10, $bv[0]->getToChapter());
+        $this->assertEquals(22, $bv[0]->getToVerse());
+
+        $this->assertEquals(46, $bv[1]->getBookId());
+        $this->assertEquals(10, $bv[1]->getFromChapter());
+        $this->assertEquals(25, $bv[1]->getFromVerse());
+        $this->assertEquals(10, $bv[1]->getToChapter());
+        $this->assertEquals(28, $bv[1]->getToVerse());
+    }
+
+    public function featureMissingYet() {
         $bv = $this->bibleVerseService->stringToBibleVerse('1.Mose 12; 14,4');
-        $this->assertEquals(count($bv), 2);
+        $this->assertCount(2, $bv);
     }
 
     public function debug($obj) {

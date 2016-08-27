@@ -1957,7 +1957,7 @@ class BibleVerseService {
         $this->statStart();
         $bibleVerses  = array();
         $bvKeyZaehler = -1;
-        $secondSearch = "/(?<buch>[1-5]?[.]?[ ]?[a-zA-Zäöü ]+)[.]?[ ]?(?<kapVon>[0-9]{1,3})([:,][ ]?(?<versVon>[0-9]{1,3}))?(?<rest>([ ]?[+.,:-][ ]?[0-9]{1,3}[ ]?|f)+)?/i";
+        $secondSearch = "/(?<buch>[1-5]?[.]?[ ]?[a-zA-Z][a-zA-Zäöü ]+)[.]?[ ]?(?<kapVon>[0-9]{1,3})([:,](?<versVon>[0-9]{1,3}))?(?<rest>([+\.,:-][0-9]{1,3}|f)+)?/i";
 
         // First identify ALL Bibleverses in a text
         preg_match_all($this->getFirstSearchString(), $bibleString, $matches1, PREG_SET_ORDER);
@@ -2277,7 +2277,7 @@ class BibleVerseService {
 
             // (?<![a-zA-Z0-9]) -> negative lookbehind (is not allowed to start directly with a letter or number)
             $ges                     = substr($ges, 0, strlen($ges) - 1);
-            $this->firstSearchString = '~(?<![a-zA-Z])(' . $ges . ')[.]?[ ]?([0-9]{1,3})([:,][ ]?([0-9]{1,3}))?(([ ]?[+.,:-][ ]?[0-9]{1,3}(?![0-9])[ ]?|f)+)?~i';
+            $this->firstSearchString = '~(?<![a-zA-Z])(' . $ges . ')[.]?[ ]?([0-9]{1,3})([:,]([0-9]{1,3}))?(([+.,:-][0-9]{1,3}(?![0-9])|f)+)?~i';
         }
 
         return $this->firstSearchString;
