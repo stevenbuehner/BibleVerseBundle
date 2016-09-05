@@ -308,12 +308,12 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 	public function testStringToBibleVerseDual() {
 		$bh = $this->bibleVerseService;
 
-		$tests["Mark 8,9+4"]    = ["Markus 8,9", "Markus 8,4"];
-		$tests["Mark 8,9+4+10"] = ["Markus 8,9", "Markus 8,4", "Markus 8,10"];
-		$tests["Mark 8,9-10.3"] = ["Markus 8,9-10", "Markus 8,3"];
-		$tests["1. Mose 3,4.3"] = ["1. Mose 3,4", "1. Mose 3,3"];
-		$tests["1. Joh 5,5.10"] = ["1. Johannes 5,5", "1. Johannes 5,10"];
-		$tests["Joh 5,5-5+3"]   = ["Johannes 5,5", "Johannes 5,3"];
+		$tests["Mark 8,9+4"]    = array("Markus 8,9", "Markus 8,4");
+		$tests["Mark 8,9+4+10"] = array("Markus 8,9", "Markus 8,4", "Markus 8,10");
+		$tests["Mark 8,9-10.3"] = array("Markus 8,9-10", "Markus 8,3");
+		$tests["1. Mose 3,4.3"] = array("1. Mose 3,4", "1. Mose 3,3");
+		$tests["1. Joh 5,5.10"] = array("1. Johannes 5,5", "1. Johannes 5,10");
+		$tests["Joh 5,5-5+3"]   = array("Johannes 5,5", "Johannes 5,3");
 
 		foreach ($tests as $input => $erwOutput) {
 			$back = $bh->stringToBibleVerse($input);
@@ -643,7 +643,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 
 	public function testStupidWriting() {
 		// This is actually not correct syntax. But commonly used
-		$bv = [];
+		$bv = array();
 		$bv = $this->bibleVerseService->stringToBibleVerse('1.Mose 12ff');
 		// Ment to be "1. Mose 12,1ff)
 		$this->assertTrue(count($bv) == 1);
