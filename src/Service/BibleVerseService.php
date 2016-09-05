@@ -1955,7 +1955,7 @@ class BibleVerseService {
 	 */
 	public function stringToBibleVerse($bibleString, $lang = "de") {
 		$this->statStart();
-		$bibleVerses  = [];
+		$bibleVerses  = array();
 		$bvKeyZaehler = -1;
 		$secondSearch = "/(?<buch>[1-5]?[.]?[ ]?[a-zA-Z][a-zA-Zäöü ]+)[.]?[ ]?(?<kapVon>[0-9]{1,3})([:,](?<versVon>[0-9]{1,3}))?(?<rest>([+\.,:-][0-9]{1,3}|f)+)?/i";
 
