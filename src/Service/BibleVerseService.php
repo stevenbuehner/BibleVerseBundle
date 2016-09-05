@@ -2448,10 +2448,7 @@ class BibleVerseService {
 	 */
 	public function bibleVerseToString(BibleVerseInterface $bibleVerse, $length = "long", $lang = "de") {
 		if ($bibleVerse !== NULL && isset ($this->bibleData [$bibleVerse->getBookId()]) && $this->isBibleVerseValid($bibleVerse)) {
-			$bv           = $bibleVerse;
-			$book         = "";
-			$returnVal    = "";
-			$kapVersDelim = ",";
+			$bv = $bibleVerse;
 
 			switch (strtolower($lang)) {
 				case "de" :
@@ -2482,7 +2479,6 @@ class BibleVerseService {
 			// Gal 5,6-7 5 6 5 7
 			// Gal 5,6-7,8 5 6 7 8
 
-			$returnVal = "";
 			if ($bv->getFromChapter() == $bv->getToChapter()) {
 				// Chapters are the same
 				if ($this->isBibleVerseAWholeChapter($bv)) {
