@@ -2517,7 +2517,7 @@ class BibleVerseService {
 	 * @return bool
 	 */
 	public function isBibleVerseAWholeChapter(BibleVerseInterface $bv) {
-		$maxVerseToChapter = $this->getMaxVersOfBookKap($bv->getBookId(), $bv->getToVerse());
+		$maxVerseToChapter = $this->getMaxVersOfBookKap($bv->getBookId(), $bv->getToChapter());
 
 		return ($bv->getFromVerse() == 1 && $bv->getToVerse() == $maxVerseToChapter);
 	}

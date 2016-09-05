@@ -271,15 +271,17 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
     public function testStringToBibleVerse() {
         $bh = $this->bibleVerseService;
 
-        $tests["Mark 8,9"]    = "Markus 8,9";
-        $tests["Mark 8,9-10"] = "Markus 8,9-10";
+        $tests["Mark 8,9"]     = "Markus 8,9";
+        $tests["Mark 8,9-10"]  = "Markus 8,9-10";
 
-        $tests["1. Mose 3,4"] = "1. Mose 3,4";
-        $tests["1. Joh 5,5"]  = "1. Johannes 5,5";
-        $tests["Joh 5,5"]     = "Johannes 5,5";
+        $tests["1. Mose 3,4"]  = "1. Mose 3,4";
+        $tests["1. Joh 5,5"]   = "1. Johannes 5,5";
+		$tests["Joh 5,5"]      = "Johannes 5,5";
+		$tests["Joh 5,1-47"]   = "Johannes 5";
+		$tests["Joh 5,1-8,59"] = "Johannes 5-8";
 
 
-        foreach ($tests as $input => $erwOutput) {
+		foreach ($tests as $input => $erwOutput) {
             $back = $bh->stringToBibleVerse($input);
 
             $this->assertNotNull($back, "Erwartet war: " . $erwOutput);
