@@ -49,7 +49,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 
 	public function testBibelVerseCombinationString() {
 		$bv = $this->bibleVerseService->stringToBibleVerse('1. Mose 2,1-3; 2. Mose 20,8-11; Daniel 1,8-20; Daniel 2,14-23; Daniel 2,23-26; Psalm 145; Matthäus 28,18-20; Johannes 6,35; 1. Timotheus 2,1-6');
-		$this->assertTrue(count($bv) == 9);
+		$this->assertCount(9, $bv);
 	}
 
 	public function testBibleVerseWithOnlyChapters() {
@@ -643,7 +643,6 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 
 	public function testStupidWriting() {
 		// This is actually not correct syntax. But commonly used
-		$bv = array();
 		$bv = $this->bibleVerseService->stringToBibleVerse('1.Mose 12ff');
 		// Ment to be "1. Mose 12,1ff)
 		$this->assertTrue(count($bv) == 1);
@@ -653,7 +652,6 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue(count($bv) == 2);
 
 		foreach ($bv as $verse) {
-			$verse = $bv[0];
 			$this->assertEquals($verse->getBookId(), 1);
 			$this->assertEquals($verse->getFromChapter(), 12);
 			$this->assertEquals($verse->getFromVerse(), 1);
@@ -680,10 +678,9 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(28, $bv[1]->getToVerse());
 	}
 
-	public function testEnglishConjunctionOfVerses(){
+	public function testEnglishConjunctionOfVerses() {
 		$bv = $this->bibleVerseService->stringToBibleVerse('Genesis 26:35, 27:46');
 
-		// FIXME
 		$this->assertCount(2, $bv);
 
 		$this->assertEquals(1, $bv[0]->getBookId());
@@ -699,14 +696,14 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(46, $bv[1]->getToVerse());
 
 		$bv = $this->bibleVerseService->stringToBibleVerse('Genesis 6:12, 11');
+
 		$this->assertCount(2, $bv);
 
 		$this->assertEquals(1, $bv[1]->getBookId());
-		$this->assertEquals(11, $bv[1]->getFromChapter());
-		$this->assertEquals(1, $bv[1]->getFromVerse());
-		$this->assertEquals(11, $bv[1]->getToChapter());
-		$this->assertEquals('?', $bv[1]->getToVerse());
-
+		$this->assertEquals(6, $bv[1]->getFromChapter());
+		$this->assertEquals(11, $bv[1]->getFromVerse());
+		$this->assertEquals(6, $bv[1]->getToChapter());
+		$this->assertEquals(11, $bv[1]->getToVerse());
 	}
 
 	public function featureMissingYet() {

@@ -15,11 +15,10 @@ use StevenBuehner\BibleVerseBundle\Interfaces\BibleVerseInterface;
 
 
 class BibleVerseService {
-	private static $instance               = NULL;
-	private        $bibleData              = NULL;
-	private        $lastInvalidBibleverses = NULL;
-	private        $firstSearchString      = NULL;
-	private        $lastRestString         = NULL;
+	private $bibleData              = NULL;
+	private $lastInvalidBibleverses = NULL;
+	private $firstSearchString      = NULL;
+	private $lastRestString         = NULL;
 
 	// Statistical Values
 	private $statLongest  = 0;
@@ -1956,7 +1955,7 @@ class BibleVerseService {
 		$this->statStart();
 		$bibleVerses  = array();
 		$bvKeyZaehler = -1;
-		$secondSearch = "/(?<buch>[1-5]?[.]?[ ]?[a-zA-Z][a-zA-Zäöü ]+)[.]?[ ]?(?<kapVon>[0-9]{1,3})([:,](?<versVon>[0-9]{1,3}))?(?<rest>([+\.,:-][0-9]{1,3}|f)+)?/i";
+		$secondSearch = "/(?<buch>[1-5]?[.]?[ ]?[a-zA-Z][a-zA-Zäöü ]+)[.]?[ ]?(?<kapVon>[0-9]{1,3})((?<trenner>[:,])(?<versVon>[0-9]{1,3}))?(?<rest>(([,;]\s?|[+\.,:-])[0-9]{1,3}|f)+)?/i";
 
 		// First identify ALL Bibleverses in a text
 		preg_match_all($this->getFirstSearchString(), $bibleString, $matches1, PREG_SET_ORDER);
@@ -1971,10 +1970,12 @@ class BibleVerseService {
 			// Than splice the each found biblevers into its segments (book, kap, vers)
 			preg_match($secondSearch, $val1 [0], $value);
 
-			$book    = trim($value [1]);
-			$kapVon  = ( int ) $value [2];
-			$versVon = (!empty ($value [4])) ? (int) trim($value [4]) : NULL;
-			$rest    = (!empty ($value [5])) ? trim($value [5]) : "";
+			$book    = trim($value ['buch']);
+			$kapVon  = ( int ) $value ['kapVon'];
+			$versVon = (!empty ($value ['versVon'])) ? (int) trim($value ['versVon']) : NULL;
+			$rest    = (!empty ($value ['rest'])) ? trim($value ['rest']) : '';
+			$trenner = isset($value['trenner']) ? $value['trenner'] : '';
+			$lang    = $this->getLanguageFromChapterVerseSeparator($trenner);
 
 			try {
 				$bookID = $this->getBookIdFromString($book);
@@ -2215,16 +2216,52 @@ class BibleVerseService {
 						}
 						break;
 					case ',':
-						// This only happens when chapter and verse-selections are mixed in a rest-string
-						// I.e. Gen 3-4+5-6,7 -> the rest here would be ",7", because the former was working on "+5-6"
-						if (preg_match("/([0-9]{1,3})([ ]?[0-9.+f,:-]*)/", substr($rest, 1), $value)) {
+						// This happens when
+						// a) chapter and verse-selections are mixed in a rest-string (i.e. Gen 3-4+5-6,7 -> the rest here would be ",7", because the former was working on "+5-6")
+						// b) multiple english written bibleverses are listed (i.e. Genesis 26:35, 27:46)
+						// c) multiple verses added (like accordance does allow): Genesis 26:35, 38
+
+						// Cut off the ","
+						$rest = substr($rest, 1);
+
+						$restPattern = '(?<zahl>[0-9]{1,3})(?<rest>[ ]?[0-9.+f,:-]*)';
+
+						// case a): If ",<NUMBER>" => Number specifies the endVerse of the former bibleverse
+						if (preg_match('~^(?<zahl>[0-9]{1,3})(?<rest>[ ]?[0-9.+f,:-]*)~', $rest, $value)) {
 							// Erkennt die Werte 4,9 oder 4:9 oder 4-9 oder 9
 
-							$zahl = ( int ) $value [1];
-							$rest = trim($value [2]);
+							$zahl = ( int ) $value ['zahl'];
+							$rest = trim($value ['rest']);
 
 							$bibleVerses[$bvKeyZaehler]->setToVerse($zahl);
+						} // case b): If ",<SPACE><NUMBER><SEPARATOR><NUMBER>" => Number represents another verse preceding the former one
+						else if (preg_match('~^\s(?<kapVon>[0-9]{1,3})[:,](?<versVon>[0-9]{1,3})(?<rest>[ ]?[0-9.+f,:-]*)~',
+											$rest, $value)) {
+
+							$chapter = ( int ) $value ['kapVon'];
+							$verse   = (int) trim($value ['versVon']);
+							$rest    = (int) trim($value ['rest']);
+
+							$bv = new BibleVerse();
+							$bv->setBookId($bibleVerses[$bvKeyZaehler]->getBookId());
+							$bv->setFromChapter($chapter);
+							$bv->setFromVerse($verse);
+							$bv->setToChapter($chapter);
+							$bv->setToVerse($verse);
+							$bibleVerses[++$bvKeyZaehler] = $bv;
+						}// case c): If ",<SPACE><NUMBER>" => Number represents another verse preceding the former one
+						else if (preg_match('~^\s(?<versVon>[0-9]{1,3})(?<rest>[ ]?[0-9.+f,:-]*)~',
+											$rest, $value)) {
+
+							$verse = (int) trim($value ['versVon']);
+							$rest  = (int) trim($value ['rest']);
+
+							$bv = $this->copyBibleVerse($bibleVerses[$bvKeyZaehler]);
+							$bv->setFromVerse($verse);
+							$bv->setToVerse($verse);
+							$bibleVerses[++$bvKeyZaehler] = $bv;
 						}
+
 						break;
 					default :
 						// Das darf nicht sein -> weitere Suche / While-Schleife abbrechen
@@ -2282,8 +2319,9 @@ class BibleVerseService {
 			}
 
 			// (?<![a-zA-Z0-9]) -> negative lookbehind (is not allowed to start directly with a letter or number)
+			// Valid Rest-Strings are 'f', 'ff', '.2', '+3'   ', 3'   ', 3:5'
 			$ges                     = substr($ges, 0, strlen($ges) - 1);
-			$this->firstSearchString = '~(?<![a-zA-Z])(' . $ges . ')[.]?[ ]?([0-9]{1,3})([:,]([0-9]{1,3}))?(([+.,:-][0-9]{1,3}(?![0-9])|f)+)?~i';
+			$this->firstSearchString = '~(?<![a-zA-Z])(' . $ges . ')[.]?[ ]?([0-9]{1,3})([:,]([0-9]{1,3}))?((([+\.,:-][0-9]{1,3}|[,;]\s?[0-9]{1,3}[,:][0-9]{1,3}|[,;]\s?[0-9]{1,3}(?![,:\.a-z ]+))(?![0-9])|f)+)?~i';
 		}
 
 		return $this->firstSearchString;
@@ -2321,6 +2359,21 @@ class BibleVerseService {
 		return $string;
 	}
 
+	/**
+	 * @param string $trenner
+	 * @return string (de|en|unk)
+	 */
+	protected function getLanguageFromChapterVerseSeparator($trenner) {
+		switch ($trenner) {
+			case ',':
+				return 'de';
+			case  ':':
+				return 'en';
+			default:
+				return 'unk';
+		}
+	}
+
 	public function getBookIdFromString($bookString) {
 		$bookString = trim($bookString);
 		foreach ($this->bibleData as $key => $value) {
@@ -2348,6 +2401,8 @@ class BibleVerseService {
 		}
 	}
 
+	// Init Funktionen
+
 	/**
 	 * Copy a existant bibleverse
 	 *
@@ -2364,8 +2419,6 @@ class BibleVerseService {
 
 		return $c;
 	}
-
-	// Init Funktionen
 
 	/**
 	 * Return the number of chapters a bibleBookID has or zero, if the bibleBookID doesn't exist
@@ -2583,11 +2636,4 @@ class BibleVerseService {
 
 }
 
-// Singleton instanziieren
-// $mySingleton = Singleton::getInstance();
-// $sameSingleton = Singleton::getInstance();
-
-// Test
-// $bibleTest = BibleHelper::getInstance();
-// $bibleTest->stringToBibleVerse("Genesis 3,7.8-9.10.12-13; Ex 3,4+7; Exodus 3,6-5,7");
 ?>
