@@ -680,6 +680,25 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(28, $bv[1]->getToVerse());
 	}
 
+	public function testEnglishConjunctionOfVerses(){
+		$bv = $this->bibleVerseService->stringToBibleVerse('Genesis 26:35, 27:46');
+
+		// FIXME
+		$this->assertCount(2, $bv);
+
+		$this->assertEquals(1, $bv[0]->getBookId());
+		$this->assertEquals(26, $bv[0]->getFromChapter());
+		$this->assertEquals(35, $bv[0]->getFromVerse());
+		$this->assertEquals(26, $bv[0]->getToChapter());
+		$this->assertEquals(35, $bv[0]->getToVerse());
+
+		$this->assertEquals(1, $bv[1]->getBookId());
+		$this->assertEquals(27, $bv[1]->getFromChapter());
+		$this->assertEquals(46, $bv[1]->getFromVerse());
+		$this->assertEquals(27, $bv[1]->getToChapter());
+		$this->assertEquals(46, $bv[1]->getToVerse());
+	}
+
 	public function featureMissingYet() {
 		$bv = $this->bibleVerseService->stringToBibleVerse('1.Mose 12; 14,4');
 		$this->assertCount(2, $bv);
