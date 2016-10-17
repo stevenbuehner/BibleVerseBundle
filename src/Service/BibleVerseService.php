@@ -1950,10 +1950,9 @@ class BibleVerseService {
 	 * Finds bibleverses in the given string and returns an ARRAY of BIBLEVERSEs
 	 *
 	 * @param string $bibleString
-	 * @param string $lang
 	 * @return BibleVerse[]
 	 */
-	public function stringToBibleVerse($bibleString, $lang = "de") {
+	public function stringToBibleVerse($bibleString) {
 		$this->statStart();
 		$bibleVerses  = array();
 		$bvKeyZaehler = -1;
