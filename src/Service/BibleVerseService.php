@@ -2169,15 +2169,71 @@ class BibleVerseService {
 						}
 						break;
 					case "-" :
+
+						/*
+							This is needed to distinguish between
+							Genesis 39:16-17,19
+							and
+							Genesis 39,16-40,20
+						*/
+						$trenner = $this->getChapterVerseSeperatorsByLanguage($lang);
+						$rest    = substr($rest, 1);
+
 						// Beginn eines Kap/Vers-Bereichs
 						// Aktuelle (erste) Bibelstelle mit KapitelTO und VersTO erweitern.
-						if (preg_match("/(([1-9][0-9]{0,2})([,;]))?([1-9][0-9]{0,2})([ ]?[0-9.+f,:-]*)/",
-									   substr($rest, 1), $value)) {
+						if (preg_match('~^(?<chapter>[1-9][0-9]{0,2})([' . $trenner . '])(?<verse>[1-9][0-9]{0,2})(?<rest>[ ]?[0-9.+f,:-]*)~',
+									   $rest, $value)) {
+							// Normale Kapitel + Versangabe
+							// Bsp.: Gen 3,5-4,6
+
+							$chapter = ( int ) $value ['chapter'];
+							$verse   = ( int ) $value ['verse'];
+							$rest    = trim($value ['rest']);
+
+
+							if ($bibleVerses[$bvKeyZaehler]->getFromVerse() == NULL) {
+								// Bsp.: Gen 3-4,5
+								$bibleVerses[$bvKeyZaehler]->setFromVerse(1);
+							}
+
+							$bibleVerses[$bvKeyZaehler]->setToChapter($chapter);
+							$bibleVerses[$bvKeyZaehler]->setToVerse($verse);
+
+						} else if (preg_match('~(?<chapterOrVerse>[1-9][0-9]{0,2})(?<rest>[ ]?[0-9.+f,:-]*)~',
+											  $rest, $value)) {
+							// Bsp.: Gen 3-4				=> nach MINUS als Kapitel behandeln
+							// Bsp.: Gen 3,5-4				=> nach MINUS als Vers behandeln
+							// Bsp.: Gen 3:5-4,3 (bei engl) => nach MINUS als Vers behandeln + Rest: ',3' als weiteren Vers später
+
+							$chapterOrVerse = ( int ) $value ['chapterOrVerse'];
+							$rest           = trim($value ['rest']);
+
+							if ($bibleVerses[$bvKeyZaehler]->getFromVerse() == NULL) {
+								// Bei nur Kapitel-Eingabe
+								// Bsp.: 1. Mose 1-3
+
+								$bookId  = $bibleVerses[$bvKeyZaehler]->getBookId();
+								$chapter = $chapterOrVerse;
+
+								$bibleVerses[$bvKeyZaehler]->setToChapter($chapter);
+								$bibleVerses[$bvKeyZaehler]->setToVerse($this->getMaxVersOfBookKap($bookId, $chapter));
+								$bibleVerses[$bvKeyZaehler]->setFromVerse(1);
+								$isChapterRange = TRUE;
+							} else {
+								$verse = $chapterOrVerse;
+								// $fromChapter = $bibleVerses[$bvKeyZaehler]->getFromChapter();
+								// $bibleVerses[$bvKeyZaehler]->setToChapter($fromChapter);
+								$bibleVerses[$bvKeyZaehler]->setToVerse($verse);
+							}
+
+
+						} else if (preg_match('~(?<chapter>[1-9][0-9]{0,2})([' . $trenner . '])(?<verse>[1-9][0-9]{0,2})(?<rest>[ ]?[0-9.+f,:-]*)~',
+											  substr($rest, 1), $value)) {
 							// Erkennt die Werte 4,9 oder 4:9 oder 4-9 oder 9
 
 							$zahl1 = (!empty ($value [2])) ? ( int ) $value [2] : NULL;
 							$zahl2 = ( int ) $value [4];
-							$rest  = trim($value [5]);
+							$rest  = trim($value ['rest']);
 
 							if ($bibleVerses[$bvKeyZaehler]->getFromVerse() == 0) {
 								// Bei nur Kapitel-Eingabe
@@ -2187,16 +2243,15 @@ class BibleVerseService {
 
 								if (empty($zahl1) && !empty($zahl2)) {
 									// Bsp.: Gen 3-4
-									$bibleVerses[$bvKeyZaehler]->setToChapter($zahl2);
-									$bibleVerses[$bvKeyZaehler]->setToVerse($this->getMaxVersOfBookKap($bookId,
-																									   $zahl2));
-									$bibleVerses[$bvKeyZaehler]->setFromVerse(1);
-									$isChapterRange = TRUE;
+									// $bibleVerses[$bvKeyZaehler]->setToChapter($zahl2);
+									// $bibleVerses[$bvKeyZaehler]->setToVerse($this->getMaxVersOfBookKap($bookId,$zahl2));
+									// $bibleVerses[$bvKeyZaehler]->setFromVerse(1);
+									// $isChapterRange = TRUE;
 								} else if (!empty($zahl1) && !empty($zahl2)) {
 									// Bsp.: Gen 3-4,5
-									$bibleVerses[$bvKeyZaehler]->setToChapter($zahl1);
-									$bibleVerses[$bvKeyZaehler]->setToVerse($zahl2);
-									$bibleVerses[$bvKeyZaehler]->setFromVerse(1);
+									// $bibleVerses[$bvKeyZaehler]->setToChapter($zahl1);
+									// $bibleVerses[$bvKeyZaehler]->setToVerse($zahl2);
+									// $bibleVerses[$bvKeyZaehler]->setFromVerse(1);
 								}
 							} else {
 								// Normale Kapitel + Versangabe
@@ -2205,12 +2260,12 @@ class BibleVerseService {
 
 								if (empty($zahl1) && !empty($zahl2)) {
 									// Bsp.: Gen 3,5-4
-									$bibleVerses[$bvKeyZaehler]->setToChapter($bibleVerses[$bvKeyZaehler]->getFromChapter());
-									$bibleVerses[$bvKeyZaehler]->setToVerse($zahl2);
+									// $bibleVerses[$bvKeyZaehler]->setToChapter($bibleVerses[$bvKeyZaehler]->getFromChapter());
+									// $bibleVerses[$bvKeyZaehler]->setToVerse($zahl2);
 								} else if (!empty($zahl1) && !empty($zahl2)) {
 									// Bsp.: Gen 3-4,5
-									$bibleVerses[$bvKeyZaehler]->setToChapter($zahl1);
-									$bibleVerses[$bvKeyZaehler]->setToVerse($zahl2);
+									// $bibleVerses[$bvKeyZaehler]->setToChapter($zahl1);
+									// $bibleVerses[$bvKeyZaehler]->setToVerse($zahl2);
 								}
 							}
 						}
@@ -2222,25 +2277,15 @@ class BibleVerseService {
 						// c) multiple verses added (like accordance does allow): Genesis 26:35, 38
 
 						// Cut off the ","
-						$rest = substr($rest, 1);
+						$rest                  = substr($rest, 1);
+						$chapterVerseSeparator = $this->getChapterVerseSeperatorsByLanguage($lang);
 
-						$restPattern = '(?<zahl>[0-9]{1,3})(?<rest>[ ]?[0-9.+f,:-]*)';
-
-						// case a): If ",<NUMBER>" => Number specifies the endVerse of the former bibleverse
-						if (preg_match('~^(?<zahl>[0-9]{1,3})(?<rest>[ ]?[0-9.+f,:-]*)~', $rest, $value)) {
-							// Erkennt die Werte 4,9 oder 4:9 oder 4-9 oder 9
-
-							$zahl = ( int ) $value ['zahl'];
-							$rest = trim($value ['rest']);
-
-							$bibleVerses[$bvKeyZaehler]->setToVerse($zahl);
-						} // case b): If ",<SPACE><NUMBER><SEPARATOR><NUMBER>" => Number represents another verse preceding the former one
-						else if (preg_match('~^\s(?<kapVon>[0-9]{1,3})[:,](?<versVon>[0-9]{1,3})(?<rest>[ ]?[0-9.+f,:-]*)~',
-											$rest, $value)) {
+						if (preg_match('~^\s?(?<kapVon>[0-9]{1,3})[' . $chapterVerseSeparator . '](?<versVon>[0-9]{1,3})(?<rest>[ ]?[0-9.+f,:-]*)~',
+									   $rest, $value)) {
 
 							$chapter = ( int ) $value ['kapVon'];
 							$verse   = (int) trim($value ['versVon']);
-							$rest    = (int) trim($value ['rest']);
+							$rest    = trim($value ['rest']);
 
 							$bv = new BibleVerse();
 							$bv->setBookId($bibleVerses[$bvKeyZaehler]->getBookId());
@@ -2250,16 +2295,22 @@ class BibleVerseService {
 							$bv->setToVerse($verse);
 							$bibleVerses[++$bvKeyZaehler] = $bv;
 						}// case c): If ",<SPACE><NUMBER>" => Number represents another verse preceding the former one
-						else if (preg_match('~^\s(?<versVon>[0-9]{1,3})(?<rest>[ ]?[0-9.+f,:-]*)~',
+						else if (preg_match('~^\s?(?<versVon>[0-9]{1,3})(?<rest>[ ]?[0-9.+f,:-]*)~',
 											$rest, $value)) {
 
 							$verse = (int) trim($value ['versVon']);
-							$rest  = (int) trim($value ['rest']);
+							$rest  = trim($value ['rest']);
 
-							$bv = $this->copyBibleVerse($bibleVerses[$bvKeyZaehler]);
-							$bv->setFromVerse($verse);
-							$bv->setToVerse($verse);
-							$bibleVerses[++$bvKeyZaehler] = $bv;
+							if ($isChapterRange === TRUE) {
+								// Bsp.: Jesus Sirach 16-17+19-20+30-32,5
+								$bibleVerses[$bvKeyZaehler]->setToVerse($verse);
+								$isChapterRange = FALSE;
+							} else {
+								$bv = $this->copyBibleVerse($bibleVerses[$bvKeyZaehler]);
+								$bv->setFromVerse($verse);
+								$bv->setToVerse($verse);
+								$bibleVerses[++$bvKeyZaehler] = $bv;
+							}
 						}
 
 						break;
@@ -2286,12 +2337,6 @@ class BibleVerseService {
 				}
 			}
 		}
-
-		// Debug ausgabe
-		// foreach($bibleVerses as $number => $verse){
-		// echo $number."-> ".$this->bibleVerseToString($verse)."<br/>";
-		// }
-
 
 		$this->statStop();
 
@@ -2401,8 +2446,6 @@ class BibleVerseService {
 		}
 	}
 
-	// Init Funktionen
-
 	/**
 	 * Copy a existant bibleverse
 	 *
@@ -2420,6 +2463,8 @@ class BibleVerseService {
 		return $c;
 	}
 
+	// Init Funktionen
+
 	/**
 	 * Return the number of chapters a bibleBookID has or zero, if the bibleBookID doesn't exist
 	 *
@@ -2431,6 +2476,17 @@ class BibleVerseService {
 			return ( int ) $this->bibleData [$bookID] ["kapAnz"];
 		} else {
 			return 0;
+		}
+	}
+
+	protected function getChapterVerseSeperatorsByLanguage($lang) {
+		switch ($lang) {
+			case 'de':
+				return ',';
+			case 'en':
+				return ':';
+			default:
+				return ':,';
 		}
 	}
 

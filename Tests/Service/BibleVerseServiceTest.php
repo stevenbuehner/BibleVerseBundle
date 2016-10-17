@@ -164,7 +164,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals($verse->getToVerse(), 31);
 
 		$bv = $this->bibleVerseService->stringToBibleVerse('Jesus Sirach 16-17+19-20+30-32,5');
-		$this->assertTrue(count($bv) == 3);
+		$this->assertCount(3, $bv);
 		$verse = $bv[0];
 		$this->assertEquals($verse->getBookId(), 73);
 		$this->assertEquals($verse->getFromChapter(), 16);
@@ -695,15 +695,54 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(27, $bv[1]->getToChapter());
 		$this->assertEquals(46, $bv[1]->getToVerse());
 
+
 		$bv = $this->bibleVerseService->stringToBibleVerse('Genesis 6:12, 11');
 
 		$this->assertCount(2, $bv);
-
 		$this->assertEquals(1, $bv[1]->getBookId());
 		$this->assertEquals(6, $bv[1]->getFromChapter());
 		$this->assertEquals(11, $bv[1]->getFromVerse());
 		$this->assertEquals(6, $bv[1]->getToChapter());
 		$this->assertEquals(11, $bv[1]->getToVerse());
+
+
+		$bv = $this->bibleVerseService->stringToBibleVerse('Genesis 39:16-17,19');
+		$this->assertCount(2, $bv);
+
+		$this->assertEquals(1, $bv[0]->getBookId());
+		$this->assertEquals(39, $bv[0]->getFromChapter());
+		$this->assertEquals(16, $bv[0]->getFromVerse());
+		$this->assertEquals(39, $bv[0]->getToChapter());
+		$this->assertEquals(17, $bv[0]->getToVerse());
+
+		$this->assertEquals(1, $bv[1]->getBookId());
+		$this->assertEquals(39, $bv[1]->getFromChapter());
+		$this->assertEquals(19, $bv[1]->getFromVerse());
+		$this->assertEquals(39, $bv[1]->getToChapter());
+		$this->assertEquals(19, $bv[1]->getToVerse());
+
+
+		$bv = $this->bibleVerseService->stringToBibleVerse('Exodus 7:3-4,3:20,4:21');
+		$this->assertCount(3, $bv);
+
+		$this->assertEquals(2, $bv[0]->getBookId());
+		$this->assertEquals(7, $bv[0]->getFromChapter());
+		$this->assertEquals(3, $bv[0]->getFromVerse());
+		$this->assertEquals(7, $bv[0]->getToChapter());
+		$this->assertEquals(4, $bv[0]->getToVerse());
+
+		$this->assertEquals(2, $bv[1]->getBookId());
+		$this->assertEquals(3, $bv[1]->getFromChapter());
+		$this->assertEquals(20, $bv[1]->getFromVerse());
+		$this->assertEquals(3, $bv[1]->getToChapter());
+		$this->assertEquals(20, $bv[1]->getToVerse());
+
+		$this->assertEquals(2, $bv[2]->getBookId());
+		$this->assertEquals(4, $bv[2]->getFromChapter());
+		$this->assertEquals(21, $bv[2]->getFromVerse());
+		$this->assertEquals(4, $bv[2]->getToChapter());
+		$this->assertEquals(21, $bv[2]->getToVerse());
+
 	}
 
 	public function featureMissingYet() {
