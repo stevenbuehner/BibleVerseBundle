@@ -697,6 +697,16 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(46, $bv[1]->getFromVerse());
 		$this->assertEquals(27, $bv[1]->getToChapter());
 		$this->assertEquals(46, $bv[1]->getToVerse());
+
+		$bv = $this->bibleVerseService->stringToBibleVerse('Genesis 6:12, 11');
+		$this->assertCount(2, $bv);
+
+		$this->assertEquals(1, $bv[1]->getBookId());
+		$this->assertEquals(11, $bv[1]->getFromChapter());
+		$this->assertEquals(1, $bv[1]->getFromVerse());
+		$this->assertEquals(11, $bv[1]->getToChapter());
+		$this->assertEquals('?', $bv[1]->getToVerse());
+
 	}
 
 	public function featureMissingYet() {
