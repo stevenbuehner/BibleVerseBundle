@@ -15,13 +15,13 @@ class BibleVerse implements BibleVerseInterface {
 	/**
 	 * @var int
 	 *
-	 * @ORM\Column(name="from", type="integer")
+	 * @ORM\Column(name="start", type="integer")
 	 */
 	protected $from;
 	/**
 	 * @var int
 	 *
-	 * @ORM\Column(name="to", type="integer")
+	 * @ORM\Column(name="end", type="integer")
 	 */
 	protected $to;
 	/**
