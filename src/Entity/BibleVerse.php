@@ -58,10 +58,10 @@ class BibleVerse implements BibleVerseInterface {
 	}
 
 	public function setFromCombined($chapter, $verse) {
-		$this->from = $this->getCombi($chapter, $verse);
+		$this->from = self::getCombi($chapter, $verse);
 	}
 
-	protected function getCombi($chapter, $verse) {
+	static function getCombi($chapter, $verse) {
 		return (int) sprintf('%03d%03d', $chapter, $verse);
 	}
 
@@ -71,14 +71,14 @@ class BibleVerse implements BibleVerseInterface {
 	 * @return int
 	 */
 	public function getFromVerse() {
-		return $this->getVerseFromCombi($this->from);
+		return self::getVerseFromCombi($this->from);
 	}
 
 	/**
 	 * @param int $chapterVerseNum
 	 * @return int
 	 */
-	protected function getVerseFromCombi($chapterVerseNum) {
+	static function getVerseFromCombi($chapterVerseNum) {
 		return (int) ($chapterVerseNum % 1000);
 	}
 
@@ -97,14 +97,14 @@ class BibleVerse implements BibleVerseInterface {
 	 * @return int
 	 */
 	public function getFromChapter() {
-		return $this->getChapterFromCombi($this->from);
+		return self::getChapterFromCombi($this->from);
 	}
 
 	/**
 	 * @param int $chapterVerseNum
 	 * @return int
 	 */
-	protected function getChapterFromCombi($chapterVerseNum) {
+	static function getChapterFromCombi($chapterVerseNum) {
 		return (int) floor($chapterVerseNum / 1000);
 	}
 
@@ -118,7 +118,7 @@ class BibleVerse implements BibleVerseInterface {
 	}
 
 	public function setToCombined($chapter, $verse) {
-		$this->to = $this->getCombi($chapter, $verse);
+		$this->to = self::getCombi($chapter, $verse);
 	}
 
 	/**
@@ -127,7 +127,7 @@ class BibleVerse implements BibleVerseInterface {
 	 * @return int
 	 */
 	public function getToVerse() {
-		return $this->getVerseFromCombi($this->to);
+		return self::getVerseFromCombi($this->to);
 	}
 
 	/**
@@ -145,7 +145,7 @@ class BibleVerse implements BibleVerseInterface {
 	 * @return int
 	 */
 	public function getToChapter() {
-		return $this->getChapterFromCombi($this->to);
+		return self::getChapterFromCombi($this->to);
 	}
 
 	/**
@@ -201,10 +201,16 @@ class BibleVerse implements BibleVerseInterface {
 		$this->setToCombined($toChapter, $toVerse);
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getFrom() {
 		return $this->from;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getTo() {
 		return $this->to;
 	}
