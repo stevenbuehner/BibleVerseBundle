@@ -2117,9 +2117,9 @@ class BibleVerseService {
 					case "f" :
 						$bookID = $bibleVerses [$bvKeyZaehler]->getBookId();
 						$kFrom  = $bibleVerses [$bvKeyZaehler]->getFromChapter();
-						$vFrom  = $bibleVerses [$bvKeyZaehler]->getFromVerse();
-						$kTo    = $bibleVerses [$bvKeyZaehler]->getToChapter();
-						$vTo    = $bibleVerses [$bvKeyZaehler]->getToVerse();
+						// $vFrom  = $bibleVerses [$bvKeyZaehler]->getFromVerse();
+						$kTo = $bibleVerses [$bvKeyZaehler]->getToChapter();
+						$vTo = $bibleVerses [$bvKeyZaehler]->getToVerse();
 
 						// Prüfen ob es sogar ein "ff" ist
 						if (strlen($rest) > 1 && substr($rest, 1, 1) == "f") {
@@ -2227,47 +2227,6 @@ class BibleVerseService {
 							}
 
 
-						} else if (preg_match('~(?<chapter>[1-9][0-9]{0,2})([' . $trenner . '])(?<verse>[1-9][0-9]{0,2})(?<rest>[ ]?[0-9.+f,:-]*)~',
-											  substr($rest, 1), $value)) {
-							// Erkennt die Werte 4,9 oder 4:9 oder 4-9 oder 9
-
-							$zahl1 = (!empty ($value [2])) ? ( int ) $value [2] : NULL;
-							$zahl2 = ( int ) $value [4];
-							$rest  = trim($value ['rest']);
-
-							if ($bibleVerses[$bvKeyZaehler]->getFromVerse() == 0) {
-								// Bei nur Kapitel-Eingabe
-								// Bsp.: Gen 3-4
-
-								$bookId = $bibleVerses[$bvKeyZaehler]->getBookId();
-
-								if (empty($zahl1) && !empty($zahl2)) {
-									// Bsp.: Gen 3-4
-									// $bibleVerses[$bvKeyZaehler]->setToChapter($zahl2);
-									// $bibleVerses[$bvKeyZaehler]->setToVerse($this->getMaxVersOfBookKap($bookId,$zahl2));
-									// $bibleVerses[$bvKeyZaehler]->setFromVerse(1);
-									// $isChapterRange = TRUE;
-								} else if (!empty($zahl1) && !empty($zahl2)) {
-									// Bsp.: Gen 3-4,5
-									// $bibleVerses[$bvKeyZaehler]->setToChapter($zahl1);
-									// $bibleVerses[$bvKeyZaehler]->setToVerse($zahl2);
-									// $bibleVerses[$bvKeyZaehler]->setFromVerse(1);
-								}
-							} else {
-								// Normale Kapitel + Versangabe
-								// Bsp.: Gen 3,5-4
-								// Bsp.: Gen 3,5-4,6
-
-								if (empty($zahl1) && !empty($zahl2)) {
-									// Bsp.: Gen 3,5-4
-									// $bibleVerses[$bvKeyZaehler]->setToChapter($bibleVerses[$bvKeyZaehler]->getFromChapter());
-									// $bibleVerses[$bvKeyZaehler]->setToVerse($zahl2);
-								} else if (!empty($zahl1) && !empty($zahl2)) {
-									// Bsp.: Gen 3-4,5
-									// $bibleVerses[$bvKeyZaehler]->setToChapter($zahl1);
-									// $bibleVerses[$bvKeyZaehler]->setToVerse($zahl2);
-								}
-							}
 						}
 						break;
 					case ',':
