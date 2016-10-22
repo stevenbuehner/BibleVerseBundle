@@ -15,47 +15,29 @@ class BibleVerse implements BibleVerseInterface {
 	/**
 	 * @var int
 	 *
+	 * @ORM\Column(name="from", type="integer")
+	 */
+	protected $from;
+	/**
+	 * @var int
+	 *
+	 * @ORM\Column(name="tp", type="integer")
+	 */
+	protected $to;
+	/**
+	 * @var int
+	 *
 	 * @ORM\Column(name="id", type="integer")
 	 * @ORM\Id
 	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
 	private $id;
-
 	/**
 	 * @var int
 	 *
 	 * @ORM\Column(name="book_id", type="integer")
 	 */
 	private $bookId;
-
-	/**
-	 * @var int
-	 *
-	 * @ORM\Column(name="from_chapter", type="integer")
-	 */
-	private $fromChapter;
-
-	/**
-	 * @var int
-	 *
-	 * @ORM\Column(name="to_chapter", type="integer")
-	 */
-	private $toChapter;
-
-	/**
-	 * @var int
-	 *
-	 * @ORM\Column(name="from_verse", type="integer")
-	 */
-	private $fromVerse;
-
-	/**
-	 * @var int
-	 *
-	 * @ORM\Column(name="to_verse", type="integer")
-	 */
-	private $toVerse;
-
 
 	/**
 	 * Get id
@@ -66,78 +48,21 @@ class BibleVerse implements BibleVerseInterface {
 		return $this->id;
 	}
 
-	public function setVerse($bookId, $fromChapter, $fromVerse, $toChapter = NULL, $toVerse = NULL) {
-		$this->setBookId($bookId);
-		$this->setFromChapter($fromChapter);
-		$this->setFromVerse($fromVerse);
-
-		if (NULL == $toChapter) {
-			$toChapter = $fromChapter;
-		}
-
-		if (NULL == $toVerse) {
-			$toVerse = $fromVerse;
-		}
-
-		$this->setToChapter($toChapter);
-		$this->setToVerse($toVerse);
-	}
-
-	/**
-	 * Returns true if fromChapter / fromVerse is equals toChapter / toVerse
-	 *
-	 * @return boolean
-	 */
-	public function isSingleVers() {
-		if ($this->getFromChapter() != 0 && $this->getFromChapter() == $this->getToChapter() && $this->getFromVerse() != 0 && $this->getFromVerse() == $this->getToVerse()) {
-			return TRUE;
-		} else {
-			return FALSE;
-		}
-	}
-
-	/**
-	 * Get fromChapter
-	 *
-	 * @return int
-	 */
-	public function getFromChapter() {
-		return $this->fromChapter;
-	}
-
 	/**
 	 * Set fromChapter
 	 *
 	 * @param integer $fromChapter
-	 *
-	 * @return BibleVerse
 	 */
 	public function setFromChapter($fromChapter) {
-		$this->fromChapter = $fromChapter;
-
-		return $this;
+		$this->setFromCombined($fromChapter, $this->getFromVerse());
 	}
 
-	/**
-	 * Get toChapter
-	 *
-	 * @return int
-	 */
-	public function getToChapter() {
-		return $this->toChapter;
+	public function setFromCombined($chapter, $verse) {
+		$this->from = $this->getCombi($chapter, $verse);
 	}
 
-	/**
-	 * Set toChapter
-	 *
-	 * @param integer $toChapter
-	 *
-	 * @return BibleVerse
-	 */
-	public function setToChapter($toChapter) {
-		$this->toChapter = $toChapter;
-
-		return $this;
+	protected function getCombi($chapter, $verse) {
+		return (int) sprintf('%03d%03d', $chapter, $verse);
 	}
 
 	/**
@@ -146,20 +71,54 @@ class BibleVerse implements BibleVerseInterface {
 	 * @return int
 	 */
 	public function getFromVerse() {
-		return $this->fromVerse;
+		return $this->getVerseFromCombi($this->from);
+	}
+
+	/**
+	 * @param int $chapterVerseNum
+	 * @return int
+	 */
+	protected function getVerseFromCombi($chapterVerseNum) {
+		return (int) ($chapterVerseNum % 1000);
 	}
 
 	/**
 	 * Set fromVerse
 	 *
 	 * @param integer $fromVerse
-	 *
-	 * @return BibleVerse
 	 */
 	public function setFromVerse($fromVerse) {
-		$this->fromVerse = $fromVerse;
+		$this->setFromCombined($this->getFromChapter(), $fromVerse);
+	}
 
-		return $this;
+	/**
+	 * Get fromChapter
+	 *
+	 * @return int
+	 */
+	public function getFromChapter() {
+		return $this->getChapterFromCombi($this->from);
+	}
+
+	/**
+	 * @param int $chapterVerseNum
+	 * @return int
+	 */
+	protected function getChapterFromCombi($chapterVerseNum) {
+		return (int) floor($chapterVerseNum / 1000);
+	}
+
+	/**
+	 * Set toChapter
+	 *
+	 * @param integer $toChapter
+	 */
+	public function setToChapter($toChapter) {
+		$this->setToCombined($toChapter, $this->getToVerse());
+	}
+
+	public function setToCombined($chapter, $verse) {
+		$this->to = $this->getCombi($chapter, $verse);
 	}
 
 	/**
@@ -168,20 +127,38 @@ class BibleVerse implements BibleVerseInterface {
 	 * @return int
 	 */
 	public function getToVerse() {
-		return $this->toVerse;
+		return $this->getVerseFromCombi($this->to);
 	}
 
 	/**
 	 * Set toVerse
 	 *
 	 * @param integer $toVerse
-	 *
-	 * @return BibleVerse
 	 */
 	public function setToVerse($toVerse) {
-		$this->toVerse = $toVerse;
+		$this->setToCombined($this->getToChapter(), $toVerse);
+	}
 
-		return $this;
+	/**
+	 * Get toChapter
+	 *
+	 * @return int
+	 */
+	public function getToChapter() {
+		return $this->getChapterFromCombi($this->to);
+	}
+
+	/**
+	 * Returns true if kapFrom / versFrom is equals kapTo / versTo
+	 *
+	 * @return boolean
+	 */
+	public function isSingleVers() {
+		if ($this->to == $this->from) {
+			return TRUE;
+		} else {
+			return FALSE;
+		}
 	}
 
 	public function __toString() {
@@ -201,14 +178,35 @@ class BibleVerse implements BibleVerseInterface {
 	 * Set bookId
 	 *
 	 * @param integer $bookId
-	 *
-	 * @return BibleVerse
 	 */
 	public function setBookId($bookId) {
-		$this->bookId = $bookId;
-
-		return $this;
+		$this->bookId = (int) $bookId;
 	}
 
+	/**
+	 * @param BibleVerseInterface $bv
+	 */
+	public function insertFromBibleVerseInterface(BibleVerseInterface $bv) {
+		$this->setBookId($bv->getBookId());
+		$this->setFromCombined($bv->getFromChapter(), $bv->getFromVerse());
+		$this->setToCombined($bv->getToChapter(), $bv->getToVerse());
+	}
+
+	public function setVerse($bookId, $fromChapter, $fromVerse, $toChapter = NULL, $toVerse = NULL) {
+		$toChapter = (NULL === $toChapter) ? (int) $fromChapter : $toChapter;
+		$toVerse   = (NULL === $toVerse) ? (int) $fromVerse : $toVerse;
+
+		$this->setBookId($bookId);
+		$this->setFromCombined($fromChapter, $fromVerse);
+		$this->setToCombined($toChapter, $toVerse);
+	}
+
+	public function getFrom() {
+		return $this->from;
+	}
+
+	public function getTo() {
+		return $this->to;
+	}
 }
 
