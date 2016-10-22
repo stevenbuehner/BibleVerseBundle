@@ -1949,7 +1949,7 @@ class BibleVerseService {
 	 * Finds bibleverses in the given string and returns an ARRAY of BIBLEVERSEs
 	 *
 	 * @param string $bibleString
-	 * @return BibleVerse[]
+	 * @return BibleVerseInterface[]
 	 */
 	public function stringToBibleVerse($bibleString) {
 		$this->statStart();
@@ -2493,7 +2493,7 @@ class BibleVerseService {
 	/**
 	 * Returns true if the given Data in BibleVerse $bv matches some validation-criterias
 	 *
-	 * @param BibleVerse $bv
+	 * @param BibleVerseInterface $bv
 	 * @return Boolean
 	 */
 	public function isBibleVerseValid(BibleVerseInterface $bv) {
@@ -2548,9 +2548,9 @@ class BibleVerseService {
 	/**
 	 * Returns a String with the Default-Name of the given BibleBook and chapter/verse range
 	 *
-	 * @param BibleVerse $bibleVerse
-	 * @param string     $length ("short"|"long")
-	 * @param string     $lang ("de"|"en")
+	 * @param BibleVerseInterface $bibleVerse
+	 * @param string              $length ("short"|"long")
+	 * @param string              $lang ("de"|"en")
 	 * @throws \Exception
 	 * @return string
 	 */
@@ -2617,7 +2617,7 @@ class BibleVerseService {
 	/**
 	 * Return true, if the given BibleVerse contains only whole chapters (i.e. Gen 3 or Gen 3-5)
 	 *
-	 * @param BibleVerse $bv
+	 * @param BibleVerseInterface $bv
 	 * @return bool
 	 */
 	public function isBibleVerseAWholeChapter(BibleVerseInterface $bv) {
