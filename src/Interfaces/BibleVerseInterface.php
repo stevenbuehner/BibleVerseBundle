@@ -74,9 +74,18 @@ interface BibleVerseInterface {
 	 */
 	public function getToVerse();
 
+	/**
+	 * @param          $bookId
+	 * @param in       $fromChapter
+	 * @param int      $fromVerse
+	 * @param int|NULL $toChapter
+	 * @param int|NULL $toVerse
+	 */
 	public function setVerse($bookId, $fromChapter, $fromVerse, $toChapter = NULL, $toVerse = NULL);
 
 	/**
+	 * String-Representation of this bibleverse, which makes it quickly possible to compare two bibleverses for beeing equal
+	 *
 	 * @return string
 	 */
 	public function __toString();
