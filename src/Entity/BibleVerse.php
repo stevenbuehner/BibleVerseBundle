@@ -21,7 +21,7 @@ class BibleVerse implements BibleVerseInterface {
 	/**
 	 * @var int
 	 *
-	 * @ORM\Column(name="tp", type="integer")
+	 * @ORM\Column(name="to", type="integer")
 	 */
 	protected $to;
 	/**
