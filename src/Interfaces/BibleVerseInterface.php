@@ -75,8 +75,8 @@ interface BibleVerseInterface {
 	public function getToVerse();
 
 	/**
-	 * @param          $bookId
-	 * @param in       $fromChapter
+	 * @param int      $bookId
+	 * @param int      $fromChapter
 	 * @param int      $fromVerse
 	 * @param int|NULL $toChapter
 	 * @param int|NULL $toVerse
