@@ -17,13 +17,13 @@ class BibleVerse implements BibleVerseInterface {
 	 *
 	 * @ORM\Column(name="start", type="integer")
 	 */
-	protected $from;
+	protected $start;
 	/**
 	 * @var int
 	 *
 	 * @ORM\Column(name="end", type="integer")
 	 */
-	protected $to;
+	protected $end;
 	/**
 	 * @var int
 	 *
@@ -58,10 +58,10 @@ class BibleVerse implements BibleVerseInterface {
 	}
 
 	public function setFromCombined($chapter, $verse) {
-		$this->from = self::getCombi($chapter, $verse);
+		$this->start = self::getCombi($chapter, $verse);
 	}
 
-	static function getCombi($chapter, $verse) {
+	public static function getCombi($chapter, $verse) {
 		return (int) sprintf('%03d%03d', $chapter, $verse);
 	}
 
@@ -71,14 +71,14 @@ class BibleVerse implements BibleVerseInterface {
 	 * @return int
 	 */
 	public function getFromVerse() {
-		return self::getVerseFromCombi($this->from);
+		return self::getVerseFromCombi($this->start);
 	}
 
 	/**
 	 * @param int $chapterVerseNum
 	 * @return int
 	 */
-	static function getVerseFromCombi($chapterVerseNum) {
+	public static function getVerseFromCombi($chapterVerseNum) {
 		return (int) ($chapterVerseNum % 1000);
 	}
 
@@ -97,14 +97,14 @@ class BibleVerse implements BibleVerseInterface {
 	 * @return int
 	 */
 	public function getFromChapter() {
-		return self::getChapterFromCombi($this->from);
+		return self::getChapterFromCombi($this->start);
 	}
 
 	/**
 	 * @param int $chapterVerseNum
 	 * @return int
 	 */
-	static function getChapterFromCombi($chapterVerseNum) {
+	public static function getChapterFromCombi($chapterVerseNum) {
 		return (int) floor($chapterVerseNum / 1000);
 	}
 
@@ -118,7 +118,7 @@ class BibleVerse implements BibleVerseInterface {
 	}
 
 	public function setToCombined($chapter, $verse) {
-		$this->to = self::getCombi($chapter, $verse);
+		$this->end = self::getCombi($chapter, $verse);
 	}
 
 	/**
@@ -127,7 +127,7 @@ class BibleVerse implements BibleVerseInterface {
 	 * @return int
 	 */
 	public function getToVerse() {
-		return self::getVerseFromCombi($this->to);
+		return self::getVerseFromCombi($this->end);
 	}
 
 	/**
@@ -145,7 +145,7 @@ class BibleVerse implements BibleVerseInterface {
 	 * @return int
 	 */
 	public function getToChapter() {
-		return self::getChapterFromCombi($this->to);
+		return self::getChapterFromCombi($this->end);
 	}
 
 	/**
@@ -154,7 +154,7 @@ class BibleVerse implements BibleVerseInterface {
 	 * @return boolean
 	 */
 	public function isSingleVers() {
-		if ($this->to == $this->from) {
+		if ($this->end == $this->start) {
 			return TRUE;
 		} else {
 			return FALSE;
@@ -204,15 +204,15 @@ class BibleVerse implements BibleVerseInterface {
 	/**
 	 * @return int
 	 */
-	public function getFrom() {
-		return $this->from;
+	public function getStart() {
+		return $this->start;
 	}
 
 	/**
 	 * @return int
 	 */
-	public function getTo() {
-		return $this->to;
+	public function getEnd() {
+		return $this->end;
 	}
 }
 
