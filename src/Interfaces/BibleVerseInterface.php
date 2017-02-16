@@ -5,7 +5,7 @@ namespace StevenBuehner\BibleVerseBundle\Interfaces;
 interface BibleVerseInterface {
 
 	/**
-	 * Set bookId
+	 * Set From and To bookId
 	 *
 	 * @param integer $bookId
 	 */
@@ -16,7 +16,29 @@ interface BibleVerseInterface {
 	 *
 	 * @return int
 	 */
-	public function getBookId();
+	public function getFromBookId();
+
+	/**
+	 * Get bookId
+	 *
+	 * @return int
+	 */
+	public function getToBookId();
+
+	/**
+	 * Set $fromBookId
+	 *
+	 * @param integer $fromBookId
+	 */
+	public function setFromBookId($fromBookId);
+
+	/**
+	 * Set $toBookId
+	 *
+	 * @param integer $toBookId
+	 */
+	public function setToBookId($toBookId);
+
 
 	/**
 	 * Set fromChapter

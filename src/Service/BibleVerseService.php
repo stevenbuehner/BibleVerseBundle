@@ -13,7 +13,12 @@ namespace StevenBuehner\BibleVerseBundle\Service;
 use StevenBuehner\BibleVerseBundle\Entity\BibleVerse;
 use StevenBuehner\BibleVerseBundle\Interfaces\BibleVerseInterface;
 
-
+/**
+ * Class BibleVerseService
+ *
+ * @package StevenBuehner\BibleVerseBundle\Service
+ * FIXME: Handling of FromBookId and ToBookId is not implemented yet
+ */
 class BibleVerseService {
 	private $bibleData              = NULL;
 	private $lastInvalidBibleverses = NULL;
@@ -2463,7 +2468,7 @@ class BibleVerseService {
 
 		// Prüfen ob die BookID im Datenblock existiert
 		// Check if BookId exists
-		$id = $bv->getBookId();
+		$id = $bv->getFromBookId();
 
 		if (!isset ($this->bibleData [$id])) {
 			return FALSE;
@@ -2514,7 +2519,7 @@ class BibleVerseService {
 	 * @return string
 	 */
 	public function bibleVerseToString(BibleVerseInterface $bibleVerse, $length = "long", $lang = "de") {
-		if ($bibleVerse !== NULL && isset ($this->bibleData [$bibleVerse->getBookId()]) && $this->isBibleVerseValid($bibleVerse)) {
+		if ($bibleVerse !== NULL && isset ($this->bibleData [$bibleVerse->getFromBookId()]) && $this->isBibleVerseValid($bibleVerse)) {
 			$bv = $bibleVerse;
 
 			switch (strtolower($lang)) {
@@ -2532,11 +2537,11 @@ class BibleVerseService {
 			// Get the fitting name of the book
 			switch ($length) {
 				case "short" :
-					$book = $this->bibleData [$bibleVerse->getBookId()] ["desc"] [$lang] ["short"];
+					$book = $this->bibleData [$bibleVerse->getFromBookId()] ["desc"] [$lang] ["short"];
 					break;
 				case "long" :
 				default :
-					$book = $this->bibleData [$bibleVerse->getBookId()] ["desc"] [$lang] ["long"];
+					$book = $this->bibleData [$bibleVerse->getFromBookId()] ["desc"] [$lang] ["long"];
 					break;
 			}
 
@@ -2580,7 +2585,7 @@ class BibleVerseService {
 	 * @return bool
 	 */
 	public function isBibleVerseAWholeChapter(BibleVerseInterface $bv) {
-		$maxVerseToChapter = $this->getMaxVersOfBookKap($bv->getBookId(), $bv->getToChapter());
+		$maxVerseToChapter = $this->getMaxVersOfBookKap($bv->getFromBookId(), $bv->getToChapter());
 
 		return ($bv->getFromVerse() == 1 && $bv->getToVerse() == $maxVerseToChapter);
 	}
