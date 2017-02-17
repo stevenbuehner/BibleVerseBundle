@@ -40,7 +40,7 @@ class BibleVerse implements BibleVerseInterface {
 	 * @ORM\Id
 	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
-	private $id;
+	protected $id;
 
 	public function __construct() {
 		$this->start = 0;
