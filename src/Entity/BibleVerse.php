@@ -18,25 +18,25 @@ class BibleVerse implements BibleVerseInterface {
 	/**
 	 * @var int
 	 *
-	 * @ORM\Column(name="start", type="int")
+	 * @ORM\Column(name="start", type="integer")
 	 */
 	protected $start;
 	/**
 	 * @var int
 	 *
-	 * @ORM\Column(name="book_id", type="int")
+	 * @ORM\Column(name="book_id", type="integer")
 	 */
 	/**
 	 * @var int
 	 *
-	 * @ORM\Column(name="end", type="int")
+	 * @ORM\Column(name="end", type="integer")
 	 */
 	protected $end;
 
 	/**
 	 * @var int
 	 *
-	 * @ORM\Column(name="id", type="int")
+	 * @ORM\Column(name="id", type="integer")
 	 * @ORM\Id
 	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
