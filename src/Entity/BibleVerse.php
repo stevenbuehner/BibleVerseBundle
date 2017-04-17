@@ -88,7 +88,7 @@ class BibleVerse implements BibleVerseInterface {
 	 * @return int
 	 */
 	public static function getBookFromCombi($chapterVerseNum) {
-		return floor($chapterVerseNum / 1000000);
+		return (int) floor($chapterVerseNum / 1000000);
 	}
 
 	/**
