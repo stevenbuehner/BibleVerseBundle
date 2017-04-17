@@ -57,7 +57,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		$bv = $this->bibleVerseService->stringToBibleVerse('1. Mose 1');
 		$this->assertTrue(count($bv) == 1);
 		$verse = $bv[0];
-		$this->assertEquals($verse->getBookId(), 1);
+		$this->assertEquals($verse->getFromBookId(), 1);
 		$this->assertEquals($verse->getFromChapter(), 1);
 		$this->assertEquals($verse->getFromVerse(), 1);
 		$this->assertEquals($verse->getToChapter(), 1);
@@ -66,7 +66,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		$bv = $this->bibleVerseService->stringToBibleVerse('1. Mose 1-3');
 		$this->assertTrue(count($bv) == 1);
 		$verse = $bv[0];
-		$this->assertEquals($verse->getBookId(), 1);
+		$this->assertEquals($verse->getFromBookId(), 1);
 		$this->assertEquals($verse->getFromChapter(), 1);
 		$this->assertEquals($verse->getFromVerse(), 1);
 		$this->assertEquals($verse->getToChapter(), 3);
@@ -75,7 +75,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		$bv = $this->bibleVerseService->stringToBibleVerse('1. Mose 1-3,5');
 		$this->assertTrue(count($bv) == 1);
 		$verse = $bv[0];
-		$this->assertEquals($verse->getBookId(), 1);
+		$this->assertEquals($verse->getFromBookId(), 1);
 		$this->assertEquals($verse->getFromChapter(), 1);
 		$this->assertEquals($verse->getFromVerse(), 1);
 		$this->assertEquals($verse->getToChapter(), 3);
@@ -89,13 +89,13 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		$bv = $this->bibleVerseService->stringToBibleVerse('1.Mose 12+20');
 		$this->assertTrue(count($bv) == 2);
 		$verse = $bv[0];
-		$this->assertEquals($verse->getBookId(), 1);
+		$this->assertEquals($verse->getFromBookId(), 1);
 		$this->assertEquals($verse->getFromChapter(), 12);
 		$this->assertEquals($verse->getFromVerse(), 1);
 		$this->assertEquals($verse->getToChapter(), 12);
 		$this->assertEquals($verse->getToVerse(), 20);
 		$verse = $bv[1];
-		$this->assertEquals($verse->getBookId(), 1);
+		$this->assertEquals($verse->getFromBookId(), 1);
 		$this->assertEquals($verse->getFromChapter(), 20);
 		$this->assertEquals($verse->getFromVerse(), 1);
 		$this->assertEquals($verse->getToChapter(), 20);
@@ -104,13 +104,13 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		$bv = $this->bibleVerseService->stringToBibleVerse('Jona 2+3');
 		$this->assertTrue(count($bv) == 2);
 		$verse = $bv[0];
-		$this->assertEquals($verse->getBookId(), 32);
+		$this->assertEquals($verse->getFromBookId(), 32);
 		$this->assertEquals($verse->getFromChapter(), 2);
 		$this->assertEquals($verse->getFromVerse(), 1);
 		$this->assertEquals($verse->getToChapter(), 2);
 		$this->assertEquals($verse->getToVerse(), 11);
 		$verse = $bv[1];
-		$this->assertEquals($verse->getBookId(), 32);
+		$this->assertEquals($verse->getFromBookId(), 32);
 		$this->assertEquals($verse->getFromChapter(), 3);
 		$this->assertEquals($verse->getFromVerse(), 1);
 		$this->assertEquals($verse->getToChapter(), 3);
@@ -121,13 +121,13 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		$bv = $this->bibleVerseService->stringToBibleVerse('1.Mose 12+20,4-20,6');
 		$this->assertTrue(count($bv) == 2);
 		$verse = $bv[0];
-		$this->assertEquals($verse->getBookId(), 1);
+		$this->assertEquals($verse->getFromBookId(), 1);
 		$this->assertEquals($verse->getFromChapter(), 12);
 		$this->assertEquals($verse->getFromVerse(), 1);
 		$this->assertEquals($verse->getToChapter(), 12);
 		$this->assertEquals($verse->getToVerse(), 20);
 		$verse = $bv[1];
-		$this->assertEquals($verse->getBookId(), 1);
+		$this->assertEquals($verse->getFromBookId(), 1);
 		$this->assertEquals($verse->getFromChapter(), 20);
 		$this->assertEquals($verse->getFromVerse(), 4);
 		$this->assertEquals($verse->getToChapter(), 20);
@@ -136,13 +136,13 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		$bv = $this->bibleVerseService->stringToBibleVerse('Jesus Sirach 35,17-18.20-21');
 		$this->assertTrue(count($bv) == 2);
 		$verse = $bv[0];
-		$this->assertEquals($verse->getBookId(), 73);
+		$this->assertEquals($verse->getFromBookId(), 73);
 		$this->assertEquals($verse->getFromChapter(), 35);
 		$this->assertEquals($verse->getFromVerse(), 17);
 		$this->assertEquals($verse->getToChapter(), 35);
 		$this->assertEquals($verse->getToVerse(), 18);
 		$verse = $bv[1];
-		$this->assertEquals($verse->getBookId(), 73);
+		$this->assertEquals($verse->getFromBookId(), 73);
 		$this->assertEquals($verse->getFromChapter(), 35);
 		$this->assertEquals($verse->getFromVerse(), 20);
 		$this->assertEquals($verse->getToChapter(), 35);
@@ -151,13 +151,13 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		$bv = $this->bibleVerseService->stringToBibleVerse('Jesus Sirach 16-17+19-20');
 		$this->assertTrue(count($bv) == 2);
 		$verse = $bv[0];
-		$this->assertEquals($verse->getBookId(), 73);
+		$this->assertEquals($verse->getFromBookId(), 73);
 		$this->assertEquals($verse->getFromChapter(), 16);
 		$this->assertEquals($verse->getFromVerse(), 1);
 		$this->assertEquals($verse->getToChapter(), 17);
 		$this->assertEquals($verse->getToVerse(), 32);
 		$verse = $bv[1];
-		$this->assertEquals($verse->getBookId(), 73);
+		$this->assertEquals($verse->getFromBookId(), 73);
 		$this->assertEquals($verse->getFromChapter(), 19);
 		$this->assertEquals($verse->getFromVerse(), 1);
 		$this->assertEquals($verse->getToChapter(), 20);
@@ -166,19 +166,19 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		$bv = $this->bibleVerseService->stringToBibleVerse('Jesus Sirach 16-17+19-20+30-32,5');
 		$this->assertCount(3, $bv);
 		$verse = $bv[0];
-		$this->assertEquals($verse->getBookId(), 73);
+		$this->assertEquals($verse->getFromBookId(), 73);
 		$this->assertEquals($verse->getFromChapter(), 16);
 		$this->assertEquals($verse->getFromVerse(), 1);
 		$this->assertEquals($verse->getToChapter(), 17);
 		$this->assertEquals($verse->getToVerse(), 32);
 		$verse = $bv[1];
-		$this->assertEquals($verse->getBookId(), 73);
+		$this->assertEquals($verse->getFromBookId(), 73);
 		$this->assertEquals($verse->getFromChapter(), 19);
 		$this->assertEquals($verse->getFromVerse(), 1);
 		$this->assertEquals($verse->getToChapter(), 20);
 		$this->assertEquals($verse->getToVerse(), 31);
 		$verse = $bv[2];
-		$this->assertEquals($verse->getBookId(), 73);
+		$this->assertEquals($verse->getFromBookId(), 73);
 		$this->assertEquals($verse->getFromChapter(), 30);
 		$this->assertEquals($verse->getFromVerse(), 1);
 		$this->assertEquals($verse->getToChapter(), 32);
@@ -190,7 +190,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		$bv = $this->bibleVerseService->stringToBibleVerse('1. Mose 1,4f');
 		$this->assertTrue(count($bv) == 1);
 		$verse = $bv[0];
-		$this->assertEquals($verse->getBookId(), 1);
+		$this->assertEquals($verse->getFromBookId(), 1);
 		$this->assertEquals($verse->getFromChapter(), 1);
 		$this->assertEquals($verse->getFromVerse(), 4);
 		$this->assertEquals($verse->getToChapter(), 1);
@@ -199,7 +199,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		$bv = $this->bibleVerseService->stringToBibleVerse('1. Mose 1,4ff');
 		$this->assertTrue(count($bv) == 1);
 		$verse = $bv[0];
-		$this->assertEquals($verse->getBookId(), 1);
+		$this->assertEquals($verse->getFromBookId(), 1);
 		$this->assertEquals($verse->getFromChapter(), 1);
 		$this->assertEquals($verse->getFromVerse(), 4);
 		$this->assertEquals($verse->getToChapter(), 1);
@@ -208,7 +208,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		$bv = $this->bibleVerseService->stringToBibleVerse('1. Mose 1,4-5f');
 		$this->assertTrue(count($bv) == 1);
 		$verse = $bv[0];
-		$this->assertEquals($verse->getBookId(), 1);
+		$this->assertEquals($verse->getFromBookId(), 1);
 		$this->assertEquals($verse->getFromChapter(), 1);
 		$this->assertEquals($verse->getFromVerse(), 4);
 		$this->assertEquals($verse->getToChapter(), 1);
@@ -217,7 +217,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		$bv = $this->bibleVerseService->stringToBibleVerse('1. Mose 1,4-5ff');
 		$this->assertTrue(count($bv) == 1);
 		$verse = $bv[0];
-		$this->assertEquals($verse->getBookId(), 1);
+		$this->assertEquals($verse->getFromBookId(), 1);
 		$this->assertEquals($verse->getFromChapter(), 1);
 		$this->assertEquals($verse->getFromVerse(), 4);
 		$this->assertEquals($verse->getToChapter(), 1);
@@ -226,7 +226,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		$bv = $this->bibleVerseService->stringToBibleVerse('1. Mose 1,4-5,3f');
 		$this->assertTrue(count($bv) == 1);
 		$verse = $bv[0];
-		$this->assertEquals($verse->getBookId(), 1);
+		$this->assertEquals($verse->getFromBookId(), 1);
 		$this->assertEquals($verse->getFromChapter(), 1);
 		$this->assertEquals($verse->getFromVerse(), 4);
 		$this->assertEquals($verse->getToChapter(), 5);
@@ -235,7 +235,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		$bv = $this->bibleVerseService->stringToBibleVerse('1. Mose 1,4-5,3ff');
 		$this->assertTrue(count($bv) == 1);
 		$verse = $bv[0];
-		$this->assertEquals($verse->getBookId(), 1);
+		$this->assertEquals($verse->getFromBookId(), 1);
 		$this->assertEquals($verse->getFromChapter(), 1);
 		$this->assertEquals($verse->getFromVerse(), 4);
 		$this->assertEquals($verse->getToChapter(), 5);
@@ -246,7 +246,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		$bv = $this->bibleVerseService->stringToBibleVerse('2. Mose 16f');
 		$this->assertTrue(count($bv) == 1);
 		$verse = $bv[0];
-		$this->assertEquals($verse->getBookId(), 2);
+		$this->assertEquals($verse->getFromBookId(), 2);
 		$this->assertEquals($verse->getFromChapter(), 16);
 		$this->assertEquals($verse->getFromVerse(), 1);
 		$this->assertEquals($verse->getToChapter(), 17);
@@ -262,7 +262,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 	public function testBibleVerseInit() {
 		$bv = new BibleVerse();
 		$bv->setVerse(4, 1, 2);
-		$this->assertEquals($bv->getBookId(), 4);
+		$this->assertEquals($bv->getFromBookId(), 4);
 		$this->assertEquals($bv->getFromChapter(), 1);
 		$this->assertEquals($bv->getToChapter(), 1);
 		$this->assertEquals($bv->getFromVerse(), 2);
@@ -346,7 +346,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 										 "%s bei " . $bd[$bookID]["desc"][$lang][$size] . " 1,4 (ID:" . $bookID . ")");
 
 					if ($vers1 != NULL) {
-						$this->assertEquals($vers1[0]->getBookId(), $bookID);
+						$this->assertEquals($vers1[0]->getFromBookId(), $bookID);
 						$this->assertEquals($vers1[0]->getFromChapter(), 1);
 						$this->assertEquals($vers1[0]->getToChapter(), 1);
 						$this->assertEquals($vers1[0]->getFromVerse(), 4);
@@ -360,7 +360,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 					$this->assertNotNull($vers1, $errorString);
 
 					if ($vers1 != NULL) {
-						$this->assertEquals($vers1[0]->getBookId(), $bookID);
+						$this->assertEquals($vers1[0]->getFromBookId(), $bookID);
 						$this->assertEquals($vers1[0]->getFromChapter(), 1, $errorString);
 						$this->assertEquals($vers1[0]->getToChapter(), 1, $errorString);
 						$this->assertEquals($vers1[0]->getFromVerse(), 4, $errorString);
@@ -374,7 +374,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 										 "%s bei " . $bd[$bookID]["desc"][$lang][$size] . " 1,4-5 (ID:" . $bookID . ")");
 
 					if ($vers1 != NULL) {
-						$this->assertEquals($vers1[0]->getBookId(), $bookID);
+						$this->assertEquals($vers1[0]->getFromBookId(), $bookID);
 						$this->assertEquals($vers1[0]->getFromChapter(), 1);
 						$this->assertEquals($vers1[0]->getToChapter(), 1);
 						$this->assertEquals($vers1[0]->getFromVerse(), 4);
@@ -389,7 +389,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 					$this->assertNotNull($vers1, $errorString);
 
 					if ($vers1 != NULL) {
-						$this->assertEquals($vers1[0]->getBookId(), $bookID);
+						$this->assertEquals($vers1[0]->getFromBookId(), $bookID);
 						$this->assertEquals($vers1[0]->getFromChapter(), 1, $errorString);
 						$this->assertEquals($vers1[0]->getToChapter(), 1, $errorString);
 						$this->assertEquals($vers1[0]->getFromVerse(), 4, $errorString);
@@ -405,7 +405,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 											 "%s bei " . $bd[$bookID]["desc"][$lang][$size] . " 1,4-2,2 (ID:" . $bookID . ")");
 
 						if ($vers1 != NULL) {
-							$this->assertEquals($vers1[0]->getBookId(), $bookID);
+							$this->assertEquals($vers1[0]->getFromBookId(), $bookID);
 							$this->assertEquals($vers1[0]->getFromChapter(), 1);
 							$this->assertEquals($vers1[0]->getToChapter(), 2);
 							$this->assertEquals($vers1[0]->getFromVerse(), 4);
@@ -419,7 +419,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 											 "%s bei " . $bd[$bookID]["desc"][$lang][$size] . " 1,4-1,6 (ID:" . $bookID . ")");
 
 						if ($vers1 != NULL) {
-							$this->assertEquals($vers1[0]->getBookId(), $bookID);
+							$this->assertEquals($vers1[0]->getFromBookId(), $bookID);
 							$this->assertEquals($vers1[0]->getFromChapter(), 1);
 							$this->assertEquals($vers1[0]->getToChapter(), 1);
 							$this->assertEquals($vers1[0]->getFromVerse(), 4);
@@ -436,7 +436,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 						$this->assertNotNull($vers1, $errorMessage);
 
 						if ($vers1 != NULL && isset($bookArray[2])) {
-							$this->assertEquals($vers1[0]->getBookId(), $bookID);
+							$this->assertEquals($vers1[0]->getFromBookId(), $bookID);
 							$this->assertEquals($vers1[0]->getFromChapter(), 1, $errorMessage);
 							$this->assertEquals($vers1[0]->getToChapter(), 2, $errorMessage);
 							$this->assertEquals($vers1[0]->getFromVerse(), 4, $errorMessage);
@@ -450,7 +450,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 											 "%s bei " . $bd[$bookID]["desc"][$lang][$size] . " 1,4-1,6f (ID:" . $bookID . ")");
 
 						if ($vers1 != NULL) {
-							$this->assertEquals($vers1[0]->getBookId(), $bookID);
+							$this->assertEquals($vers1[0]->getFromBookId(), $bookID);
 							$this->assertEquals($vers1[0]->getFromChapter(), 1);
 							$this->assertEquals($vers1[0]->getToChapter(), 1);
 							$this->assertEquals($vers1[0]->getFromVerse(), 4);
@@ -466,7 +466,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 										 "%s bei " . $bd[$bookID]["desc"][$lang][$size] . " 1 (ID:" . $bookID . ")");
 
 					if ($vers1 != NULL) {
-						$this->assertEquals($vers1[0]->getBookId(), $bookID);
+						$this->assertEquals($vers1[0]->getFromBookId(), $bookID);
 						$this->assertEquals($vers1[0]->getFromChapter(), 1);
 						$this->assertEquals($vers1[0]->getToChapter(), 1);
 						$this->assertEquals($vers1[0]->getFromVerse(), 1);
@@ -483,14 +483,14 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 
 
 					if ($vers1 != NULL) {
-						$this->assertEquals($vers1[0]->getBookId(), $bookID);
+						$this->assertEquals($vers1[0]->getFromBookId(), $bookID);
 						$this->assertEquals($vers1[0]->getFromChapter(), 1);
 						$this->assertEquals($vers1[0]->getToChapter(), 1);
 						$this->assertEquals($vers1[0]->getFromVerse(), 1);
 						$this->assertEquals($vers1[0]->getToVerse(), 1);
 
 
-						$this->assertEquals($vers1[1]->getBookId(), $bookID);
+						$this->assertEquals($vers1[1]->getFromBookId(), $bookID);
 						$this->assertEquals($vers1[1]->getFromChapter(), 1);
 						$this->assertEquals($vers1[1]->getToChapter(), 1);
 						$this->assertEquals($vers1[1]->getFromVerse(), 3);
@@ -506,13 +506,13 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 					$this->assertTrue(count($vers1) == 2);
 
 					if ($vers1 != NULL) {
-						$this->assertEquals($vers1[0]->getBookId(), $bookID);
+						$this->assertEquals($vers1[0]->getFromBookId(), $bookID);
 						$this->assertEquals($vers1[0]->getFromChapter(), 1);
 						$this->assertEquals($vers1[0]->getToChapter(), 1);
 						$this->assertEquals($vers1[0]->getFromVerse(), 1);
 						$this->assertEquals($vers1[0]->getToVerse(), 1);
 
-						$this->assertEquals($vers1[1]->getBookId(), $bookID);
+						$this->assertEquals($vers1[1]->getFromBookId(), $bookID);
 						$this->assertEquals($vers1[1]->getFromChapter(), 1);
 						$this->assertEquals($vers1[1]->getToChapter(), 1);
 						$this->assertEquals($vers1[1]->getFromVerse(), 3);
@@ -528,7 +528,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 					$this->assertTrue(count($vers1) == 2);
 
 					if ($vers1 != NULL) {
-						$this->assertEquals($vers1[1]->getBookId(), $bookID);
+						$this->assertEquals($vers1[1]->getFromBookId(), $bookID);
 						$this->assertEquals($vers1[1]->getFromChapter(), 1);
 						$this->assertEquals($vers1[1]->getToChapter(), 1);
 						$this->assertEquals($vers1[1]->getFromVerse(), 3);
@@ -543,7 +543,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 					$this->assertNotNull($vers1, $errorMessage);
 
 					if ($vers1 != NULL) {
-						$this->assertEquals($vers1[0]->getBookId(), $bookID, $errorMessage);
+						$this->assertEquals($vers1[0]->getFromBookId(), $bookID, $errorMessage);
 						$this->assertEquals($vers1[0]->getFromChapter(), 1, $errorMessage);
 						$this->assertEquals($vers1[0]->getToChapter(), 1, $errorMessage);
 						$this->assertEquals($vers1[0]->getFromVerse(), 2, $errorMessage);
@@ -652,7 +652,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue(count($bv) == 2);
 
 		foreach ($bv as $verse) {
-			$this->assertEquals($verse->getBookId(), 1);
+			$this->assertEquals($verse->getFromBookId(), 1);
 			$this->assertEquals($verse->getFromChapter(), 12);
 			$this->assertEquals($verse->getFromVerse(), 1);
 			$this->assertEquals($verse->getToChapter(), 12);
@@ -665,13 +665,13 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertCount(2, $bv);
 
-		$this->assertEquals(46, $bv[0]->getBookId());
+		$this->assertEquals(46, $bv[0]->getFromBookId());
 		$this->assertEquals(10, $bv[0]->getFromChapter());
 		$this->assertEquals(14, $bv[0]->getFromVerse());
 		$this->assertEquals(10, $bv[0]->getToChapter());
 		$this->assertEquals(22, $bv[0]->getToVerse());
 
-		$this->assertEquals(46, $bv[1]->getBookId());
+		$this->assertEquals(46, $bv[1]->getFromBookId());
 		$this->assertEquals(10, $bv[1]->getFromChapter());
 		$this->assertEquals(25, $bv[1]->getFromVerse());
 		$this->assertEquals(10, $bv[1]->getToChapter());
@@ -683,13 +683,13 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertCount(2, $bv);
 
-		$this->assertEquals(1, $bv[0]->getBookId());
+		$this->assertEquals(1, $bv[0]->getFromBookId());
 		$this->assertEquals(26, $bv[0]->getFromChapter());
 		$this->assertEquals(35, $bv[0]->getFromVerse());
 		$this->assertEquals(26, $bv[0]->getToChapter());
 		$this->assertEquals(35, $bv[0]->getToVerse());
 
-		$this->assertEquals(1, $bv[1]->getBookId());
+		$this->assertEquals(1, $bv[1]->getFromBookId());
 		$this->assertEquals(27, $bv[1]->getFromChapter());
 		$this->assertEquals(46, $bv[1]->getFromVerse());
 		$this->assertEquals(27, $bv[1]->getToChapter());
@@ -699,7 +699,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		$bv = $this->bibleVerseService->stringToBibleVerse('Genesis 6:12, 11');
 
 		$this->assertCount(2, $bv);
-		$this->assertEquals(1, $bv[1]->getBookId());
+		$this->assertEquals(1, $bv[1]->getFromBookId());
 		$this->assertEquals(6, $bv[1]->getFromChapter());
 		$this->assertEquals(11, $bv[1]->getFromVerse());
 		$this->assertEquals(6, $bv[1]->getToChapter());
@@ -709,13 +709,13 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		$bv = $this->bibleVerseService->stringToBibleVerse('Genesis 39:16-17,19');
 		$this->assertCount(2, $bv);
 
-		$this->assertEquals(1, $bv[0]->getBookId());
+		$this->assertEquals(1, $bv[0]->getFromBookId());
 		$this->assertEquals(39, $bv[0]->getFromChapter());
 		$this->assertEquals(16, $bv[0]->getFromVerse());
 		$this->assertEquals(39, $bv[0]->getToChapter());
 		$this->assertEquals(17, $bv[0]->getToVerse());
 
-		$this->assertEquals(1, $bv[1]->getBookId());
+		$this->assertEquals(1, $bv[1]->getFromBookId());
 		$this->assertEquals(39, $bv[1]->getFromChapter());
 		$this->assertEquals(19, $bv[1]->getFromVerse());
 		$this->assertEquals(39, $bv[1]->getToChapter());
@@ -725,19 +725,19 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		$bv = $this->bibleVerseService->stringToBibleVerse('Exodus 7:3-4,3:20,4:21');
 		$this->assertCount(3, $bv);
 
-		$this->assertEquals(2, $bv[0]->getBookId());
+		$this->assertEquals(2, $bv[0]->getFromBookId());
 		$this->assertEquals(7, $bv[0]->getFromChapter());
 		$this->assertEquals(3, $bv[0]->getFromVerse());
 		$this->assertEquals(7, $bv[0]->getToChapter());
 		$this->assertEquals(4, $bv[0]->getToVerse());
 
-		$this->assertEquals(2, $bv[1]->getBookId());
+		$this->assertEquals(2, $bv[1]->getFromBookId());
 		$this->assertEquals(3, $bv[1]->getFromChapter());
 		$this->assertEquals(20, $bv[1]->getFromVerse());
 		$this->assertEquals(3, $bv[1]->getToChapter());
 		$this->assertEquals(20, $bv[1]->getToVerse());
 
-		$this->assertEquals(2, $bv[2]->getBookId());
+		$this->assertEquals(2, $bv[2]->getFromBookId());
 		$this->assertEquals(4, $bv[2]->getFromChapter());
 		$this->assertEquals(21, $bv[2]->getFromVerse());
 		$this->assertEquals(4, $bv[2]->getToChapter());

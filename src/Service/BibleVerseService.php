@@ -13,7 +13,12 @@ namespace StevenBuehner\BibleVerseBundle\Service;
 use StevenBuehner\BibleVerseBundle\Entity\BibleVerse;
 use StevenBuehner\BibleVerseBundle\Interfaces\BibleVerseInterface;
 
-
+/**
+ * Class BibleVerseService
+ *
+ * @package StevenBuehner\BibleVerseBundle\Service
+ * FIXME: Handling of FromBookId and ToBookId is not implemented yet
+ */
 class BibleVerseService {
 	private $bibleData              = NULL;
 	private $lastInvalidBibleverses = NULL;
@@ -38,7 +43,7 @@ class BibleVerseService {
 		$bd [1] ["desc"] ["de"] ["short"] = "1Mo";
 		$bd [1] ["desc"] ["en"] ["long"]  = "Genesis";
 		$bd [1] ["desc"] ["en"] ["short"] = "Gen";
-		$bd [1] ["pat"]                   = "/^(1[.]?[ ]?(mos?|mose)|Genesis|Gen)$/i";
+		$bd [1] ["pat"]                   = "/^(1[.]?[ ]?(mos?|mose)|Genesis|Ge?n)$/i";
 		$bd [1] ["kapAnz"]                = 50;
 		$bd [1] [1]                       = 31;
 		$bd [1] [2]                       = 25;
@@ -142,7 +147,7 @@ class BibleVerseService {
 		$bd [3] ["desc"] ["de"] ["short"] = "3Mo";
 		$bd [3] ["desc"] ["en"] ["long"]  = "Leviticus";
 		$bd [3] ["desc"] ["en"] ["short"] = "Lev";
-		$bd [3] ["pat"]                   = "/^(3[.]?[ ]?(mos?|mose)|Leviti[ck]us|Lev)$/i";
+		$bd [3] ["pat"]                   = "/^(3[.]?[ ]?(mos?|mose)|Leviti[ck]us|Le?v)$/i";
 		$bd [3] ["kapAnz"]                = 27;
 		$bd [3] [1]                       = 17;
 		$bd [3] [2]                       = 16;
@@ -260,7 +265,7 @@ class BibleVerseService {
 		$bd [6] ["desc"] ["de"] ["short"] = "Jos";
 		$bd [6] ["desc"] ["en"] ["long"]  = "Joshua";
 		$bd [6] ["desc"] ["en"] ["short"] = "Josh";
-		$bd [6] ["pat"]                   = "/^(Joshua|Josua|Josue|Jos[h]?)$/i";
+		$bd [6] ["pat"]                   = "/^(Jo[sz]h?|Jo[sz]h?u[ae]?)$/i";
 		$bd [6] ["kapAnz"]                = 24;
 		$bd [6] [1]                       = 18;
 		$bd [6] [2]                       = 24;
@@ -291,7 +296,7 @@ class BibleVerseService {
 		$bd [7] ["desc"] ["de"] ["short"] = "Ri";
 		$bd [7] ["desc"] ["en"] ["long"]  = "Judges";
 		$bd [7] ["desc"] ["en"] ["short"] = "Judg";
-		$bd [7] ["pat"]                   = "/^(Ri(chter)?|Judges|Judg)$/i";
+		$bd [7] ["pat"]                   = "/^(Ri(chter)?|Judges|Judg|jdc|judicum)$/i";
 		$bd [7] ["kapAnz"]                = 21;
 		$bd [7] [1]                       = 36;
 		$bd [7] [2]                       = 23;
@@ -319,7 +324,7 @@ class BibleVerseService {
 		$bd [8] ["desc"] ["de"] ["short"] = "Rut";
 		$bd [8] ["desc"] ["en"] ["long"]  = "Ruth";
 		$bd [8] ["desc"] ["en"] ["short"] = "Ruth";
-		$bd [8] ["pat"]                   = "/^Rut[h]?$/i";
+		$bd [8] ["pat"]                   = "/^((Buch )?Ruth?|rt)$/i";
 		$bd [8] ["kapAnz"]                = 4;
 		$bd [8] [1]                       = 22;
 		$bd [8] [2]                       = 23;
@@ -330,7 +335,7 @@ class BibleVerseService {
 		$bd [9] ["desc"] ["de"] ["short"] = "1Sam";
 		$bd [9] ["desc"] ["en"] ["long"]  = "1 Samuel";
 		$bd [9] ["desc"] ["en"] ["short"] = "1Sam";
-		$bd [9] ["pat"]                   = "/^(1[.]?[ ]?Sam(uel)?)$/i";
+		$bd [9] ["pat"]                   = "/^1[.]? ?(Sam?|Samuel|Sm)$/i";
 		$bd [9] ["kapAnz"]                = 31;
 		$bd [9] [1]                       = 28;
 		$bd [9] [2]                       = 36;
@@ -368,7 +373,7 @@ class BibleVerseService {
 		$bd [10] ["desc"] ["de"] ["short"] = "2Sam";
 		$bd [10] ["desc"] ["en"] ["long"]  = "2 Samuel";
 		$bd [10] ["desc"] ["en"] ["short"] = "2Sam";
-		$bd [10] ["pat"]                   = "/^(2[.]?[ ]?Sam(uel)?)$/i";
+		$bd [10] ["pat"]                   = "/^2[.]? ?(Sam?|Samuel|Sm)$/i";
 		$bd [10] ["kapAnz"]                = 24;
 		$bd [10] [1]                       = 27;
 		$bd [10] [2]                       = 32;
@@ -399,7 +404,7 @@ class BibleVerseService {
 		$bd [11] ["desc"] ["de"] ["short"] = "1Kön";
 		$bd [11] ["desc"] ["en"] ["long"]  = "1 Kings";
 		$bd [11] ["desc"] ["en"] ["short"] = "1Kgs";
-		$bd [11] ["pat"]                   = "/^(1[.]?[ ]?K(ö|oe)n(ige)?|1[.]?[ ]?(King[s]?|Kgs))$/i";
+		$bd [11] ["pat"]                   = "/^(1[.]?[ ]?(K(ö|oe)(n|nige)?|Koningen|reg|King[s]?|Kgs))$/i";
 		$bd [11] ["kapAnz"]                = 22;
 		$bd [11] [1]                       = 53;
 		$bd [11] [2]                       = 46;
@@ -428,7 +433,7 @@ class BibleVerseService {
 		$bd [12] ["desc"] ["de"] ["short"] = "2Kön";
 		$bd [12] ["desc"] ["en"] ["long"]  = "2 Kings";
 		$bd [12] ["desc"] ["en"] ["short"] = "2Kgs";
-		$bd [12] ["pat"]                   = "/^(2[.]?[ ]?K(ö|oe)n(ige)?|2[.]?[ ]?(King[s]?|Kgs))$/i";
+		$bd [12] ["pat"]                   = "/^(2[.]?[ ]?(K(ö|oe)(n|nige)?|Koningen|reg|King[s]?|Kgs))$/i";
 		$bd [12] ["kapAnz"]                = 25;
 		$bd [12] [1]                       = 18;
 		$bd [12] [2]                       = 25;
@@ -556,7 +561,7 @@ class BibleVerseService {
 		$bd [16] ["desc"] ["de"] ["short"] = "Neh";
 		$bd [16] ["desc"] ["en"] ["long"]  = "Nehemiah";
 		$bd [16] ["desc"] ["en"] ["short"] = "Neh";
-		$bd [16] ["pat"]                   = "/^(Neh|Nehm|Nehemiah)$/i";
+		$bd [16] ["pat"]                   = "/^(Neh|Nehm|Nehemiah?)$/i";
 		$bd [16] ["kapAnz"]                = 13;
 		$bd [16] [1]                       = 11;
 		$bd [16] [2]                       = 20;
@@ -642,7 +647,7 @@ class BibleVerseService {
 		$bd [19] ["desc"] ["de"] ["short"] = "Ps";
 		$bd [19] ["desc"] ["en"] ["long"]  = "Psalms";
 		$bd [19] ["desc"] ["en"] ["short"] = "Ps";
-		$bd [19] ["pat"]                   = "/^(Psalms?|Psalmen|Ps|Psal)$/i";
+		$bd [19] ["pat"]                   = "/^(Psalms?|Psalmen|Ps|Psal|Psalter)$/i";
 		$bd [19] ["kapAnz"]                = 150;
 		$bd [19] [1]                       = 6;
 		$bd [19] [2]                       = 12;
@@ -799,7 +804,7 @@ class BibleVerseService {
 		$bd [20] ["desc"] ["de"] ["short"] = "Spr";
 		$bd [20] ["desc"] ["en"] ["long"]  = "Proverbs";
 		$bd [20] ["desc"] ["en"] ["short"] = "Prov";
-		$bd [20] ["pat"]                   = "/^(Prov(erbs)?|Spr(ichw(ö|oe)rter)?|Spri)$/i";
+		$bd [20] ["pat"]                   = "/^(Prov(erbs)?|Prv|Spr(ichw(ö|oe)rter)?|Spri|Spr(ue|ü)che)$/i";
 		$bd [20] ["kapAnz"]                = 31;
 		$bd [20] [1]                       = 33;
 		$bd [20] [2]                       = 22;
@@ -837,7 +842,7 @@ class BibleVerseService {
 		$bd [21] ["desc"] ["de"] ["short"] = "Pred";
 		$bd [21] ["desc"] ["en"] ["long"]  = "Ecclesiastes";
 		$bd [21] ["desc"] ["en"] ["short"] = "Eccl";
-		$bd [21] ["pat"]                   = "/^(Prediger|Pred|Koh(elet)?|Eccl(esiastes)?)$/i";
+		$bd [21] ["pat"]                   = "/^(Predi[gk]er|Pred|Koh(elet)?|Eccl(esiastes)?)( Salomo)?$/i";
 		$bd [21] ["kapAnz"]                = 12;
 		$bd [21] [1]                       = 18;
 		$bd [21] [2]                       = 26;
@@ -856,7 +861,7 @@ class BibleVerseService {
 		$bd [22] ["desc"] ["de"] ["short"] = "Hld";
 		$bd [22] ["desc"] ["en"] ["long"]  = "Song of Salomon";
 		$bd [22] ["desc"] ["en"] ["short"] = "Song";
-		$bd [22] ["pat"]                   = "/^(Hoheslied|Hld|Hohesl|Hohes Lied|Song[s]? of Salomo[n]?|Song of Songs|Song)$/i";
+		$bd [22] ["pat"]                   = "/^(Hohes?lied|Hh?ld|Hohesl|Hohes Lied|Song[s]? of Salomo[n]?|Song of Songs|Song)$/i";
 		$bd [22] ["kapAnz"]                = 8;
 		$bd [22] [1]                       = 17;
 		$bd [22] [2]                       = 17;
@@ -871,7 +876,7 @@ class BibleVerseService {
 		$bd [23] ["desc"] ["de"] ["short"] = "Jes";
 		$bd [23] ["desc"] ["en"] ["long"]  = "Isaiah";
 		$bd [23] ["desc"] ["en"] ["short"] = "Isa";
-		$bd [23] ["pat"]                   = "/^(Jesaja|Jes|Jesa|Isaiah|Isa)$/i";
+		$bd [23] ["pat"]                   = "/^(Jesaja|Jes|Jesa|Isaiah|Isa?)$/i";
 		$bd [23] ["kapAnz"]                = 66;
 		$bd [23] [1]                       = 31;
 		$bd [23] [2]                       = 22;
@@ -944,7 +949,7 @@ class BibleVerseService {
 		$bd [24] ["desc"] ["de"] ["short"] = "Jer";
 		$bd [24] ["desc"] ["en"] ["long"]  = "Jeremiah";
 		$bd [24] ["desc"] ["en"] ["short"] = "Jer";
-		$bd [24] ["pat"]                   = "/^(Jeremia[h]?|Jer|Jere|Jerem)$/i";
+		$bd [24] ["pat"]                   = "/^(Jeremia[h]?|Je?r|Jere|Jerem)$/i";
 		$bd [24] ["kapAnz"]                = 52;
 		$bd [24] [1]                       = 19;
 		$bd [24] [2]                       = 37;
@@ -1017,7 +1022,7 @@ class BibleVerseService {
 		$bd [25] ["desc"] ["de"] ["short"] = "Klgl";
 		$bd [25] ["desc"] ["en"] ["long"]  = "Lamentations";
 		$bd [25] ["desc"] ["en"] ["short"] = "Lam";
-		$bd [25] ["pat"]                   = "/^(Klagelieder|Klgl|Klage|Lam(entations)?)$/i";
+		$bd [25] ["pat"]                   = "/^(Klagelieder|Kla?a?gl|Klage|Kla|Lam(entations)?)$/i";
 		$bd [25] ["kapAnz"]                = 5;
 		$bd [25] [1]                       = 22;
 		$bd [25] [2]                       = 22;
@@ -1029,7 +1034,7 @@ class BibleVerseService {
 		$bd [26] ["desc"] ["de"] ["short"] = "Hes";
 		$bd [26] ["desc"] ["en"] ["long"]  = "Ezekiel";
 		$bd [26] ["desc"] ["en"] ["short"] = "Ezek";
-		$bd [26] ["pat"]                   = "/^(Ezechiel|Ezekiel|Ezek|Ez|Hes|Hesekiel)$/i";
+		$bd [26] ["pat"]                   = "/^(Ezechiel|Ezekiel|Eze(k|ch)|Ez|Hes|Hesekiel)$/i";
 		$bd [26] ["kapAnz"]                = 48;
 		$bd [26] [1]                       = 28;
 		$bd [26] [2]                       = 10;
@@ -1084,7 +1089,7 @@ class BibleVerseService {
 		$bd [27] ["desc"] ["de"] ["short"] = "Dan";
 		$bd [27] ["desc"] ["en"] ["long"]  = "Daniel";
 		$bd [27] ["desc"] ["en"] ["short"] = "Dan";
-		$bd [27] ["pat"]                   = "/^(Daniel|Dan)$/i";
+		$bd [27] ["pat"]                   = "/^(Daniel|Da?n)$/i";
 		$bd [27] ["kapAnz"]                = 14;
 		$bd [27] [1]                       = 21;
 		$bd [27] [2]                       = 49;
@@ -1126,7 +1131,7 @@ class BibleVerseService {
 		$bd [29] ["desc"] ["de"] ["short"] = "Joel";
 		$bd [29] ["desc"] ["en"] ["long"]  = "Joel";
 		$bd [29] ["desc"] ["en"] ["short"] = "Joel";
-		$bd [29] ["pat"]                   = "/^Joel$/i";
+		$bd [29] ["pat"]                   = "/^Joel|Jo$/i";
 		$bd [29] ["kapAnz"]                = 3;
 		$bd [29] [1]                       = 20;
 		$bd [29] [2]                       = 32;
@@ -1152,7 +1157,7 @@ class BibleVerseService {
 		$bd [31] ["desc"] ["de"] ["short"] = "Obd";
 		$bd [31] ["desc"] ["en"] ["long"]  = "Obadiah";
 		$bd [31] ["desc"] ["en"] ["short"] = "Obad";
-		$bd [31] ["pat"]                   = "/^(Obadiah|Obadja|Obd|Obad)$/i";
+		$bd [31] ["pat"]                   = "/^(Obadiah|Obadja|Obd|Obad|Obj?)$/i";
 		$bd [31] ["kapAnz"]                = 1;
 		$bd [31] [1]                       = 21;
 
@@ -1160,7 +1165,7 @@ class BibleVerseService {
 		$bd [32] ["desc"] ["de"] ["short"] = "Jona";
 		$bd [32] ["desc"] ["en"] ["long"]  = "Jonah";
 		$bd [32] ["desc"] ["en"] ["short"] = "Jonah";
-		$bd [32] ["pat"]                   = "/^(Jona[h]?)$/i";
+		$bd [32] ["pat"]                   = "/^(Jonah?|Jon)$/i";
 		$bd [32] ["kapAnz"]                = 4;
 		$bd [32] [1]                       = 17;
 		$bd [32] [2]                       = 11;
@@ -1171,7 +1176,7 @@ class BibleVerseService {
 		$bd [33] ["desc"] ["de"] ["short"] = "Mi";
 		$bd [33] ["desc"] ["en"] ["long"]  = "Micah";
 		$bd [33] ["desc"] ["en"] ["short"] = "Mic";
-		$bd [33] ["pat"]                   = "/^(Micah|Mi(cha)?|Mic)$/i";
+		$bd [33] ["pat"]                   = "/^(Micah|Mi(cha)?|Mic|Mch)$/i";
 		$bd [33] ["kapAnz"]                = 7;
 		$bd [33] [1]                       = 16;
 		$bd [33] [2]                       = 13;
@@ -1205,7 +1210,7 @@ class BibleVerseService {
 		$bd [36] ["desc"] ["de"] ["short"] = "Zef";
 		$bd [36] ["desc"] ["en"] ["long"]  = "Zephaniah";
 		$bd [36] ["desc"] ["en"] ["short"] = "Zeph";
-		$bd [36] ["pat"]                   = "/^(Ze(ph|f)an(i|j)a[h]?|Zef|Zeph)$/i";
+		$bd [36] ["pat"]                   = "/^(([ZS]e(ph|f)((an)([ij](ah?)?)?)?)|Zph)$/i";
 		$bd [36] ["kapAnz"]                = 3;
 		$bd [36] [1]                       = 18;
 		$bd [36] [2]                       = 15;
@@ -1215,7 +1220,7 @@ class BibleVerseService {
 		$bd [37] ["desc"] ["de"] ["short"] = "Hag";
 		$bd [37] ["desc"] ["en"] ["long"]  = "Haggai";
 		$bd [37] ["desc"] ["en"] ["short"] = "Hag";
-		$bd [37] ["pat"]                   = "/^Hag(gai)?$/i";
+		$bd [37] ["pat"]                   = "/^Hag(gai)?|Hgg$/i";
 		$bd [37] ["kapAnz"]                = 2;
 		$bd [37] [1]                       = 15;
 		$bd [37] [2]                       = 23;
@@ -1224,7 +1229,7 @@ class BibleVerseService {
 		$bd [38] ["desc"] ["de"] ["short"] = "Sach";
 		$bd [38] ["desc"] ["en"] ["long"]  = "Zechariah";
 		$bd [38] ["desc"] ["en"] ["short"] = "Zech";
-		$bd [38] ["pat"]                   = "/^(Zech(ariah)?|Sacharja|Sach)$/i";
+		$bd [38] ["pat"]                   = "/^(Zech(ariah)?|[SZ]ach(ar[ij]a)?|Zch)$/i";
 		$bd [38] ["kapAnz"]                = 14;
 		$bd [38] [1]                       = 21;
 		$bd [38] [2]                       = 13;
@@ -1245,7 +1250,7 @@ class BibleVerseService {
 		$bd [39] ["desc"] ["de"] ["short"] = "Mal";
 		$bd [39] ["desc"] ["en"] ["long"]  = "Malachi";
 		$bd [39] ["desc"] ["en"] ["short"] = "Mal";
-		$bd [39] ["pat"]                   = "/^(Mal[e]?achi|Mal)$/i";
+		$bd [39] ["pat"]                   = "/^(Mal[e]?achi|Mal|Ml)$/i";
 		$bd [39] ["kapAnz"]                = 3;
 		$bd [39] [1]                       = 14;
 		$bd [39] [2]                       = 17;
@@ -1256,7 +1261,7 @@ class BibleVerseService {
 		$bd [40] ["desc"] ["de"] ["short"] = "Mt";
 		$bd [40] ["desc"] ["en"] ["long"]  = "Matthew";
 		$bd [40] ["desc"] ["en"] ["short"] = "Matt";
-		$bd [40] ["pat"]                   = "/^(Matthew|Mat[t]?h(ä|ae)us|Mt|Mat[t]?)$/i";
+		$bd [40] ["pat"]                   = "/^(Matthew|Matt?h?(ä|ae|e)us(evangelium)?|Mt|Matt?)$/i";
 		$bd [40] ["kapAnz"]                = 28;
 		$bd [40] [1]                       = 25;
 		$bd [40] [2]                       = 23;
@@ -1291,7 +1296,7 @@ class BibleVerseService {
 		$bd [41] ["desc"] ["de"] ["short"] = "Mk";
 		$bd [41] ["desc"] ["en"] ["long"]  = "Mark";
 		$bd [41] ["desc"] ["en"] ["short"] = "Mark";
-		$bd [41] ["pat"]                   = "/^(Mark(us)?|Mk)$/i";
+		$bd [41] ["pat"]                   = "/^(Mar[ck](us(evangelium)?)?|M[ck])$/i";
 		$bd [41] ["kapAnz"]                = 16;
 		$bd [41] [1]                       = 45;
 		$bd [41] [2]                       = 28;
@@ -1314,7 +1319,7 @@ class BibleVerseService {
 		$bd [42] ["desc"] ["de"] ["short"] = "Lk";
 		$bd [42] ["desc"] ["en"] ["long"]  = "Luke";
 		$bd [42] ["desc"] ["en"] ["short"] = "Luke";
-		$bd [42] ["pat"]                   = "/^(Luk(e|as)|Lk)$/i";
+		$bd [42] ["pat"]                   = "/^(Luk(e|as(evangelium)?)?|L[ck]|Luc(as)?)$/i";
 		$bd [42] ["kapAnz"]                = 24;
 		$bd [42] [1]                       = 80;
 		$bd [42] [2]                       = 52;
@@ -1345,7 +1350,7 @@ class BibleVerseService {
 		$bd [43] ["desc"] ["de"] ["short"] = "Joh";
 		$bd [43] ["desc"] ["en"] ["long"]  = "John";
 		$bd [43] ["desc"] ["en"] ["short"] = "John";
-		$bd [43] ["pat"]                   = "/^(John|Joh|Johannes)$/i";
+		$bd [43] ["pat"]                   = "/^(John|Jo?h|Johannes(evangelium)?|Jn)$/i";
 		$bd [43] ["kapAnz"]                = 21;
 		$bd [43] [1]                       = 51;
 		$bd [43] [2]                       = 25;
@@ -1373,7 +1378,7 @@ class BibleVerseService {
 		$bd [44] ["desc"] ["de"] ["short"] = "Apg";
 		$bd [44] ["desc"] ["en"] ["long"]  = "Acts";
 		$bd [44] ["desc"] ["en"] ["short"] = "Acts";
-		$bd [44] ["pat"]                   = "/^(Acts|Apostelgeschichte|Apg)$/i";
+		$bd [44] ["pat"]                   = "/^(Acts?|Apostelgeschichte|Apg)$/i";
 		$bd [44] ["kapAnz"]                = 28;
 		$bd [44] [1]                       = 26;
 		$bd [44] [2]                       = 47;
@@ -1408,7 +1413,7 @@ class BibleVerseService {
 		$bd [45] ["desc"] ["de"] ["short"] = "Röm";
 		$bd [45] ["desc"] ["en"] ["long"]  = "Romans";
 		$bd [45] ["desc"] ["en"] ["short"] = "Rom";
-		$bd [45] ["pat"]                   = "/^(Romans|R(ö|oe|o)m(er)?)$/i";
+		$bd [45] ["pat"]                   = "/^(Romans|R(ö|oe|o)m(er(brief)?)?)$/i";
 		$bd [45] ["kapAnz"]                = 16;
 		$bd [45] [1]                       = 32;
 		$bd [45] [2]                       = 29;
@@ -1431,7 +1436,7 @@ class BibleVerseService {
 		$bd [46] ["desc"] ["de"] ["short"] = "1Kor";
 		$bd [46] ["desc"] ["en"] ["long"]  = "1 Corinthians";
 		$bd [46] ["desc"] ["en"] ["short"] = "1Cor";
-		$bd [46] ["pat"]                   = "/^(1[.]?[ ]?(Corinthians|Korint[h]?er|Kor|Cor))$/i";
+		$bd [46] ["pat"]                   = "/^(1[.]?[ ]?(Corinthians|Korint[h]?er(brief)?|Kor|Cor))$/i";
 		$bd [46] ["kapAnz"]                = 16;
 		$bd [46] [1]                       = 31;
 		$bd [46] [2]                       = 16;
@@ -1454,7 +1459,7 @@ class BibleVerseService {
 		$bd [47] ["desc"] ["de"] ["short"] = "2Kor";
 		$bd [47] ["desc"] ["en"] ["long"]  = "2 Corinthians";
 		$bd [47] ["desc"] ["en"] ["short"] = "2Cor";
-		$bd [47] ["pat"]                   = "/^(2[.]?[ ]?(Corinthians|Korint[h]?er|Kor|Cor))$/i";
+		$bd [47] ["pat"]                   = "/^(2[.]?[ ]?(Corinthians|Korint[h]?er(brief)?|Kor|Cor))$/i";
 		$bd [47] ["kapAnz"]                = 13;
 		$bd [47] [1]                       = 24;
 		$bd [47] [2]                       = 17;
@@ -1474,7 +1479,7 @@ class BibleVerseService {
 		$bd [48] ["desc"] ["de"] ["short"] = "Gal";
 		$bd [48] ["desc"] ["en"] ["long"]  = "Galatians";
 		$bd [48] ["desc"] ["en"] ["short"] = "Gal";
-		$bd [48] ["pat"]                   = "/^(Galatians|Gal(ater)?)$/i";
+		$bd [48] ["pat"]                   = "/^(Galatians|Gal(ater(brief)?)?)$/i";
 		$bd [48] ["kapAnz"]                = 6;
 		$bd [48] [1]                       = 24;
 		$bd [48] [2]                       = 21;
@@ -1487,7 +1492,7 @@ class BibleVerseService {
 		$bd [49] ["desc"] ["de"] ["short"] = "Eph";
 		$bd [49] ["desc"] ["en"] ["long"]  = "Ephesians";
 		$bd [49] ["desc"] ["en"] ["short"] = "Eph";
-		$bd [49] ["pat"]                   = "/^(Ephesians|Ephes[s]?er|Eph)$/i";
+		$bd [49] ["pat"]                   = "/^(Ephesians|Ephes[s]?er(brief)?|Eph|Ef)$/i";
 		$bd [49] ["kapAnz"]                = 6;
 		$bd [49] [1]                       = 23;
 		$bd [49] [2]                       = 22;
@@ -1500,7 +1505,7 @@ class BibleVerseService {
 		$bd [50] ["desc"] ["de"] ["short"] = "Phil";
 		$bd [50] ["desc"] ["en"] ["long"]  = "Philippians";
 		$bd [50] ["desc"] ["en"] ["short"] = "Phil";
-		$bd [50] ["pat"]                   = "/^(Philippians|Phil(ipper)?)$/i";
+		$bd [50] ["pat"]                   = "/^(Philippians|Phil(ipper(brief)?)?|Ph)$/i";
 		$bd [50] ["kapAnz"]                = 4;
 		$bd [50] [1]                       = 30;
 		$bd [50] [2]                       = 30;
@@ -1511,7 +1516,7 @@ class BibleVerseService {
 		$bd [51] ["desc"] ["de"] ["short"] = "Kol";
 		$bd [51] ["desc"] ["en"] ["long"]  = "Colossians";
 		$bd [51] ["desc"] ["en"] ["short"] = "Col";
-		$bd [51] ["pat"]                   = "/^(Col(ossians)?|Kol(osser)?)$/i";
+		$bd [51] ["pat"]                   = "/^(Col(ossians)?|Kol(osser(brief)?)?)$/i";
 		$bd [51] ["kapAnz"]                = 4;
 		$bd [51] [1]                       = 29;
 		$bd [51] [2]                       = 23;
@@ -1522,7 +1527,7 @@ class BibleVerseService {
 		$bd [52] ["desc"] ["de"] ["short"] = "1Thess";
 		$bd [52] ["desc"] ["en"] ["long"]  = "1 Thessalonians";
 		$bd [52] ["desc"] ["en"] ["short"] = "1Thess";
-		$bd [52] ["pat"]                   = "/^(1[.]?[ ]?(Thes[s]?|Thessalonicher|Thessalonians))$/i";
+		$bd [52] ["pat"]                   = "/^(1[.]?[ ]?(Th?ess?|Th|Thessalonicher(brief)?|Thessalonians))$/i";
 		$bd [52] ["kapAnz"]                = 5;
 		$bd [52] [1]                       = 10;
 		$bd [52] [2]                       = 20;
@@ -1534,7 +1539,7 @@ class BibleVerseService {
 		$bd [53] ["desc"] ["de"] ["short"] = "2Thess";
 		$bd [53] ["desc"] ["en"] ["long"]  = "2 Thessalonians";
 		$bd [53] ["desc"] ["en"] ["short"] = "2Thess";
-		$bd [53] ["pat"]                   = "/^(2[.]?[ ]?(Thes[s]?|Thessalonicher|Thessalonians))$/i";
+		$bd [53] ["pat"]                   = "/^(2[.]?[ ]?(Th?ess?|Th|Thessalonicher(brief)?|Thessalonians))$/i";
 		$bd [53] ["kapAnz"]                = 3;
 		$bd [53] [1]                       = 12;
 		$bd [53] [2]                       = 17;
@@ -1544,7 +1549,7 @@ class BibleVerseService {
 		$bd [54] ["desc"] ["de"] ["short"] = "1Tim";
 		$bd [54] ["desc"] ["en"] ["long"]  = "1 Timothy";
 		$bd [54] ["desc"] ["en"] ["short"] = "1Tim";
-		$bd [54] ["pat"]                   = "/^(1[.]?[ ]?(Tim(otheus)?|Timothy))$/i";
+		$bd [54] ["pat"]                   = "/^(1[.]?[ ]?(Tim(otheus(brief)?)?|Timothy))$/i";
 		$bd [54] ["kapAnz"]                = 6;
 		$bd [54] [1]                       = 20;
 		$bd [54] [2]                       = 15;
@@ -1557,7 +1562,7 @@ class BibleVerseService {
 		$bd [55] ["desc"] ["de"] ["short"] = "2Tim";
 		$bd [55] ["desc"] ["en"] ["long"]  = "2 Timothy";
 		$bd [55] ["desc"] ["en"] ["short"] = "2Tim";
-		$bd [55] ["pat"]                   = "/^(2[.]?[ ]?(Tim(otheus)?|Timothy))$/i";
+		$bd [55] ["pat"]                   = "/^(2[.]?[ ]?(Tim(otheus(brief)?)?|Timothy))$/i";
 		$bd [55] ["kapAnz"]                = 4;
 		$bd [55] [1]                       = 18;
 		$bd [55] [2]                       = 26;
@@ -1568,7 +1573,7 @@ class BibleVerseService {
 		$bd [56] ["desc"] ["de"] ["short"] = "Tit";
 		$bd [56] ["desc"] ["en"] ["long"]  = "Titus";
 		$bd [56] ["desc"] ["en"] ["short"] = "Titus";
-		$bd [56] ["pat"]                   = "/^Tit(us)?$/i";
+		$bd [56] ["pat"]                   = "/^Tit(us(brief)?)?$/i";
 		$bd [56] ["kapAnz"]                = 3;
 		$bd [56] [1]                       = 16;
 		$bd [56] [2]                       = 15;
@@ -1578,7 +1583,7 @@ class BibleVerseService {
 		$bd [57] ["desc"] ["de"] ["short"] = "Phlm";
 		$bd [57] ["desc"] ["en"] ["long"]  = "Philemon";
 		$bd [57] ["desc"] ["en"] ["short"] = "Phlm";
-		$bd [57] ["pat"]                   = "/^(Philemon|Phlm)$/i";
+		$bd [57] ["pat"]                   = "/^(Filem(on)?|Philemon(brief)?|Phil?e?m|Phl?m)$/i";
 		$bd [57] ["kapAnz"]                = 1;
 		$bd [57] [1]                       = 25;
 
@@ -1586,7 +1591,7 @@ class BibleVerseService {
 		$bd [58] ["desc"] ["de"] ["short"] = "Hebr";
 		$bd [58] ["desc"] ["en"] ["long"]  = "Hebrews";
 		$bd [58] ["desc"] ["en"] ["short"] = "Heb";
-		$bd [58] ["pat"]                   = "/^(Hebrews|Hebr(ä|ae)er|Hebr(ä|ae)?|Heb)$/i";
+		$bd [58] ["pat"]                   = "/^(Hebrews|Hebr(ä|ae)er(brief)?|Hebr(ä|ae)?|Heb)$/i";
 		$bd [58] ["kapAnz"]                = 13;
 		$bd [58] [1]                       = 14;
 		$bd [58] [2]                       = 18;
@@ -1606,7 +1611,7 @@ class BibleVerseService {
 		$bd [59] ["desc"] ["de"] ["short"] = "Jak";
 		$bd [59] ["desc"] ["en"] ["long"]  = "James";
 		$bd [59] ["desc"] ["en"] ["short"] = "Jas";
-		$bd [59] ["pat"]                   = "/^(James|Jak(obus)?|Jas)$/i";
+		$bd [59] ["pat"]                   = "/^(James|Jak(obus(brief)?)?|Jas)$/i";
 		$bd [59] ["kapAnz"]                = 5;
 		$bd [59] [1]                       = 27;
 		$bd [59] [2]                       = 26;
@@ -1618,7 +1623,7 @@ class BibleVerseService {
 		$bd [60] ["desc"] ["de"] ["short"] = "1Petr";
 		$bd [60] ["desc"] ["en"] ["long"]  = "1 Peter";
 		$bd [60] ["desc"] ["en"] ["short"] = "1Pet";
-		$bd [60] ["pat"]                   = "/^(1[.]?[ ]?(Peter|Petr(us)?|Pet))$/i";
+		$bd [60] ["pat"]                   = "/^(1[.]?[ ]?(Peter|Petr(us(brief)?)?|Pet))$/i";
 		$bd [60] ["kapAnz"]                = 5;
 		$bd [60] [1]                       = 25;
 		$bd [60] [2]                       = 25;
@@ -1630,7 +1635,7 @@ class BibleVerseService {
 		$bd [61] ["desc"] ["de"] ["short"] = "2Petr";
 		$bd [61] ["desc"] ["en"] ["long"]  = "2 Peter";
 		$bd [61] ["desc"] ["en"] ["short"] = "2Pet";
-		$bd [61] ["pat"]                   = "/^(2[.]?[ ]?(Peter|Petr(us)?|Pet))$/i";
+		$bd [61] ["pat"]                   = "/^(2[.]?[ ]?(Peter|Petr(us(brief)?)?|Pet))$/i";
 		$bd [61] ["kapAnz"]                = 3;
 		$bd [61] [1]                       = 21;
 		$bd [61] [2]                       = 22;
@@ -1640,7 +1645,7 @@ class BibleVerseService {
 		$bd [62] ["desc"] ["de"] ["short"] = "1Joh";
 		$bd [62] ["desc"] ["en"] ["long"]  = "1 John";
 		$bd [62] ["desc"] ["en"] ["short"] = "1John";
-		$bd [62] ["pat"]                   = "/^(1[.]?[ ]?(John|Joh(annes)?))$/i";
+		$bd [62] ["pat"]                   = "/^(1[.]?[ ]?(John|Joh(annes(brief)?)?|Jn))$/i";
 		$bd [62] ["kapAnz"]                = 5;
 		$bd [62] [1]                       = 10;
 		$bd [62] [2]                       = 29;
@@ -1652,7 +1657,7 @@ class BibleVerseService {
 		$bd [63] ["desc"] ["de"] ["short"] = "2Joh";
 		$bd [63] ["desc"] ["en"] ["long"]  = "2 John";
 		$bd [63] ["desc"] ["en"] ["short"] = "2John";
-		$bd [63] ["pat"]                   = "/^(2[.]?[ ]?(John|Joh(annes)?))$/i";
+		$bd [63] ["pat"]                   = "/^(2[.]?[ ]?(John|Joh(annes(brief)?)?|Jn))$/i";
 		$bd [63] ["kapAnz"]                = 1;
 		$bd [63] [1]                       = 13;
 
@@ -1660,7 +1665,7 @@ class BibleVerseService {
 		$bd [64] ["desc"] ["de"] ["short"] = "3Joh";
 		$bd [64] ["desc"] ["en"] ["long"]  = "3 John";
 		$bd [64] ["desc"] ["en"] ["short"] = "3John";
-		$bd [64] ["pat"]                   = "/^(3[.]?[ ]?(John|Joh(annes)?))$/i";
+		$bd [64] ["pat"]                   = "/^(3[.]?[ ]?(John|Joh(annes(brief)?)?|Jn))$/i";
 		$bd [64] ["kapAnz"]                = 1;
 		$bd [64] [1]                       = 14;
 
@@ -1668,7 +1673,7 @@ class BibleVerseService {
 		$bd [65] ["desc"] ["de"] ["short"] = "Jud";
 		$bd [65] ["desc"] ["en"] ["long"]  = "Jude";
 		$bd [65] ["desc"] ["en"] ["short"] = "Jude";
-		$bd [65] ["pat"]                   = "/^(Jude|Jud(as)?)$/i";
+		$bd [65] ["pat"]                   = "/^(Jude|Jud(as(brief)?)?|Judb|Jd)$/i";
 		$bd [65] ["kapAnz"]                = 1;
 		$bd [65] [1]                       = 25;
 
@@ -1676,7 +1681,7 @@ class BibleVerseService {
 		$bd [66] ["desc"] ["de"] ["short"] = "Offb";
 		$bd [66] ["desc"] ["en"] ["long"]  = "Revelation";
 		$bd [66] ["desc"] ["en"] ["short"] = "Rev";
-		$bd [66] ["pat"]                   = "/^(Revelation|Rev|Of[f]?enb[h]?arung|Off|Of[f]?b)$/i";
+		$bd [66] ["pat"]                   = "/^(Revelation|Rev|Of[f]?enb[h]?arung( des Johannes)?|Off|Of[f]?b|Apo?[ck]|Apokalypse)$/i";
 		$bd [66] ["kapAnz"]                = 22;
 		$bd [66] [1]                       = 20;
 		$bd [66] [2]                       = 29;
@@ -1705,7 +1710,7 @@ class BibleVerseService {
 		$bd [67] ["desc"] ["de"] ["short"] = "Tob";
 		$bd [67] ["desc"] ["en"] ["long"]  = "Tob";
 		$bd [67] ["desc"] ["en"] ["short"] = "Tob";
-		$bd [67] ["pat"]                   = "/^Tob(it)?$/i";
+		$bd [67] ["pat"]                   = "/^Tob(it|ias)?$/i";
 		$bd [67] ["kapAnz"]                = 14;
 		$bd [67] [1]                       = 22;
 		$bd [67] [2]                       = 14;
@@ -1734,7 +1739,7 @@ class BibleVerseService {
 		$bd [68] ["desc"] ["de"] ["short"] = "Jdt";
 		$bd [68] ["desc"] ["en"] ["long"]  = "Jdt";
 		$bd [68] ["desc"] ["en"] ["short"] = "Jdt";
-		$bd [68] ["pat"]                   = "/^(Judith|Jdt)$/i";
+		$bd [68] ["pat"]                   = "/^(Judith?|Jdth?)$/i";
 		$bd [68] ["kapAnz"]                = 16;
 		$bd [68] [1]                       = 16;
 		$bd [68] [2]                       = 28;
@@ -1757,7 +1762,7 @@ class BibleVerseService {
 		$bd [69] ["desc"] ["de"] ["short"] = "1Makk";
 		$bd [69] ["desc"] ["en"] ["long"]  = "1Macc";
 		$bd [69] ["desc"] ["en"] ["short"] = "1Macc";
-		$bd [69] ["pat"]                   = "/^(1[.]?[ ]?(Ma[ck][ck][a]?|Makkab(ä|ae)er))$/i";
+		$bd [69] ["pat"]                   = '/^(1[.]?[ ]?(Ma?[ck][ck]?[a]?|Makkab(ä|ae)er|Maccabees))$/i';
 		$bd [69] ["kapAnz"]                = 16;
 		$bd [69] [1]                       = 64;
 		$bd [69] [2]                       = 70;
@@ -1780,7 +1785,7 @@ class BibleVerseService {
 		$bd [70] ["desc"] ["de"] ["short"] = "2Makk";
 		$bd [70] ["desc"] ["en"] ["long"]  = "2Macc";
 		$bd [70] ["desc"] ["en"] ["short"] = "2Macc";
-		$bd [70] ["pat"]                   = "/^(2[.]?[ ]?(Ma[ck][ck][a]?|Makkab(ä|ae)er))$/i";
+		$bd [70] ["pat"]                   = "/^(2[.]?[ ]?(Ma?[ck][ck]?[a]?|Makkab(ä|ae)er|Maccabees))$/i";
 		$bd [70] ["kapAnz"]                = 15;
 		$bd [70] [1]                       = 36;
 		$bd [70] [2]                       = 32;
@@ -1802,7 +1807,7 @@ class BibleVerseService {
 		$bd [71] ["desc"] ["de"] ["short"] = "3Makk";
 		$bd [71] ["desc"] ["en"] ["long"]  = "3Macc";
 		$bd [71] ["desc"] ["en"] ["short"] = "3Macc";
-		$bd [71] ["pat"]                   = "/^(3[.]?[ ]?(Ma[ck][ck][a]?|Makkab(ä|ae)er))$/i";
+		$bd [71] ["pat"]                   = "/^(3[.]?[ ]?(Ma?[ck][ck]?[a]?|Makkab(ä|ae)er|Maccabees))$/i";
 		$bd [71] ["kapAnz"]                = 7;
 		$bd [71] [1]                       = 29;
 
@@ -1810,7 +1815,7 @@ class BibleVerseService {
 		$bd [72] ["desc"] ["de"] ["short"] = "Weish";
 		$bd [72] ["desc"] ["en"] ["long"]  = "Wis";
 		$bd [72] ["desc"] ["en"] ["short"] = "Wis";
-		$bd [72] ["pat"]                   = "/^Weish(eit)?|Wis?$/i";
+		$bd [72] ["pat"]                   = "/^Weish(eit)?|Wis?|Wisdom$/i";
 		$bd [72] ["kapAnz"]                = 19;
 		$bd [72] [1]                       = 16;
 		$bd [72] [2]                       = 24;
@@ -1894,7 +1899,7 @@ class BibleVerseService {
 		$bd [74] ["desc"] ["de"] ["short"] = "Gebet des Manasse";
 		$bd [74] ["desc"] ["en"] ["long"]  = "PrMan";
 		$bd [74] ["desc"] ["en"] ["short"] = "PrMan";
-		$bd [74] ["pat"]                   = "/^(GebMan|PrManOrMan|Gebet (des )?Manasse|PrMan)$/i";
+		$bd [74] ["pat"]                   = "/^(GebMan|PrManOrMan|Gebet (des )?Manasses?|PrMan|Man(asse)?)$/i";
 		$bd [74] ["kapAnz"]                = 1;
 		$bd [74] [1]                       = 16;
 
@@ -1902,7 +1907,7 @@ class BibleVerseService {
 		$bd [75] ["desc"] ["de"] ["short"] = "Psalmen Salomos";
 		$bd [75] ["desc"] ["en"] ["long"]  = "Psalmen Salomos";
 		$bd [75] ["desc"] ["en"] ["short"] = "Psalmen Salomos";
-		$bd [75] ["pat"]                   = "/^(Psalmen Salomo[s]?|PsSa[l]?)$/i";
+		$bd [75] ["pat"]                   = "/^(Psalmen Salomo[s]?|Ps ?Sa[l]?)$/i";
 		$bd [75] ["kapAnz"]                = 18;
 		$bd [75] [1]                       = 8;
 		$bd [75] [2]                       = 41;
@@ -1940,7 +1945,7 @@ class BibleVerseService {
 		$bd [77] ["desc"] ["de"] ["short"] = "Brief des Jeremia";
 		$bd [77] ["desc"] ["en"] ["long"]  = "EpJer";
 		$bd [77] ["desc"] ["en"] ["short"] = "EpJer";
-		$bd [77] ["pat"]                   = "/^(Brief (des )?Jeremia[s]?|BrJe|BrJer|EpJer)$/i";
+		$bd [77] ["pat"]                   = "/^(Brief (des )?Jeremia[s]?|BrJe|BrJer|EpJer|Letter of Jeremiah)$/i";
 		$bd [77] ["kapAnz"]                = 1;
 		$bd [77] [1]                       = 73;
 	}
@@ -2463,7 +2468,7 @@ class BibleVerseService {
 
 		// Prüfen ob die BookID im Datenblock existiert
 		// Check if BookId exists
-		$id = $bv->getBookId();
+		$id = $bv->getFromBookId();
 
 		if (!isset ($this->bibleData [$id])) {
 			return FALSE;
@@ -2514,7 +2519,7 @@ class BibleVerseService {
 	 * @return string
 	 */
 	public function bibleVerseToString(BibleVerseInterface $bibleVerse, $length = "long", $lang = "de") {
-		if ($bibleVerse !== NULL && isset ($this->bibleData [$bibleVerse->getBookId()]) && $this->isBibleVerseValid($bibleVerse)) {
+		if ($bibleVerse !== NULL && isset ($this->bibleData [$bibleVerse->getFromBookId()]) && $this->isBibleVerseValid($bibleVerse)) {
 			$bv = $bibleVerse;
 
 			switch (strtolower($lang)) {
@@ -2532,11 +2537,11 @@ class BibleVerseService {
 			// Get the fitting name of the book
 			switch ($length) {
 				case "short" :
-					$book = $this->bibleData [$bibleVerse->getBookId()] ["desc"] [$lang] ["short"];
+					$book = $this->bibleData [$bibleVerse->getFromBookId()] ["desc"] [$lang] ["short"];
 					break;
 				case "long" :
 				default :
-					$book = $this->bibleData [$bibleVerse->getBookId()] ["desc"] [$lang] ["long"];
+					$book = $this->bibleData [$bibleVerse->getFromBookId()] ["desc"] [$lang] ["long"];
 					break;
 			}
 
@@ -2580,7 +2585,7 @@ class BibleVerseService {
 	 * @return bool
 	 */
 	public function isBibleVerseAWholeChapter(BibleVerseInterface $bv) {
-		$maxVerseToChapter = $this->getMaxVersOfBookKap($bv->getBookId(), $bv->getToChapter());
+		$maxVerseToChapter = $this->getMaxVersOfBookKap($bv->getFromBookId(), $bv->getToChapter());
 
 		return ($bv->getFromVerse() == 1 && $bv->getToVerse() == $maxVerseToChapter);
 	}
