@@ -4,7 +4,7 @@ namespace StevenBuehner\BibleVerseBundle\Tests\Service;
 
 use StevenBuehner\BibleVerseBundle\Service\BibleVerseService;
 
-class BasisBibelAcronymsTest extends \PHPUnit_Framework_TestCase {
+class AcronymsTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @var BibleVerseService
@@ -1130,12 +1130,12 @@ class BasisBibelAcronymsTest extends \PHPUnit_Framework_TestCase {
 
 		$bd = $this->bibleVerseService->getBibleData();
 
-		foreach ($acronyms as $word => $basisBibelBookId) {
+		foreach ($acronyms as $word => $acronymBookkId) {
 			$recognized = FALSE;
 			foreach ($bd as $bookId => $bibleBookData) {
 
 				$matched     = preg_match($bibleBookData['pat'], $word);
-				$assertMatch = $this->getMappedBookId($basisBibelBookId) == $bookId;
+				$assertMatch = $this->getMappedBookId($acronymBookkId) == $bookId;
 
 				if ($assertMatch === TRUE) {
 					$recognized = TRUE;
@@ -1145,16 +1145,16 @@ class BasisBibelAcronymsTest extends \PHPUnit_Framework_TestCase {
 				}
 
 				$this->assertEquals($matched, $assertMatch,
-									"Expected '{$word}' (BB: {$basisBibelBookId}) to be {$not}matched by {$bibleBookData['pat']} (BVS: {$bookId})");
+									"Expected '{$word}' (BB: {$acronymBookkId}) to be {$not}matched by {$bibleBookData['pat']} (BVS: {$bookId})");
 
 			}
 
-			$this->assertTrue($recognized, "Expected '{$word}' (BB: {$basisBibelBookId}) to be matched by anything");
+			$this->assertTrue($recognized, "Expected '{$word}' (BB: {$acronymBookkId}) to be matched by anything");
 		}
 	}
 
-	protected function getMappedBookId($basisBibelBookId) {
-		switch ($basisBibelBookId) {
+	protected function getMappedBookId($acronymBookId) {
+		switch ($acronymBookId) {
 			case 40:
 				return 68;
 				break;
@@ -1201,7 +1201,7 @@ class BasisBibelAcronymsTest extends \PHPUnit_Framework_TestCase {
 			case 74:
 			case 75:
 			case 76:
-				return $basisBibelBookId - 10;
+				return $acronymBookId - 10;
 			case 83:
 				return 77;
 			case 87:
@@ -1210,7 +1210,7 @@ class BasisBibelAcronymsTest extends \PHPUnit_Framework_TestCase {
 				return 75;
 
 			default:
-				return $basisBibelBookId;
+				return $acronymBookId;
 		}
 	}
 
