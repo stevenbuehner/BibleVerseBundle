@@ -11,6 +11,8 @@
 namespace StevenBuehner\BibleVerseBundle\Service;
 
 use StevenBuehner\BibleVerseBundle\Entity\BibleVerse;
+use StevenBuehner\BibleVerseBundle\Exceptions\InvalidBibleVerseObjectException;
+use StevenBuehner\BibleVerseBundle\Exceptions\InvalidBookIdException;
 use StevenBuehner\BibleVerseBundle\Interfaces\BibleVerseInterface;
 
 /**
@@ -1951,9 +1953,134 @@ class BibleVerseService {
 	}
 
 	/**
+	 * Helper function to compare two BibleVerseInterface objects with usort
+	 * @param BibleVerseInterface $v1
+	 * @param BibleVerseInterface $v2
+	 * @return int
+	 */
+	protected static function usortBibleverses(BibleVerseInterface $v1, BibleVerseInterface $v2) {
+		$f1 = static::combine($v1->getFromBookId(), $v1->getFromChapter(), $v1->getFromVerse());
+		$f2 = static::combine($v2->getFromBookId(), $v2->getFromChapter(), $v2->getFromVerse());
+
+
+		// Use "to" attribute, if both verses have the same start
+		if ($f1 == $f2) {
+			$t1 = static::combine($v1->getToBookId(), $v1->getToChapter(), $v1->getToVerse());
+			$t2 = static::combine($v2->getToBookId(), $v2->getToChapter(), $v2->getToVerse());
+
+			return $t1 - $t2;
+		}
+
+		return $f1 - $f2;
+	}
+
+	/**
+	 * Combine bookId, chapter and verse to one single Number
+	 *
+	 * @param int $bookId
+	 * @param int $chapter
+	 * @param int $verse
+	 * @return int
+	 */
+	protected static function combine($bookId, $chapter, $verse) {
+		return (int) sprintf('%03d%03d%03d', $bookId, $chapter, $verse);
+	}
+
+	/**
+	 * Carefull !! The inserted Bibleverse-Objects will be used directly and merged.
+	 * A reduced subset of merged bibleverses will be returned
+	 *
+	 * @param BibleVerseInterface[] $bibleverses
+	 * @throws InvalidBibleVerseObjectException
+	 * @return BibleVerseInterface[]
+	 */
+	public function mergeBibleverses($bibleverses) {
+		$resultBibleverses = array();
+
+		if (count($bibleverses) <= 0) {
+			// Nothring to do
+			return $bibleverses;
+		}
+
+		// Make shure all verses are of type BibleVerseInterface
+		foreach ($bibleverses as $vers) {
+			if (!$vers instanceof BibleVerseInterface) {
+				throw new InvalidBibleVerseObjectException();
+			}
+		}
+
+		// Sorty bibleverses by "from" attribute
+		usort($bibleverses, array('StevenBuehner\BibleVerseBundle\Service\BibleVerseService', 'usortBibleverses'));
+
+		// merge bibleverses if possible
+		// Start loop with offset of one
+		$former              = $bibleverses[0];
+		$resultBibleverses[] = $former;
+
+		for ($i = 1; $i < count($bibleverses); ++$i) {
+			$current     = $bibleverses[$i];
+			$currentFrom = static::combine($current->getFromBookId(), $current->getFromChapter(),
+										   $current->getFromVerse());
+			$formerTo    = static::combine($former->getToBookId(), $former->getToChapter(), $former->getToVerse());
+
+
+			// Three cases to check (because the bibleverses are sorted!)
+			// 1) $former TO is bigger or equals to $current FROM
+			// 2) $former TO value is Differs from $current TO by one
+			// 3) $former TO value is Differs from $current TO by one (check chapter start and endings)
+
+			if ( /* 1) + 2) */
+				($currentFrom - 1 <= $formerTo) ||
+				/* 3) */
+				($former->getToBookId() == $current->getFromBookId() &&
+					$former->getToChapter() == $current->getFromChapter() - 1 &&
+					$current->getFromVerse() == 1 &&
+					$former->getToVerse() == $this->getMaxVersOfBookKap($former->getToBookId(),
+																		$former->getToChapter()))
+			) {
+				// do Merge
+				$former->setToBookId($current->getFromBookId());
+
+				// Set the taller Number (i.e. when the $current verse is a smaller part of the $formerVerse
+				$currentTo = static::combine($current->getToBookId(), $current->getToChapter(), $current->getToVerse());
+				if ($currentTo > $formerTo) {
+					$former->setToChapter($current->getToChapter());
+					$former->setToVerse($current->getToVerse());
+				} else {
+					// $former->setToChapter($former->getToChapter());
+					// $former->setToVerse($former->getToVerse());
+				}
+
+			} else {
+				$former              = $current;
+				$resultBibleverses[] = $current;
+			}
+		}
+
+		return $resultBibleverses;
+	}
+
+	/**
+	 * Return the number of verses a chapter of a $bookID has or zero, if the bibleBookID or the chapter in that book
+	 * don't exist
+	 *
+	 * @param int $bookID
+	 * @param int $kap
+	 * @return number
+	 */
+	public function getMaxVersOfBookKap($bookID, $kap) {
+		if (isset ($this->bibleData [$bookID]) && isset ($this->bibleData [$bookID] [$kap])) {
+			return ( int ) $this->bibleData [$bookID] [$kap];
+		} else {
+			return 0;
+		}
+	}
+
+	/**
 	 * Finds bibleverses in the given string and returns an ARRAY of BIBLEVERSEs
 	 *
 	 * @param string $bibleString
+	 * @throws InvalidBookIdException
 	 * @return BibleVerseInterface[]
 	 */
 	public function stringToBibleVerse($bibleString) {
@@ -2311,8 +2438,6 @@ class BibleVerseService {
 		$this->startTime = microtime(TRUE);
 	}
 
-	// TODO: Write Function to combine BibleVerses that intersect each other
-
 	/**
 	 * Generate the FirstSearchString out of the single Books to identify the book of a bible
 	 *
@@ -2395,26 +2520,11 @@ class BibleVerseService {
 	}
 
 	/**
-	 * Return the number of verses a chapter of a $bookID has or zero, if the bibleBookID or the chapter in that book
-	 * don't exist
-	 *
-	 * @param int $bookID
-	 * @param int $kap
-	 * @return number
-	 */
-	public function getMaxVersOfBookKap($bookID, $kap) {
-		if (isset ($this->bibleData [$bookID]) && isset ($this->bibleData [$bookID] [$kap])) {
-			return ( int ) $this->bibleData [$bookID] [$kap];
-		} else {
-			return 0;
-		}
-	}
-
-	/**
 	 * Copy a existant bibleverse
 	 *
 	 * @param BibleVerse $bv
 	 * @return BibleVerse
+	 * @throws \StevenBuehner\BibleVerseBundle\Exceptions\InvalidBookIdException
 	 */
 	protected function copyBibleVerse(BibleVerse $bv) {
 		$c = new BibleVerse();
@@ -2426,8 +2536,6 @@ class BibleVerseService {
 
 		return $c;
 	}
-
-	// Init Funktionen
 
 	/**
 	 * Return the number of chapters a bibleBookID has or zero, if the bibleBookID doesn't exist
@@ -2442,6 +2550,8 @@ class BibleVerseService {
 			return 0;
 		}
 	}
+
+	// Init Funktionen
 
 	protected function getChapterVerseSeperatorsByLanguage($lang) {
 		switch ($lang) {
