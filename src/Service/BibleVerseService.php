@@ -12,6 +12,7 @@ namespace StevenBuehner\BibleVerseBundle\Service;
 
 use StevenBuehner\BibleVerseBundle\Entity\BibleVerse;
 use StevenBuehner\BibleVerseBundle\Exceptions\InvalidBibleVerseObjectException;
+use StevenBuehner\BibleVerseBundle\Exceptions\InvalidBookIdException;
 use StevenBuehner\BibleVerseBundle\Interfaces\BibleVerseInterface;
 
 /**
@@ -1951,6 +1952,12 @@ class BibleVerseService {
 		$bd [77] [1]                       = 73;
 	}
 
+	/**
+	 * Helper function to compare two BibleVerseInterface objects with usort
+	 * @param BibleVerseInterface $v1
+	 * @param BibleVerseInterface $v2
+	 * @return int
+	 */
 	protected static function usortBibleverses(BibleVerseInterface $v1, BibleVerseInterface $v2) {
 		$f1 = static::combine($v1->getFromBookId(), $v1->getFromChapter(), $v1->getFromVerse());
 		$f2 = static::combine($v2->getFromBookId(), $v2->getFromChapter(), $v2->getFromVerse());
@@ -1985,6 +1992,7 @@ class BibleVerseService {
 	 *
 	 * @param BibleVerseInterface[] $bibleverses
 	 * @throws InvalidBibleVerseObjectException
+	 * @return BibleVerseInterface[]
 	 */
 	public function mergeBibleverses($bibleverses) {
 		$resultBibleverses = array();
@@ -2072,6 +2080,7 @@ class BibleVerseService {
 	 * Finds bibleverses in the given string and returns an ARRAY of BIBLEVERSEs
 	 *
 	 * @param string $bibleString
+	 * @throws InvalidBookIdException
 	 * @return BibleVerseInterface[]
 	 */
 	public function stringToBibleVerse($bibleString) {
@@ -2515,6 +2524,7 @@ class BibleVerseService {
 	 *
 	 * @param BibleVerse $bv
 	 * @return BibleVerse
+	 * @throws \StevenBuehner\BibleVerseBundle\Exceptions\InvalidBookIdException
 	 */
 	protected function copyBibleVerse(BibleVerse $bv) {
 		$c = new BibleVerse();
