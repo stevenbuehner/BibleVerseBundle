@@ -1975,14 +1975,14 @@ class BibleVerseService {
 
 		// Sorty bibleverses by "from" attribute
 		usort($bibleverses, function (BibleVerseInterface $v1, BibleVerseInterface $v2) {
-			$f1 = $this->combine($v1->getFromBookId(), $v1->getFromChapter(), $v1->getFromVerse());
-			$f2 = $this->combine($v2->getFromBookId(), $v2->getFromChapter(), $v2->getFromVerse());
+			$f1 = static::combine($v1->getFromBookId(), $v1->getFromChapter(), $v1->getFromVerse());
+			$f2 = static::combine($v2->getFromBookId(), $v2->getFromChapter(), $v2->getFromVerse());
 
 
 			// Use "to" attribute, if both verses have the same start
 			if ($f1 == $f2) {
-				$t1 = $this->combine($v1->getToBookId(), $v1->getToChapter(), $v1->getToVerse());
-				$t2 = $this->combine($v2->getToBookId(), $v2->getToChapter(), $v2->getToVerse());
+				$t1 = static::combine($v1->getToBookId(), $v1->getToChapter(), $v1->getToVerse());
+				$t2 = static::combine($v2->getToBookId(), $v2->getToChapter(), $v2->getToVerse());
 
 				return $t1 - $t2;
 			}
@@ -1997,9 +1997,9 @@ class BibleVerseService {
 
 		for ($i = 1; $i < count($bibleverses); ++$i) {
 			$current     = $bibleverses[$i];
-			$currentFrom = $this->combine($current->getFromBookId(), $current->getFromChapter(),
-										  $current->getFromVerse());
-			$formerTo    = $this->combine($former->getToBookId(), $former->getToChapter(), $former->getToVerse());
+			$currentFrom = static::combine($current->getFromBookId(), $current->getFromChapter(),
+										   $current->getFromVerse());
+			$formerTo    = static::combine($former->getToBookId(), $former->getToChapter(), $former->getToVerse());
 
 
 			// Three cases to check (because the bibleverses are sorted!)
@@ -2020,7 +2020,7 @@ class BibleVerseService {
 				$former->setToBookId($current->getFromBookId());
 
 				// Set the taller Number (i.e. when the $current verse is a smaller part of the $formerVerse
-				$currentTo = $this->combine($current->getToBookId(), $current->getToChapter(), $current->getToVerse());
+				$currentTo = static::combine($current->getToBookId(), $current->getToChapter(), $current->getToVerse());
 				if ($currentTo > $formerTo) {
 					$former->setToChapter($current->getToChapter());
 					$former->setToVerse($current->getToVerse());
@@ -2046,7 +2046,7 @@ class BibleVerseService {
 	 * @param int $verse
 	 * @return int
 	 */
-	protected function combine($bookId, $chapter, $verse) {
+	protected static function combine($bookId, $chapter, $verse) {
 		return (int) sprintf('%03d%03d%03d', $bookId, $chapter, $verse);
 	}
 
@@ -2426,8 +2426,6 @@ class BibleVerseService {
 	private function statStart() {
 		$this->startTime = microtime(TRUE);
 	}
-
-	// TODO: Write Function to combine BibleVerses that intersect each other
 
 	/**
 	 * Generate the FirstSearchString out of the single Books to identify the book of a bible
