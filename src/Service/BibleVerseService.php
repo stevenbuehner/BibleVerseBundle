@@ -1951,6 +1951,34 @@ class BibleVerseService {
 		$bd [77] [1]                       = 73;
 	}
 
+	protected static function usortBibleverses(BibleVerseInterface $v1, BibleVerseInterface $v2) {
+		$f1 = static::combine($v1->getFromBookId(), $v1->getFromChapter(), $v1->getFromVerse());
+		$f2 = static::combine($v2->getFromBookId(), $v2->getFromChapter(), $v2->getFromVerse());
+
+
+		// Use "to" attribute, if both verses have the same start
+		if ($f1 == $f2) {
+			$t1 = static::combine($v1->getToBookId(), $v1->getToChapter(), $v1->getToVerse());
+			$t2 = static::combine($v2->getToBookId(), $v2->getToChapter(), $v2->getToVerse());
+
+			return $t1 - $t2;
+		}
+
+		return $f1 - $f2;
+	}
+
+	/**
+	 * Combine bookId, chapter and verse to one single Number
+	 *
+	 * @param int $bookId
+	 * @param int $chapter
+	 * @param int $verse
+	 * @return int
+	 */
+	protected static function combine($bookId, $chapter, $verse) {
+		return (int) sprintf('%03d%03d%03d', $bookId, $chapter, $verse);
+	}
+
 	/**
 	 * Carefull !! The inserted Bibleverse-Objects will be used directly and merged.
 	 * A reduced subset of merged bibleverses will be returned
@@ -1974,21 +2002,7 @@ class BibleVerseService {
 		}
 
 		// Sorty bibleverses by "from" attribute
-		usort($bibleverses, function (BibleVerseInterface $v1, BibleVerseInterface $v2) {
-			$f1 = static::combine($v1->getFromBookId(), $v1->getFromChapter(), $v1->getFromVerse());
-			$f2 = static::combine($v2->getFromBookId(), $v2->getFromChapter(), $v2->getFromVerse());
-
-
-			// Use "to" attribute, if both verses have the same start
-			if ($f1 == $f2) {
-				$t1 = static::combine($v1->getToBookId(), $v1->getToChapter(), $v1->getToVerse());
-				$t2 = static::combine($v2->getToBookId(), $v2->getToChapter(), $v2->getToVerse());
-
-				return $t1 - $t2;
-			}
-
-			return $f1 - $f2;
-		});
+		usort($bibleverses, array(self::class, 'usortBibleverses'));
 
 		// merge bibleverses if possible
 		// Start loop with offset of one
@@ -2036,18 +2050,6 @@ class BibleVerseService {
 		}
 
 		return $resultBibleverses;
-	}
-
-	/**
-	 * Combine bookId, chapter and verse to one single Number
-	 *
-	 * @param int $bookId
-	 * @param int $chapter
-	 * @param int $verse
-	 * @return int
-	 */
-	protected static function combine($bookId, $chapter, $verse) {
-		return (int) sprintf('%03d%03d%03d', $bookId, $chapter, $verse);
 	}
 
 	/**
