@@ -12,6 +12,7 @@ namespace StevenBuehner\BibleVerseBundle\Service;
 
 use StevenBuehner\BibleVerseBundle\Entity\BibleVerse;
 use StevenBuehner\BibleVerseBundle\Exceptions\InvalidBibleVerseObjectException;
+use StevenBuehner\BibleVerseBundle\Exceptions\InvalidBibleVerseRangeException;
 use StevenBuehner\BibleVerseBundle\Exceptions\InvalidBookIdException;
 use StevenBuehner\BibleVerseBundle\Interfaces\BibleVerseInterface;
 
@@ -2419,7 +2420,7 @@ class BibleVerseService {
 				if (!$this->isBibleVerseValid($vers)) {
 					try {
 						$this->lastInvalidBibleverses [] = "Die Bibelstelle '" . $this->bibleVerseToString($vers) . "' gibt es in der Elberfelder nicht.";
-					} catch (\Exception $e) {
+					} catch (InvalidBibleVerseRangeException $e) {
 						// If Exception is thrown, because book doesn't exist
 						$this->lastInvalidBibleverses [] = $e->getMessage();
 					}
@@ -2625,7 +2626,7 @@ class BibleVerseService {
 	 * @param BibleVerseInterface $bibleVerse
 	 * @param string              $length ("short"|"long")
 	 * @param string              $lang ("de"|"en")
-	 * @throws \Exception
+	 * @throws InvalidBibleVerseRangeException
 	 * @return string
 	 */
 	public function bibleVerseToString(BibleVerseInterface $bibleVerse, $length = "long", $lang = "de") {
@@ -2685,7 +2686,7 @@ class BibleVerseService {
 
 			return $returnVal;
 		}
-		throw new \Exception ("The given Biblevers is not valid: " . $bibleVerse->__toString());
+		throw new InvalidBibleVerseRangeException ("The given Biblevers is not valid: " . $bibleVerse->__toString());
 	}
 
 	/**
