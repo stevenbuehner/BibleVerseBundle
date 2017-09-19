@@ -1959,7 +1959,7 @@ class BibleVerseService {
 	 * @param BibleVerseInterface $v2
 	 * @return int
 	 */
-	protected static function usortBibleverses(BibleVerseInterface $v1, BibleVerseInterface $v2) {
+	public static function usortBibleverses(BibleVerseInterface $v1, BibleVerseInterface $v2) {
 		$f1 = static::combine($v1->getFromBookId(), $v1->getFromChapter(), $v1->getFromVerse());
 		$f2 = static::combine($v2->getFromBookId(), $v2->getFromChapter(), $v2->getFromVerse());
 
