@@ -753,6 +753,21 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertCount(3, $bv);
 	}
 
+	public function testRecognizeUmlauteFromPDF(){
+
+		$text = "Römer 15,1-2";
+		$bv = $this->bibleVerseService->stringToBibleVerse($text);
+		$this->assertCount(1, $bv);
+
+		$text = "Matthäus 6,33;";
+		$bv = $this->bibleVerseService->stringToBibleVerse($text);
+		$this->assertCount(1, $bv);
+
+		$text = "Sprüche 21,23";
+		$bv = $this->bibleVerseService->stringToBibleVerse($text);
+		$this->assertCount(1, $bv);
+
+	}
 
 	public function featureMissingYet() {
 		$bv = $this->bibleVerseService->stringToBibleVerse('1.Mose 12; 14,4');
