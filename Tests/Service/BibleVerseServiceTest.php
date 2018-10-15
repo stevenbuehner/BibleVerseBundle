@@ -745,6 +745,15 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 
 	}
 
+	public function testMixingText() {
+		$text = "apolutrosis: Röm 3,24; 1Kor 1,30; Kol 1,14; ";
+
+		$bv = $this->bibleVerseService->stringToBibleVerse($text);
+
+		$this->assertCount(3, $bv);
+	}
+
+
 	public function featureMissingYet() {
 		$bv = $this->bibleVerseService->stringToBibleVerse('1.Mose 12; 14,4');
 		$this->assertCount(2, $bv);
