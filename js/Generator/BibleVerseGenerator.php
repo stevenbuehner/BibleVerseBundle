@@ -61,7 +61,7 @@ class BibleVerseGenerator {
 				$bibleBooks[] = $book;
 			}
 
-			file_put_contents(__DIR__ . '/../out/' . $lang . '_BibleVerseService.js',
+			file_put_contents(__DIR__ . "/../out/BibleVerseService_{$lang}.js",
 							  $template->render(['data'                  => $bibleBooks,
 												 'biblePattern'          => $this->bibleVerseService->getFirstSearchString(),
 												 'chapterVerseSeparator' => $chapterVerseSeparator]
