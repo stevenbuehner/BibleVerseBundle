@@ -123,8 +123,7 @@ export const BibleVerseService = {
                 } else {
                     // Todo: Different Books => Not supported yet!
                 }
-
-
+                
             }
 
         }
