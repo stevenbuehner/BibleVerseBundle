@@ -88,6 +88,8 @@ export const BibleVerseService = {
     biblePattern: '\u007E\u0028\u003F\u003C\u0021\u005Ba\u002DzA\u002DZ\u005D\u0029\u0028\u00281\u005B.\u005D\u003F\u005B\u0020\u005D\u003F\u0028mos\u003F\u007Cmose\u0029\u007CGenesis\u007CGe\u003Fn\u0029\u007C\u00282\u005B.\u005D\u003F\u005B\u0020\u005D\u003F\u0028mos\u003F\u007Cmose\u0029\u007CExod\u0028us\u0029\u003F\u007CEx\u0029\u007C\u00283\u005B.\u005D\u003F\u005B\u0020\u005D\u003F\u0028mos\u003F\u007Cmose\u0029\u007CLeviti\u005Bck\u005Dus\u007CLe\u003Fv\u0029\u007C\u00284\u005B.\u005D\u003F\u005B\u0020\u005D\u003F\u0028mos\u003F\u007Cmose\u0029\u007CNumeri\u007CNu\u005Bm\u005D\u003F\u007CNumbers\u0029\u007C\u00285\u005B.\u005D\u003F\u005B\u0020\u005D\u003F\u0028mos\u003F\u007Cmose\u0029\u007CDeuteronom\u0028y\u007Cium\u0029\u007CDeut\u007CDt\u005Bn\u005D\u003F\u0029\u007C\u0028Jo\u005Bsz\u005Dh\u003F\u007CJo\u005Bsz\u005Dh\u003Fu\u005Bae\u005D\u003F\u0029\u007C\u0028Ri\u0028chter\u0029\u003F\u007CJudges\u007CJudg\u007Cjdc\u007Cjudicum\u0029\u007C\u0028\u0028Buch\u0020\u0029\u003FRuth\u003F\u007Crt\u0029\u007C\u00281\u005B.\u005D\u003F\u0020\u003F\u0028Sam\u003F\u007CSamuel\u007CSm\u0029\u0029\u007C\u00282\u005B.\u005D\u003F\u0020\u003F\u0028Sam\u003F\u007CSamuel\u007CSm\u0029\u0029\u007C\u00281\u005B.\u005D\u003F\u005B\u0020\u005D\u003F\u0028K\u0028\u00F6\u007Coe\u007Co\u0308\u0029\u0028n\u007Cnige\u0029\u003F\u007CKoningen\u007Creg\u007CKing\u005Bs\u005D\u003F\u007CKgs\u0029\u0029\u007C\u00282\u005B.\u005D\u003F\u005B\u0020\u005D\u003F\u0028K\u0028\u00F6\u007Coe\u007Co\u0308\u0029\u0028n\u007Cnige\u0029\u003F\u007CKoningen\u007Creg\u007CKing\u005Bs\u005D\u003F\u007CKgs\u0029\u0029\u007C\u00281\u005B.\u005D\u003F\u005B\u0020\u005D\u003F\u0028Chr\u007CChro\u007CChron\u007CChronik\u005Be\u005D\u003F\u007CChronicles\u0029\u005B.\u005D\u003F\u0029\u007C\u00282\u005B.\u005D\u003F\u005B\u0020\u005D\u003F\u0028Chr\u007CChro\u007CChron\u007CChronik\u005Be\u005D\u003F\u007CChronicles\u0029\u005B.\u005D\u003F\u0029\u007C\u0028E\u005Bsz\u005Dra\u007CE\u005Bsz\u005D\u005B\u005Et\u005D\u007CE\u005Bsz\u005Dr\u0029\u007C\u0028Neh\u007CNehm\u007CNehemiah\u003F\u0029\u007C\u0028Ester\u007CEsther\u007CEst\u007CEsth\u0029\u007C\u0028Ijob\u007CHiob\u007CHi\u007CJob\u0029\u007C\u0028Psalms\u003F\u007CPsalmen\u007CPs\u007CPsal\u007CPsalter\u0029\u007C\u0028Prov\u0028erbs\u0029\u003F\u007CPrv\u007CSpr\u0028ichw\u0028\u00F6\u007Coe\u007Co\u0308\u0029rter\u0029\u003F\u007CSpri\u007CSpr\u0028ue\u007C\u00FC\u007Cu\u0308\u0029che\u0029\u007C\u0028\u0028Predi\u005Bgk\u005Der\u007CPred\u007CKoh\u0028elet\u0029\u003F\u007CEccl\u0028esiastes\u0029\u003F\u0029\u0028\u0020Salomo\u0029\u003F\u0029\u007C\u0028Hohes\u003Flied\u007CHh\u003Fld\u007CHohesl\u007CHohes\u0020Lied\u007CSong\u005Bs\u005D\u003F\u0020of\u0020Salomo\u005Bn\u005D\u003F\u007CSong\u0020of\u0020Songs\u007CSong\u0029\u007C\u0028Jesaja\u007CJes\u007CJesa\u007CIsaiah\u007CIsa\u003F\u0029\u007C\u0028Jeremia\u005Bh\u005D\u003F\u007CJe\u003Fr\u007CJere\u007CJerem\u0029\u007C\u0028Klagelieder\u007CKla\u003Fa\u003Fgl\u007CKlage\u007CKla\u007CLam\u0028entations\u0029\u003F\u0029\u007C\u0028Ezechiel\u007CEzekiel\u007CEze\u0028k\u007Cch\u0029\u007CEz\u007CHes\u007CHesekiel\u0029\u007C\u0028Daniel\u007CDa\u003Fn\u0029\u007C\u0028Hosea\u007CHos\u0029\u007C\u0028Joel\u007CJo\u0029\u007C\u0028Amos\u007CAm\u0029\u007C\u0028Obadiah\u007CObadja\u007CObd\u007CObad\u007CObj\u003F\u0029\u007C\u0028Jonah\u003F\u007CJon\u0029\u007C\u0028Micah\u007CMi\u0028cha\u0029\u003F\u007CMic\u007CMch\u0029\u007C\u0028Nah\u0028um\u0029\u003F\u0029\u007C\u0028Habak\u005Bk\u005D\u003Fuk\u007CHab\u0029\u007C\u0028\u0028\u005BZS\u005De\u0028ph\u007Cf\u0029\u0028\u0028an\u0029\u0028\u005Bij\u005D\u0028ah\u003F\u0029\u003F\u0029\u003F\u0029\u003F\u0029\u007CZph\u0029\u007C\u0028Hag\u0028gai\u0029\u003F\u007CHgg\u0029\u007C\u0028Zech\u0028ariah\u0029\u003F\u007C\u005BSZ\u005Dach\u0028ar\u005Bij\u005Da\u0029\u003F\u007CZch\u0029\u007C\u0028Mal\u005Be\u005D\u003Fachi\u007CMal\u007CMl\u0029\u007C\u0028Matthew\u007CMatt\u003Fh\u003F\u0028\u00E4\u007Cae\u007Ce\u007Ca\u0308\u0029us\u0028evangelium\u0029\u003F\u007CMt\u007CMatt\u003F\u0029\u007C\u0028Mar\u005Bck\u005D\u0028us\u0028evangelium\u0029\u003F\u0029\u003F\u007CM\u005Bck\u005D\u0029\u007C\u0028Luk\u0028e\u007Cas\u0028evangelium\u0029\u003F\u0029\u003F\u007CL\u005Bck\u005D\u007CLuc\u0028as\u0029\u003F\u0029\u007C\u0028John\u007CJo\u003Fh\u007CJohannes\u0028evangelium\u0029\u003F\u007CJn\u0029\u007C\u0028Acts\u003F\u007CApostelgeschichte\u007CApg\u0029\u007C\u0028Romans\u007CR\u0028\u00F6\u007Coe\u007Co\u007Co\u0308\u0029m\u0028er\u0028brief\u0029\u003F\u0029\u003F\u0029\u007C\u00281\u005B.\u005D\u003F\u005B\u0020\u005D\u003F\u0028Corinthians\u007CKorint\u005Bh\u005D\u003Fer\u0028brief\u0029\u003F\u007CKor\u007CCor\u0029\u0029\u007C\u00282\u005B.\u005D\u003F\u005B\u0020\u005D\u003F\u0028Corinthians\u007CKorint\u005Bh\u005D\u003Fer\u0028brief\u0029\u003F\u007CKor\u007CCor\u0029\u0029\u007C\u0028Galatians\u007CGal\u0028ater\u0028brief\u0029\u003F\u0029\u003F\u0029\u007C\u0028Ephesians\u007CEphes\u005Bs\u005D\u003Fer\u0028brief\u0029\u003F\u007CEph\u007CEf\u0029\u007C\u0028Philippians\u007CPhil\u0028ipper\u0028brief\u0029\u003F\u0029\u003F\u007CPh\u0029\u007C\u0028Col\u0028ossians\u0029\u003F\u007CKol\u0028osser\u0028brief\u0029\u003F\u0029\u003F\u0029\u007C\u00281\u005B.\u005D\u003F\u005B\u0020\u005D\u003F\u0028Th\u003Fess\u003F\u007CTh\u007CThessalonicher\u0028brief\u0029\u003F\u007CThessalonians\u0029\u0029\u007C\u00282\u005B.\u005D\u003F\u005B\u0020\u005D\u003F\u0028Th\u003Fess\u003F\u007CTh\u007CThessalonicher\u0028brief\u0029\u003F\u007CThessalonians\u0029\u0029\u007C\u00281\u005B.\u005D\u003F\u005B\u0020\u005D\u003F\u0028Tim\u0028otheus\u0028brief\u0029\u003F\u0029\u003F\u007CTimothy\u0029\u0029\u007C\u00282\u005B.\u005D\u003F\u005B\u0020\u005D\u003F\u0028Tim\u0028otheus\u0028brief\u0029\u003F\u0029\u003F\u007CTimothy\u0029\u0029\u007C\u0028Tit\u0028us\u0028brief\u0029\u003F\u0029\u003F\u0029\u007C\u0028Filem\u0028on\u0029\u003F\u007CPhilemon\u0028brief\u0029\u003F\u007CPhil\u003Fe\u003Fm\u007CPhl\u003Fm\u0029\u007C\u0028Hebrews\u007CHebr\u0028\u00E4\u007Cae\u007Ca\u0308\u0029er\u0028brief\u0029\u003F\u007CHebr\u0028\u00E4\u007Cae\u007Ca\u0308\u0029\u003F\u007CHeb\u0029\u007C\u0028James\u007CJak\u0028obus\u0028brief\u0029\u003F\u0029\u003F\u007CJas\u0029\u007C\u00281\u005B.\u005D\u003F\u005B\u0020\u005D\u003F\u0028Peter\u007CPetr\u0028us\u0028brief\u0029\u003F\u0029\u003F\u007CPet\u0029\u0029\u007C\u00282\u005B.\u005D\u003F\u005B\u0020\u005D\u003F\u0028Peter\u007CPetr\u0028us\u0028brief\u0029\u003F\u0029\u003F\u007CPet\u0029\u0029\u007C\u00281\u005B.\u005D\u003F\u005B\u0020\u005D\u003F\u0028John\u007CJoh\u0028annes\u0028brief\u0029\u003F\u0029\u003F\u007CJn\u0029\u0029\u007C\u00282\u005B.\u005D\u003F\u005B\u0020\u005D\u003F\u0028John\u007CJoh\u0028annes\u0028brief\u0029\u003F\u0029\u003F\u007CJn\u0029\u0029\u007C\u00283\u005B.\u005D\u003F\u005B\u0020\u005D\u003F\u0028John\u007CJoh\u0028annes\u0028brief\u0029\u003F\u0029\u003F\u007CJn\u0029\u0029\u007C\u0028Jude\u007CJud\u0028as\u0028brief\u0029\u003F\u0029\u003F\u007CJudb\u007CJd\u0029\u007C\u0028Revelation\u007CRev\u007COf\u005Bf\u005D\u003Fenb\u005Bh\u005D\u003Farung\u0028\u0020des\u0020Johannes\u0029\u003F\u007COff\u007COf\u005Bf\u005D\u003Fb\u007CApo\u003F\u005Bck\u005D\u007CApokalypse\u0029\u007C\u0028Tob\u0028it\u007Cias\u0029\u003F\u0029\u007C\u0028Judith\u003F\u007CJdth\u003F\u0029\u007C\u00281\u005B.\u005D\u003F\u005B\u0020\u005D\u003F\u0028Ma\u003F\u005Bck\u005D\u005Bck\u005D\u003F\u005Ba\u005D\u003F\u007CMakkab\u0028\u00E4\u007Cae\u007Ca\u0308\u0029er\u007CMaccabees\u0029\u0029\u007C\u00282\u005B.\u005D\u003F\u005B\u0020\u005D\u003F\u0028Ma\u003F\u005Bck\u005D\u005Bck\u005D\u003F\u005Ba\u005D\u003F\u007CMakkab\u0028\u00E4\u007Cae\u007Ca\u0308\u0029er\u007CMaccabees\u0029\u0029\u007C\u00283\u005B.\u005D\u003F\u005B\u0020\u005D\u003F\u0028Ma\u003F\u005Bck\u005D\u005Bck\u005D\u003F\u005Ba\u005D\u003F\u007CMakkab\u0028\u00E4\u007Cae\u007Ca\u0308\u0029er\u007CMaccabees\u0029\u0029\u007C\u0028Weish\u0028eit\u0029\u003F\u007CWis\u003F\u007CWisdom\u0029\u007C\u0028Jesus\u0020Sirach\u007CSirach\u007CEcclesiasticus\u007CSir\u0029\u007C\u0028GebMan\u007CPrManOrMan\u007CGebet\u0020\u0028des\u0020\u0029\u003FManasses\u003F\u007CPrMan\u007CMan\u0028asse\u0029\u003F\u0029\u007C\u0028Psalmen\u0020Salomo\u005Bs\u005D\u003F\u007CPs\u0020\u003FSa\u005Bl\u005D\u003F\u0029\u007C\u0028Baruch\u007CBar\u0029\u007C\u0028Brief\u0020\u0028des\u0020\u0029\u003FJeremia\u005Bs\u005D\u003F\u007CBrJe\u007CBrJer\u007CEpJer\u007CLetter\u0020of\u0020Jeremiah\u0029\u0029\u005B.\u005D\u003F\u005B\u0020\u005D\u003F\u0028\u005B0\u002D9\u005D\u007B1,3\u007D\u0029\u0028\u005B\u003A,\u005D\u0028\u005B0\u002D9\u005D\u007B1,3\u007D\u0029\u0029\u003F\u0028\u0028\u0028\u005B\u002B\\.,\u003A\u002D\u005D\u005B0\u002D9\u005D\u007B1,3\u007D\u007C\u005B,\u003B\u005D\\s\u003F\u005B0\u002D9\u005D\u007B1,3\u007D\u005B,\u003A\u005D\u005B0\u002D9\u005D\u007B1,3\u007D\u007C\u005B,\u003B\u005D\\s\u003F\u005B0\u002D9\u005D\u007B1,3\u007D\u0028\u003F\u0021\u005B,\u003A\\.a\u002Dz\u0020\u005D\u002B\u0029\u0029\u0028\u003F\u0021\u005B0\u002D9\u005D\u0029\u007Cf\u0029\u002B\u0029\u003F\u007Ei',
     chapterVerseSeparator: ':',
     verseVerseSeparator: '-',
+    untilChapterEndSuffix: 'ff',
+    nextVerseAlsoSuffix: 'f',
 
     bibleVerseToString: function (verse, displayLength) {
 
@@ -95,38 +97,54 @@ export const BibleVerseService = {
             displayLength = 'short';
         }
 
-        var resultString = 'UNKNOWN';
+        let resultString = '';
 
         if (this.isBibleVerseValid(verse) === true) {
-            resultString = this._getBookLabel(verse.getFromBookId(), displayLength) + ' ';
-            resultString += verse.getFromChapter();
-
-            if (verse.isSameBook() && verse.isSameChapter() && verse.getFromVerse() === 1 && this.isVerseUntilChapterEnd(verse)) {
-                // Do not display the verse!
-            } else {
-                resultString += this.chapterVerseSeparator + verse.getFromVerse();
-            }
-
-
-            if (!verse.isSingleVerse()) {
-
-                if (verse.isSameBook()) {
-
-                    resultString += this.verseVerseSeparator;
-
-                    if (verse.isSameChapter()) {
-                        resultString += verse.getToVerse();
-                    } else {
-                        resultString += verse.getToChapter() + this.chapterVerseSeparator + verse.getToVerse();
-                    }
-
-                } else {
-                    // Todo: Different Books => Not supported yet!
-                }
-                
-            }
-
+            resultString = '(Invalid) ';
         }
+
+        resultString += this._getBookLabel(verse.getFromBookId(), displayLength) + ' ';
+        resultString += verse.getFromChapter();
+
+        if (verse.isSameBook()) {
+
+            if (verse.isSameChapter()) {
+                // All verses are in the same chapter
+
+                if (verse.getFromVerse() === 1 && this.isVerseUntilChapterEnd(verse)) {
+                    // Do not display the verse! It is a single Chapter
+                } else if (verse.isSingleVerse()) {
+                    // Is single Verse
+                    resultString += this.chapterVerseSeparator + verse.getFromVerse();
+                } else if (verse.getToVerse() - verse.getFromVerse() === 1) {
+                    // This verserange conatins only two verses
+                    resultString += this.chapterVerseSeparator + verse.getFromVerse() + this.nextVerseAlsoSuffix;
+                } else if (this.isVerseUntilChapterEnd(verse)) {
+                    // This verserange ends at the chapter end => ff
+                    resultString += this.chapterVerseSeparator + verse.getFromVerse() + this.untilChapterEndSuffix;
+                } else {
+                    // Is multiple Verses in same chapter
+                    resultString += this.chapterVerseSeparator + verse.getFromVerse() + this.verseVerseSeparator + verse.getToVerse();
+                }
+
+            }
+            else {
+                // This verse contains multiple chapters of the same book
+
+                if (verse.getFromVerse() === 1 && this.isVerseUntilChapterEnd(verse)) {
+                    // Contains complete Chapters => display only chapters without verses
+                    resultString += this.verseVerseSeparator + verse.getToChapter()
+                } else {
+                    // This verse has multiple chapters with separat verses
+                    resultString += this.chapterVerseSeparator + verse.getFromVerse() + this.verseVerseSeparator + verse.getToChapter() + this.chapterVerseSeparator + verse.getToVerse();
+                }
+            }
+
+
+        } else {
+            console.error('Ranges over multiples books are not supported yet')
+        }
+
 
         return resultString;
     },

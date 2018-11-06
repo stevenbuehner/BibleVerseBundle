@@ -10,6 +10,8 @@ export const BibleVerseService = {
     biblePattern: '{{ include("biblePattern") }}',
     chapterVerseSeparator: '{{ chapterVerseSeparator }}',
     verseVerseSeparator: '-',
+    untilChapterEndSuffix: 'ff',
+    nextVerseAlsoSuffix: 'f',
 
     bibleVerseToString: function (verse, displayLength) {
 
@@ -17,38 +19,54 @@ export const BibleVerseService = {
             displayLength = 'short';
         }
 
-        var resultString = 'UNKNOWN';
+        let resultString = '';
 
         if (this.isBibleVerseValid(verse) === true) {
-            resultString = this._getBookLabel(verse.getFromBookId(), displayLength) + ' ';
-            resultString += verse.getFromChapter();
-
-            if (verse.isSameBook() && verse.isSameChapter() && verse.getFromVerse() === 1 && this.isVerseUntilChapterEnd(verse)) {
-                // Do not display the verse!
-            } else {
-                resultString += this.chapterVerseSeparator + verse.getFromVerse();
-            }
-
-
-            if (!verse.isSingleVerse()) {
-
-                if (verse.isSameBook()) {
-
-                    resultString += this.verseVerseSeparator;
-
-                    if (verse.isSameChapter()) {
-                        resultString += verse.getToVerse();
-                    } else {
-                        resultString += verse.getToChapter() + this.chapterVerseSeparator + verse.getToVerse();
-                    }
-
-                } else {
-                    // Todo: Different Books => Not supported yet!
-                }
-                
-            }
-
+            resultString = '(Invalid) ';
         }
+
+        resultString += this._getBookLabel(verse.getFromBookId(), displayLength) + ' ';
+        resultString += verse.getFromChapter();
+
+        if (verse.isSameBook()) {
+
+            if (verse.isSameChapter()) {
+                // All verses are in the same chapter
+
+                if (verse.getFromVerse() === 1 && this.isVerseUntilChapterEnd(verse)) {
+                    // Do not display the verse! It is a single Chapter
+                } else if (verse.isSingleVerse()) {
+                    // Is single Verse
+                    resultString += this.chapterVerseSeparator + verse.getFromVerse();
+                } else if (verse.getToVerse() - verse.getFromVerse() === 1) {
+                    // This verserange conatins only two verses
+                    resultString += this.chapterVerseSeparator + verse.getFromVerse() + this.nextVerseAlsoSuffix;
+                } else if (this.isVerseUntilChapterEnd(verse)) {
+                    // This verserange ends at the chapter end => ff
+                    resultString += this.chapterVerseSeparator + verse.getFromVerse() + this.untilChapterEndSuffix;
+                } else {
+                    // Is multiple Verses in same chapter
+                    resultString += this.chapterVerseSeparator + verse.getFromVerse() + this.verseVerseSeparator + verse.getToVerse();
+                }
+
+            }
+            else {
+                // This verse contains multiple chapters of the same book
+
+                if (verse.getFromVerse() === 1 && this.isVerseUntilChapterEnd(verse)) {
+                    // Contains complete Chapters => display only chapters without verses
+                    resultString += this.verseVerseSeparator + verse.getToChapter()
+                } else {
+                    // This verse has multiple chapters with separat verses
+                    resultString += this.chapterVerseSeparator + verse.getFromVerse() + this.verseVerseSeparator + verse.getToChapter() + this.chapterVerseSeparator + verse.getToVerse();
+                }
+            }
+
+
+        } else {
+            console.error('Ranges over multiples books are not supported yet')
+        }
+
 
         return resultString;
     },
