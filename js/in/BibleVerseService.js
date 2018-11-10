@@ -21,7 +21,7 @@ export const BibleVerseService = {
 
         let resultString = '';
 
-        if (this.isBibleVerseValid(verse) === true) {
+        if (this.isBibleVerseValid(verse) === false) {
             resultString = '(Invalid) ';
         }
 
