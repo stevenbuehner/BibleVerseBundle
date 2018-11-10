@@ -1648,7 +1648,7 @@ class BibleVerseService {
 		$bd [62] ["desc"] ["de"] ["short"] = "1Joh";
 		$bd [62] ["desc"] ["en"] ["long"]  = "1 John";
 		$bd [62] ["desc"] ["en"] ["short"] = "1John";
-		$bd [62] ["pat"]                   = "/^(1[.]?[ ]?(John|Joh(annes(brief)?)?|Jn))$/i";
+		$bd [62] ["pat"]                   = "/^(1[.]?[ ]?(John|Joh(annes(brief)?)?|Jo|Jn))$/i";
 		$bd [62] ["kapAnz"]                = 5;
 		$bd [62] [1]                       = 10;
 		$bd [62] [2]                       = 29;
