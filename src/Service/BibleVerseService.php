@@ -25,7 +25,7 @@ use StevenBuehner\BibleVerseBundle\Interfaces\BibleVerseInterface;
  */
 class BibleVerseService {
 	private $bibleData              = NULL;
-	private $lastInvalidBibleverses = NULL;
+	private $lastInvalidBibleverses = [];
 	private $firstSearchString      = NULL;
 	private $lastRestString         = NULL;
 
@@ -2416,7 +2416,7 @@ class BibleVerseService {
 		}
 
 		// Ungültige Bibelstellen aus der Auflistung entfernen
-		$this->lastInvalidBibleverses = NULL;
+		$this->lastInvalidBibleverses = [];
 		if ($bibleVerses !== NULL) {
 			foreach ($bibleVerses as $key => $vers) {
 				if (!$this->isBibleVerseValid($vers)) {
@@ -2786,7 +2786,7 @@ class BibleVerseService {
 	/**
 	 * Returns the last validationErrors of the recent stringToBibletag-function.
 	 *
-	 * @return $lastInvalidBibleverses[]
+	 * @return BibleVerseInterface[] $lastInvalidBibleverses
 	 */
 	public function getLastValidationErrors() {
 		return $this->lastInvalidBibleverses;
