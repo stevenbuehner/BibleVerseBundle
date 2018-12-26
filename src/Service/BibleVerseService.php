@@ -8,6 +8,7 @@
  * - Klemens Kolb (Bibleverses)
  * - Benjamin Binder (Bibleverses)
  **/
+
 namespace StevenBuehner\BibleVerseBundle\Service;
 
 use StevenBuehner\BibleVerseBundle\Entity\BibleVerse;
@@ -1955,6 +1956,7 @@ class BibleVerseService {
 
 	/**
 	 * Helper function to compare two BibleVerseInterface objects with usort
+	 *
 	 * @param BibleVerseInterface $v1
 	 * @param BibleVerseInterface $v2
 	 * @return int
@@ -2418,12 +2420,7 @@ class BibleVerseService {
 		if ($bibleVerses !== NULL) {
 			foreach ($bibleVerses as $key => $vers) {
 				if (!$this->isBibleVerseValid($vers)) {
-					try {
-						$this->lastInvalidBibleverses [] = "Die Bibelstelle '" . $this->bibleVerseToString($vers) . "' gibt es in der Elberfelder nicht.";
-					} catch (InvalidBibleVerseRangeException $e) {
-						// If Exception is thrown, because book doesn't exist
-						$this->lastInvalidBibleverses [] = $e->getMessage();
-					}
+					$this->lastInvalidBibleverses [] = $vers;
 
 					unset ($bibleVerses [$key]);
 				}
@@ -2620,6 +2617,19 @@ class BibleVerseService {
 		return TRUE;
 	}
 
+	private function statStop() {
+		$now = microtime(TRUE);
+
+		if ($this->startTime > 0) {
+			$dif = $now - $this->startTime;
+
+			$this->statLongest  = ($dif > $this->statLongest) ? $dif : $this->statLongest;
+			$this->statShortest = ($dif < $this->statShortest) ? $dif : $this->statShortest;
+			$this->statCount++;
+			$this->statSum += $dif;
+		}
+	}
+
 	/**
 	 * Returns a String with the Default-Name of the given BibleBook and chapter/verse range
 	 *
@@ -2699,19 +2709,6 @@ class BibleVerseService {
 		$maxVerseToChapter = $this->getMaxVersOfBookKap($bv->getFromBookId(), $bv->getToChapter());
 
 		return ($bv->getFromVerse() == 1 && $bv->getToVerse() == $maxVerseToChapter);
-	}
-
-	private function statStop() {
-		$now = microtime(TRUE);
-
-		if ($this->startTime > 0) {
-			$dif = $now - $this->startTime;
-
-			$this->statLongest  = ($dif > $this->statLongest) ? $dif : $this->statLongest;
-			$this->statShortest = ($dif < $this->statShortest) ? $dif : $this->statShortest;
-			$this->statCount++;
-			$this->statSum += $dif;
-		}
 	}
 
 	/**
