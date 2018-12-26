@@ -2549,8 +2549,6 @@ class BibleVerseService {
 		}
 	}
 
-	// Init Funktionen
-
 	protected function getChapterVerseSeperatorsByLanguage($lang) {
 		switch ($lang) {
 			case 'de':
@@ -2561,6 +2559,8 @@ class BibleVerseService {
 				return ':,';
 		}
 	}
+
+	// Init Funktionen
 
 	/**
 	 * Returns true if the given Data in BibleVerse $bv matches some validation-criterias
@@ -2628,6 +2628,58 @@ class BibleVerseService {
 			$this->statCount++;
 			$this->statSum += $dif;
 		}
+	}
+
+	/**
+	 * @param BibleVerseInterface $bibleVerse
+	 * @throws InvalidBibleVerseRangeException
+	 */
+	public function autoCorrectBibleverse(BibleVerseInterface $bibleVerse) {
+
+		// Prüfen ob die BookID im Datenblock existiert
+		// Check if BookId exists
+		$id = $bibleVerse->getFromBookId();
+
+		if (!isset ($this->bibleData [$id])) {
+			throw new InvalidBibleVerseRangeException();
+		}
+
+		// Check if chapters exist
+		$k1   = $bibleVerse->getFromChapter();
+		$k2   = $bibleVerse->getToChapter();
+		$kMax = $this->bibleData [$id] ["kapAnz"];
+
+		// Chapters must exist
+		if ($k1 < 0 || $k2 < 0 || $k2 < $k1 || $k1 > $kMax || $k2 > $kMax) {
+			throw new InvalidBibleVerseRangeException();
+		}
+
+		// Correct the verses
+		// Check if Verse-area exists
+		$v1 = $bibleVerse->getFromVerse();
+		$v2 = $bibleVerse->getToVerse();
+
+		if ($k1 == $k2 && $v2 < $v1) {
+			$bibleVerse->setFromVerse($v2);
+			$bibleVerse->setToVerse($v1);
+			$v1 = $bibleVerse->getFromVerse();
+			$v2 = $bibleVerse->getToVerse();
+		}
+
+		// Wenn Informationen zum Start-Vers vorhanden, diese ebenfalls validieren
+		if (isset ($this->bibleData [$id] [$k1]) && $v1 > $this->getMaxVersOfBookKap($id, $k1)) {
+			$bibleVerse->setFromVerse($this->getMaxVersOfBookKap($id, $k1));
+			// $v1 = $bibleVerse->getFromVerse();
+		}
+
+		// Wenn Informationen zum End-Vers vorhanden, diese ebenfalls validieren
+		if (isset ($this->bibleData [$id] [$k2]) && $v2 > $this->getMaxVersOfBookKap($id, $k2)) {
+			$bibleVerse->setToVerse($this->getMaxVersOfBookKap($id, $k2));
+			// $v2 = $bibleVerse->getToVerse();
+		}
+
+		return $bibleVerse;
+
 	}
 
 	/**
