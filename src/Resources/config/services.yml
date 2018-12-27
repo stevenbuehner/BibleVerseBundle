@@ -1,3 +1,4 @@
 services:
-     bible_verse.helper:
-         class: StevenBuehner\BibleVerseBundle\Service\BibleVerseService
+  bible_verse.helper:
+    class: StevenBuehner\BibleVerseBundle\Service\BibleVerseService
+    public: true
