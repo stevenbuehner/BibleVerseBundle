@@ -25,7 +25,7 @@ use StevenBuehner\BibleVerseBundle\Interfaces\BibleVerseInterface;
  */
 class BibleVerseService {
 	private $bibleData              = NULL;
-	private $lastInvalidBibleverses = [];
+	private $lastInvalidBibleverses = array();
 	private $firstSearchString      = NULL;
 	private $lastRestString         = NULL;
 
@@ -2416,7 +2416,7 @@ class BibleVerseService {
 		}
 
 		// Ungültige Bibelstellen aus der Auflistung entfernen
-		$this->lastInvalidBibleverses = [];
+		$this->lastInvalidBibleverses = array();
 		if ($bibleVerses !== NULL) {
 			foreach ($bibleVerses as $key => $vers) {
 				if (!$this->isBibleVerseValid($vers)) {
