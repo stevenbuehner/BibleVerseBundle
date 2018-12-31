@@ -124,11 +124,7 @@ class BibleVerse {
 
     static explodeNumber(number) {
 
-        if (number instanceof Number) {
-            number = number.toString();
-        }
-
-        const paddedNumber = number.padStart(9, '0');
+        const paddedNumber = number.toString().padStart(9, '0');
 
         return {
             bookId: parseInt(paddedNumber.substr(0, 3)),
