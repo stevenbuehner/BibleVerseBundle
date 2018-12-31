@@ -65,6 +65,9 @@ class BibleVerse {
     }
 
     setFromVerse(fromVerse) {
+        if(fromVerse === 0){
+            fromVerse = 1;
+        }
         this.fromVerse = fromVerse;
     }
 
@@ -77,6 +80,9 @@ class BibleVerse {
     }
 
     setToVerse(toVerse) {
+        if(toVerse === 0){
+            toVerse = 1;
+        }
         this.toVerse = toVerse;
     }
 
