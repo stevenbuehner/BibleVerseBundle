@@ -2147,7 +2147,7 @@ class BibleVerseService {
 					$bibleVerses [$bvKeyZaehler]->setToVerse($this->getMaxVersOfBookKap($bookID, $kapVon));
 				} else {
 					// There is more coming ... following $rest will contain information about Verse-Stuff
-					$bibleVerses [$bvKeyZaehler]->setFromVerse(NULL);
+					$bibleVerses [$bvKeyZaehler]->setFromVerse(1);
 					$bibleVerses [$bvKeyZaehler]->setToVerse(NULL);
 				}
 				$isChapterRange = TRUE;
@@ -2329,12 +2329,6 @@ class BibleVerseService {
 							$verse   = ( int ) $value ['verse'];
 							$rest    = trim($value ['rest']);
 
-
-							if ($bibleVerses[$bvKeyZaehler]->getFromVerse() == NULL) {
-								// Bsp.: Gen 3-4,5
-								$bibleVerses[$bvKeyZaehler]->setFromVerse(1);
-							}
-
 							$bibleVerses[$bvKeyZaehler]->setToChapter($chapter);
 							$bibleVerses[$bvKeyZaehler]->setToVerse($verse);
 
@@ -2347,7 +2341,7 @@ class BibleVerseService {
 							$chapterOrVerse = ( int ) $value ['chapterOrVerse'];
 							$rest           = trim($value ['rest']);
 
-							if ($bibleVerses[$bvKeyZaehler]->getFromVerse() == NULL) {
+							if ($bibleVerses[$bvKeyZaehler]->getToVerse() == NULL) {
 								// Bei nur Kapitel-Eingabe
 								// Bsp.: 1. Mose 1-3
 
@@ -2356,7 +2350,7 @@ class BibleVerseService {
 
 								$bibleVerses[$bvKeyZaehler]->setToChapter($chapter);
 								$bibleVerses[$bvKeyZaehler]->setToVerse($this->getMaxVersOfBookKap($bookId, $chapter));
-								$bibleVerses[$bvKeyZaehler]->setFromVerse(1);
+								// $bibleVerses[$bvKeyZaehler]->setFromVerse(1);
 								$isChapterRange = TRUE;
 							} else {
 								$verse = $chapterOrVerse;
