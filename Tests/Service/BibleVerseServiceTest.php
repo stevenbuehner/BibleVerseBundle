@@ -753,19 +753,69 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertCount(3, $bv);
 	}
 
-	public function testRecognizeUmlauteFromPDF(){
+	public function testRecognizeUmlauteFromPDF() {
 
 		$text = "Römer 15,1-2";
-		$bv = $this->bibleVerseService->stringToBibleVerse($text);
+		$bv   = $this->bibleVerseService->stringToBibleVerse($text);
 		$this->assertCount(1, $bv);
 
 		$text = "Matthäus 6,33;";
-		$bv = $this->bibleVerseService->stringToBibleVerse($text);
+		$bv   = $this->bibleVerseService->stringToBibleVerse($text);
 		$this->assertCount(1, $bv);
 
 		$text = "Sprüche 21,23";
-		$bv = $this->bibleVerseService->stringToBibleVerse($text);
+		$bv   = $this->bibleVerseService->stringToBibleVerse($text);
 		$this->assertCount(1, $bv);
+
+	}
+
+	public function testLongMinus() {
+
+		// Langes (!) Minus
+		$text = "Lk 1–2";
+		$bv   = $this->bibleVerseService->stringToBibleVerse($text);
+		$this->assertCount(1, $bv);
+		$this->assertEquals(1, $bv[0]->getFromChapter());
+		$this->assertEquals(2, $bv[0]->getToChapter());
+
+
+		// Langes (!) Minus
+		$text = "Lk 1,1–2";
+		$bv   = $this->bibleVerseService->stringToBibleVerse($text);
+		$this->assertCount(1, $bv);
+		$this->assertEquals(1, $bv[0]->getFromVerse());
+		$this->assertEquals(2, $bv[0]->getToVerse());
+
+
+		// Langes (!) Minus
+		$text = "Lk 1,2+3–4";
+		$bv   = $this->bibleVerseService->stringToBibleVerse($text);
+		$this->assertCount(2, $bv);
+		$this->assertEquals(3, $bv[1]->getFromVerse());
+		$this->assertEquals(4, $bv[1]->getToVerse());
+
+	}
+
+	public function testSpaceBetweenChapterAndVerse(){
+
+		// Leerzeichen zwischen Kapitel und Vers
+		$text = "Lk 1, 2";
+		$bv   = $this->bibleVerseService->stringToBibleVerse($text);
+		$this->assertCount(1, $bv);
+		$this->assertEquals(1, $bv[0]->getFromChapter());
+		$this->assertEquals(1, $bv[0]->getToChapter());
+		$this->assertEquals(2, $bv[0]->getFromVerse());
+		$this->assertEquals(2, $bv[0]->getToVerse());
+
+
+		// Tab zwischen Kapitel und Vers
+		$text = "Lk 1,	2";
+		$bv   = $this->bibleVerseService->stringToBibleVerse($text);
+		$this->assertCount(1, $bv);
+		$this->assertEquals(1, $bv[0]->getFromChapter());
+		$this->assertEquals(1, $bv[0]->getToChapter());
+		$this->assertEquals(2, $bv[0]->getFromVerse());
+		$this->assertEquals(2, $bv[0]->getToVerse());
 
 	}
 
