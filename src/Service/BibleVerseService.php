@@ -2013,7 +2013,8 @@ class BibleVerseService {
 		}
 
 		// Sorty bibleverses by "from" attribute
-		usort($bibleverses, array(self::class, 'usortBibleverses'));
+		// compatibility with php 5.3 (no self::class)
+		usort($bibleverses, array('StevenBuehner\BibleVerseBundle\Service\BibleVerseService', 'usortBibleverses'));
 
 		// merge bibleverses if possible
 		// Start loop with offset of one
