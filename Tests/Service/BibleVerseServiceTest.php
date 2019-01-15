@@ -796,7 +796,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 
 	}
 
-	public function testSpaceBetweenChapterAndVerse(){
+	public function testSpaceBetweenChapterAndVerse() {
 
 		// Leerzeichen zwischen Kapitel und Vers
 		$text = "Lk 1, 2";
@@ -819,9 +819,57 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 
 	}
 
-	public function featureMissingYet() {
-		$bv = $this->bibleVerseService->stringToBibleVerse('1.Mose 12; 14,4');
+	public function testSemikolonErweiterungen() {
+
+		// Bsp.: Gen 3,4; 5,5	| 	Rest: 5,5...		=> zwei einzelne Verse
+		$bv = $this->bibleVerseService->stringToBibleVerse('Gen 3,4; 5,5');
 		$this->assertCount(2, $bv);
+		$this->assertEquals(3, $bv[0]->getFromChapter());
+		$this->assertEquals(4, $bv[0]->getFromVerse());
+		$this->assertEquals(3, $bv[0]->getToChapter());
+		$this->assertEquals(4, $bv[0]->getToVerse());
+		$this->assertEquals(5, $bv[1]->getFromChapter());
+		$this->assertEquals(5, $bv[1]->getFromVerse());
+		$this->assertEquals(5, $bv[1]->getToChapter());
+		$this->assertEquals(5, $bv[1]->getToVerse());
+
+		// Bsp.: Gen 3,4; 5,5-6	| 	Rest: 5,5...		=> Zwei Verse zu verschiedenen Kapitel. Neuer Rest: "-6"
+		$bv = $this->bibleVerseService->stringToBibleVerse('Gen 3,4; 5,5-6');
+		$this->assertCount(2, $bv);
+		$this->assertEquals(3, $bv[0]->getFromChapter());
+		$this->assertEquals(4, $bv[0]->getFromVerse());
+		$this->assertEquals(3, $bv[0]->getToChapter());
+		$this->assertEquals(4, $bv[0]->getToVerse());
+		$this->assertEquals(5, $bv[1]->getFromChapter());
+		$this->assertEquals(5, $bv[1]->getFromVerse());
+		$this->assertEquals(5, $bv[1]->getToChapter());
+		$this->assertEquals(6, $bv[1]->getToVerse());
+
+
+		// Bsp.: Gen 4; 5		| 	Rest: 5...			=> zwei ganze Kapitel
+		$bv = $this->bibleVerseService->stringToBibleVerse('Gen 4; 5');
+		$this->assertCount(2, $bv);
+		$this->assertEquals(4, $bv[0]->getFromChapter());
+		$this->assertEquals(1, $bv[0]->getFromVerse());
+		$this->assertEquals(4, $bv[0]->getToChapter());
+		$this->assertEquals($this->bibleVerseService->getMaxVersOfBookKap(1, 4), $bv[0]->getToVerse());
+		$this->assertEquals(5, $bv[1]->getFromChapter());
+		$this->assertEquals(1, $bv[1]->getFromVerse());
+		$this->assertEquals(5, $bv[1]->getToChapter());
+		$this->assertEquals($this->bibleVerseService->getMaxVersOfBookKap(1, 5), $bv[1]->getToVerse());
+
+		// Bsp.: Gen 3,4; 5-6	| 	Rest: 5-6...		=> Zwei Verse zum selben Kapitel 3
+		$bv = $this->bibleVerseService->stringToBibleVerse('Gen 3,4; 5-6');
+		$this->assertCount(2, $bv);
+		$this->assertEquals(3, $bv[0]->getFromChapter());
+		$this->assertEquals(4, $bv[0]->getFromVerse());
+		$this->assertEquals(3, $bv[0]->getToChapter());
+		$this->assertEquals(4, $bv[0]->getToVerse());
+		$this->assertEquals(3, $bv[1]->getFromChapter());
+		$this->assertEquals(5, $bv[1]->getFromVerse());
+		$this->assertEquals(3, $bv[1]->getToChapter());
+		$this->assertEquals(6, $bv[1]->getToVerse());
+
 	}
 
 	public function debug($obj) {

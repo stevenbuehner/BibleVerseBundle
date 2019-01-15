@@ -2364,9 +2364,8 @@ class BibleVerseService {
 								// $bibleVerses[$bvKeyZaehler]->setToChapter($fromChapter);
 								$bibleVerses[$bvKeyZaehler]->setToVerse($verse);
 							}
-
-
 						}
+
 						break;
 					case ',':
 						// This happens when
@@ -2412,6 +2411,65 @@ class BibleVerseService {
 						}
 
 						break;
+
+					case ';':
+
+						$rest   = trim(substr($rest, 1));
+						$bookID = $bibleVerses [$bvKeyZaehler]->getBookId();
+
+						if (preg_match('~^(?<chapter>[1-9][0-9]{0,2})((?<trenner>,\s?|:)(?<last>[1-9][0-9]{0,2}))?(?<rest>.*)$~',
+									   $rest, $value) === 1) {
+
+							$chapterOrVerse = ( int ) $value ['chapter'];
+							$bv             = new BibleVerse();
+							$bv->setBookId($bookID);
+							$bv->setFromChapter($chapterOrVerse);
+							$bv->setToChapter($chapterOrVerse);
+
+
+							if (!empty($value['last']) && $isChapterRange === FALSE) {
+								// Bsp.: Gen 3,4; 5,5	| 	Rest: 5,5...		=> zwei einzelne Verse
+								// Bsp.: Gen 3,4; 5,5-6	| 	Rest: 5,5...		=> Zwei Verse zu verschiedenen Kapitel. Neuer Rest: "-6"
+
+								$verse = (int) $value ['last'];
+								$bv->setFromVerse($verse);
+								$bv->setToVerse($verse);
+
+							} else if ($isChapterRange === TRUE && empty($value['last'])) {
+								// Bsp.: Gen 4; 5		| 	Rest: 5...			=> zwei ganze Kapitel
+
+								$bv->setFromVerse(1);
+								$bv->setToVerse($this->getMaxVersOfBookKap($bookID, $chapterOrVerse));
+
+								// Den letzten Vers nachbearbeiten, falls noch nicht geschehen
+								$bibleVerses[$bvKeyZaehler]->setFromVerse(1);
+								$bibleVerses[$bvKeyZaehler]->setToVerse($this->getMaxVersOfBookKap($bookID,
+																								   $bibleVerses[$bvKeyZaehler]->getToChapter()));
+
+							} else if ($isChapterRange === FALSE && empty($value['last'])) {
+								// Bsp.: Gen 3,4; 5-6	| 	Rest: 5...			=> Zwei Verse zum selben Kapitel 3. Neuer Rest -6
+
+								$kTo = $bibleVerses [$bvKeyZaehler]->getToChapter();
+								$bv->setFromChapter($kTo);
+								$bv->setToChapter($kTo);
+								$bv->setFromVerse($chapterOrVerse);
+								$bv->setToVerse($chapterOrVerse); // Temporaryly
+							} else {
+
+								// This should not happen
+								continue;
+
+							}
+
+							$rest                         = trim($value ['rest']);
+							$bibleVerses[++$bvKeyZaehler] = $bv;
+
+						} else {
+							$code = preg_last_error();
+						}
+
+						break;
+
 					default :
 						// Das darf nicht sein -> weitere Suche / While-Schleife abbrechen
 						break 2;
