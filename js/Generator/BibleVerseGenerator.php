@@ -23,7 +23,7 @@ class BibleVerseGenerator {
 													   'BibleVerse'   => "new Bibleverse({{verse.verseId}}, {{verse.fromChapter}}, {{verse.fromVerse}}, {{verse.toChapter}}, {{verse.toVerse}})",
 													   'BibleBook'    => "new BibleBook({{book.bookId}}, '{{book.nameLong | escape('js')}}', '{{book.nameShort | escape('js')}}', '{{book.namePattern | escape('js')}}', {{book.chapterSum}}, { {% for count in book.chapterCount %} '{{count.chapter}}' : {{count.verseCount}}, {% endfor %} })",
 													   'BookListing'  => "\n{% for book in data %}{{book.bookId}} : {{ include('BibleBook') }},\n{% endfor %}",
-													   'biblePattern' => '{{ biblePattern | escape(\'js\')}}'
+													   'biblePattern' => '{{ biblePattern | raw}}'
 												   ]);
 		$loaderChain      = new \Twig_Loader_Chain([$loader1, $loader2]);
 		$this->twigEngine = new \Twig_Environment($loaderChain);
@@ -33,6 +33,12 @@ class BibleVerseGenerator {
 		$template = $this->twigEngine->loadTemplate('BibleVerseService.js');
 		$langs    = ['de', 'en'];
 		$_data    = $this->bibleVerseService->getBibleData();
+		$_pattern = $this->bibleVerseService->getFirstSearchString();
+		$cutStart = 14;
+		$cutEnd   = 2;
+		$_pattern = substr($_pattern,
+						   $cutStart,
+						   strlen($_pattern) - $cutStart - $cutEnd); // Negative Lookbehind not supported in Safari
 
 		foreach ($langs as $lang) {
 
@@ -63,7 +69,7 @@ class BibleVerseGenerator {
 
 			file_put_contents(__DIR__ . "/../out/BibleVerseService_{$lang}.js",
 							  $template->render(['data'                  => $bibleBooks,
-												 'biblePattern'          => $this->bibleVerseService->getFirstSearchString(),
+												 'biblePattern'          => $_pattern,
 												 'chapterVerseSeparator' => $chapterVerseSeparator]
 							  )
 			);
