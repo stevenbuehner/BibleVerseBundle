@@ -807,6 +807,42 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(2, $bv[0]->getFromVerse());
 		$this->assertEquals(2, $bv[0]->getToVerse());
 
+		// Leerzeichen zwischen Kapitel und Vers-Bereich
+		$text = "Lk 1, 2-4";
+		$bv   = $this->bibleVerseService->stringToBibleVerse($text);
+		$this->assertCount(1, $bv);
+		$this->assertEquals(1, $bv[0]->getFromChapter());
+		$this->assertEquals(1, $bv[0]->getToChapter());
+		$this->assertEquals(2, $bv[0]->getFromVerse());
+		$this->assertEquals(4, $bv[0]->getToVerse());
+
+
+		// Leerzeichen zwischen Kapitel UND Vers-Bereich
+		$text = "Lk 1,2 -4";
+		$bv   = $this->bibleVerseService->stringToBibleVerse($text);
+		$this->assertCount(1, $bv);
+		$this->assertEquals(1, $bv[0]->getFromChapter());
+		$this->assertEquals(1, $bv[0]->getToChapter());
+		$this->assertEquals(2, $bv[0]->getFromVerse());
+		$this->assertEquals(4, $bv[0]->getToVerse());
+
+		// Leerzeichen zwischen Kapitel UND Vers-Bereich
+		$text = "Lk 1,2- 4";
+		$bv   = $this->bibleVerseService->stringToBibleVerse($text);
+		$this->assertCount(1, $bv);
+		$this->assertEquals(1, $bv[0]->getFromChapter());
+		$this->assertEquals(1, $bv[0]->getToChapter());
+		$this->assertEquals(2, $bv[0]->getFromVerse());
+		$this->assertEquals(4, $bv[0]->getToVerse());
+
+		// Leerzeichen zwischen Kapitel UND Vers-Bereich
+		$text = "Lk 1, 2 - 4";
+		$bv   = $this->bibleVerseService->stringToBibleVerse($text);
+		$this->assertCount(1, $bv);
+		$this->assertEquals(1, $bv[0]->getFromChapter());
+		$this->assertEquals(1, $bv[0]->getToChapter());
+		$this->assertEquals(2, $bv[0]->getFromVerse());
+		$this->assertEquals(4, $bv[0]->getToVerse());
 
 		// Tab zwischen Kapitel und Vers
 		$text = "Lk 1,	2";

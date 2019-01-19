@@ -47,7 +47,7 @@ class BibleVerseService {
 		$bd [1] ["desc"] ["de"] ["short"] = "1Mo";
 		$bd [1] ["desc"] ["en"] ["long"]  = "Genesis";
 		$bd [1] ["desc"] ["en"] ["short"] = "Gen";
-		$bd [1] ["pat"]                   = "/^(1[.]?[ ]?(mos?|mose)|Genesis|Ge?n)$/i";
+		$bd [1] ["pat"]                   = "/^(1[.]?\s?(mos?|mose)|Genesis|Ge?n)$/i";
 		$bd [1] ["kapAnz"]                = 50;
 		$bd [1] [1]                       = 31;
 		$bd [1] [2]                       = 25;
@@ -104,7 +104,7 @@ class BibleVerseService {
 		$bd [2] ["desc"] ["de"] ["short"] = "2Mo";
 		$bd [2] ["desc"] ["en"] ["long"]  = "Exodus";
 		$bd [2] ["desc"] ["en"] ["short"] = "Exod";
-		$bd [2] ["pat"]                   = "/^(2[.]?[ ]?(mos?|mose)|Exod(us)?|Ex)$/i";
+		$bd [2] ["pat"]                   = "/^(2[.]?\s?(mos?|mose)|Exod(us)?|Ex)$/i";
 		$bd [2] ["kapAnz"]                = 40;
 		$bd [2] [1]                       = 22;
 		$bd [2] [2]                       = 25;
@@ -339,7 +339,7 @@ class BibleVerseService {
 		$bd [9] ["desc"] ["de"] ["short"] = "1Sam";
 		$bd [9] ["desc"] ["en"] ["long"]  = "1 Samuel";
 		$bd [9] ["desc"] ["en"] ["short"] = "1Sam";
-		$bd [9] ["pat"]                   = "/^1[.]? ?(Sam?|Samuel|Sm)$/i";
+		$bd [9] ["pat"]                   = "/^1[.]?\s?(Sam?|Samuel|Sm)$/i";
 		$bd [9] ["kapAnz"]                = 31;
 		$bd [9] [1]                       = 28;
 		$bd [9] [2]                       = 36;
@@ -377,7 +377,7 @@ class BibleVerseService {
 		$bd [10] ["desc"] ["de"] ["short"] = "2Sam";
 		$bd [10] ["desc"] ["en"] ["long"]  = "2 Samuel";
 		$bd [10] ["desc"] ["en"] ["short"] = "2Sam";
-		$bd [10] ["pat"]                   = "/^2[.]? ?(Sam?|Samuel|Sm)$/i";
+		$bd [10] ["pat"]                   = "/^2[.]?\s?(Sam?|Samuel|Sm)$/i";
 		$bd [10] ["kapAnz"]                = 24;
 		$bd [10] [1]                       = 27;
 		$bd [10] [2]                       = 32;
@@ -1685,7 +1685,7 @@ class BibleVerseService {
 		$bd [66] ["desc"] ["de"] ["short"] = "Offb";
 		$bd [66] ["desc"] ["en"] ["long"]  = "Revelation";
 		$bd [66] ["desc"] ["en"] ["short"] = "Rev";
-		$bd [66] ["pat"]                   = "/^(Revelation|Rev|Of[f]?enb[h]?arung( des Johannes)?|Off|Of[f]?b|Apo?[ck]|Apokalypse)$/i";
+		$bd [66] ["pat"]                   = "/^(Revelation|Rev|Of[f]?enb[h]?arung( des (Johannes|Joh))?|Off|Of[f]?b|Apo?[ck]|Apokalypse)$/i";
 		$bd [66] ["kapAnz"]                = 22;
 		$bd [66] [1]                       = 20;
 		$bd [66] [2]                       = 29;
@@ -1911,7 +1911,7 @@ class BibleVerseService {
 		$bd [75] ["desc"] ["de"] ["short"] = "Psalmen Salomos";
 		$bd [75] ["desc"] ["en"] ["long"]  = "Psalmen Salomos";
 		$bd [75] ["desc"] ["en"] ["short"] = "Psalmen Salomos";
-		$bd [75] ["pat"]                   = "/^(Psalmen Salomo[s]?|Ps ?Sa[l]?)$/i";
+		$bd [75] ["pat"]                   = "/^(Psalmen Salomo[s]?|Ps\s?Sa[l]?)$/i";
 		$bd [75] ["kapAnz"]                = 18;
 		$bd [75] [1]                       = 8;
 		$bd [75] [2]                       = 41;
@@ -2091,7 +2091,7 @@ class BibleVerseService {
 		$this->statStart();
 		$bibleVerses  = array();
 		$bvKeyZaehler = -1;
-		$secondSearch = "/(?<buch>[1-5]?[.]?\s?[a-zA-Z][a-zA-Zäöü̈ ]+)[.]?\s?(?<kapVon>[0-9]{1,3})((?<trenner>:|,\s?)(?<versVon>[0-9]{1,3}))?(?<rest>(([,;]\s?|[+\.,:\-\s])[0-9]{1,3}|f)+)?/i";
+		$secondSearch = '~(?<buch>[1-5]?[.]?\s?[a-zA-Z][a-zA-Zäöü̈ ]+)[.]?\s*(?<kapVon>[0-9]{1,3})((?<trenner>:|,\s*)(?<versVon>[0-9]{1,3}))?(?<rest>((\s*[+\.,:;\-]\s*)[0-9]{1,3}|f)+)?~i';
 
 		// Remove long strokes from U+2010 to U+2015
 		$bibleString = preg_replace('~(‐|‑|‒|–|—|―)~u', '-', $bibleString);
@@ -2511,7 +2511,8 @@ class BibleVerseService {
 			// Valid Rest-Strings are 'f', 'ff', '.2', '+3'   ', 3'   ', 3:5'
 			$ges                     = substr($ges, 0, strlen($ges) - 1);
 			$trenner                 = '(:|,\s?)';
-			$this->firstSearchString = '~(?<![a-zA-Z])(' . $ges . ')[.]?\s?([0-9]{1,3})(' . $trenner . '([0-9]{1,3}))?((([+\.,:\-][0-9]{1,3}|[,;]\s?[0-9]{1,3}[,:]\s?[0-9]{1,3}|[,;]\s?[0-9]{1,3}(?![,:\.a-z ]+))(?![0-9])|f)+)?~i';
+
+			$this->firstSearchString = '~(?<![a-zA-Z])(' . $ges . ')[.]?\s?([0-9]{1,3})(' . $trenner . '([0-9]{1,3}))?\s*((([+\.,:][0-9]{1,3}|-\s?[0-9]{1,3}|[,;]\s?[0-9]{1,3}[,:]\s?[0-9]{1,3}|[,;]\s?[0-9]{1,3}(?![,:\.a-z\s]+))(?![0-9])|f)+)?~i';
 		}
 
 		return $this->firstSearchString;
