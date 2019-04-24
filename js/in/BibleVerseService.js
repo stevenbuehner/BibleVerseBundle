@@ -7,7 +7,7 @@ BibleBook;
 export const BibleVerseService = {
     _d: { //{{ include('BookListing') }}
     },
-    biblePattern: /{{ include("biblePattern") }}/i,
+    biblePattern: /{{ include("biblePattern") }}/ig,
     chapterVerseSeparator: '{{ chapterVerseSeparator }}',
     verseVerseSeparator: '-',
     untilChapterEndSuffix: 'ff',
