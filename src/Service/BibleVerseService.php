@@ -1135,7 +1135,7 @@ class BibleVerseService {
 		$bd [29] ["desc"] ["de"] ["short"] = "Joel";
 		$bd [29] ["desc"] ["en"] ["long"]  = "Joel";
 		$bd [29] ["desc"] ["en"] ["short"] = "Joel";
-		$bd [29] ["pat"]                   = "/^Joel|Jo|Joël$/i";
+		$bd [29] ["pat"]                   = "/^(Joel|Jo|Joël)$/i";
 		$bd [29] ["kapAnz"]                = 3;
 		$bd [29] [1]                       = 20;
 		$bd [29] [2]                       = 32;
