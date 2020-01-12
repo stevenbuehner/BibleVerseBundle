@@ -1,7 +1,7 @@
 {
   "name": "stevenbuehner/bible-verse-bundle",
   "description": "A (Symphony) bundle to identify, handle, store and work with bibleverses.",
-  "type": "Library",
+  "type": "library",
   "require": {
     "php": ">5.3"
   },
