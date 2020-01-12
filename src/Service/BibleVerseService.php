@@ -1266,7 +1266,7 @@ class BibleVerseService {
 		$bd [40] ["desc"] ["de"] ["short"] = "Mt";
 		$bd [40] ["desc"] ["en"] ["long"]  = "Matthew";
 		$bd [40] ["desc"] ["en"] ["short"] = "Matt";
-		$bd [40] ["pat"]                   = "/^(Matthew|Matt?h?(ä|ae|e|ä)us(evangelium)?|Mt|Matt?)$/i";
+		$bd [40] ["pat"]                   = "/^(Matthew|Matt?h?(ä|ae|e|ä)us(evangelium)?|Mt|Matt?h?)$/i";
 		$bd [40] ["kapAnz"]                = 28;
 		$bd [40] [1]                       = 25;
 		$bd [40] [2]                       = 23;
