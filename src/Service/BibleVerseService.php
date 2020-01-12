@@ -1136,10 +1136,11 @@ class BibleVerseService {
 		$bd [29] ["desc"] ["en"] ["long"]  = "Joel";
 		$bd [29] ["desc"] ["en"] ["short"] = "Joel";
 		$bd [29] ["pat"]                   = "/^(Joel|Jo|Joël)$/i";
-		$bd [29] ["kapAnz"]                = 3;
+		$bd [29] ["kapAnz"]                = 4;
 		$bd [29] [1]                       = 20;
-		$bd [29] [2]                       = 32;
-		$bd [29] [3]                       = 21;
+		$bd [29] [2]                       = 27;
+		$bd [29] [3]                       = 5;
+		$bd [29] [4]                       = 21;
 
 		$bd [30] ["desc"] ["de"] ["long"]  = "Amos";
 		$bd [30] ["desc"] ["de"] ["short"] = "Am";
