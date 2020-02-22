@@ -908,6 +908,13 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 
 	}
 
+	public function testZusammenfuegungen(){
+
+		$bv = $this->bibleVerseService->stringToBibleVerse('2. Mose 15,22–27+2. Mose 16');
+		$this->assertCount(2, $bv);
+
+	}
+
 	public function debug($obj) {
 		fwrite(STDERR, print_r($obj, TRUE) . "\n");
 	}
