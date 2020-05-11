@@ -2453,7 +2453,7 @@ class BibleVerseService {
 							} else {
 
 								// This should not happen
-								continue;
+								break; // In Switch ab PHP 7.3 nur noch breaks
 
 							}
 
