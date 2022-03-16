@@ -933,7 +933,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 
 	public function testNumerationExamples() {
 
-		$booksFirst  = ['Thess' => 52, 'Tim' => 54, 'Petrus' => 60];
+		$booksFirst  = array('Thess' => 52, 'Tim' => 54, 'Petrus' => 60);
 
 		$bMuster = new BibleVerse();
 		$bMuster->setFromCombined(1, 1, 1);
