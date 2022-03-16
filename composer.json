@@ -1,6 +1,6 @@
 {
   "name": "stevenbuehner/bible-verse-bundle",
-  "description": "A (Symphony) bundle to identify, handle, store and work with bibleverses.",
+  "description": "A library to parse, identify, merge store and work with bibleverses.",
   "type": "library",
   "license": "MIT",
   "require": {
