@@ -983,7 +983,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 			$bv = $this->bibleVerseService->stringToBibleVerse('aI ' . $book . $verse);
 			$this->assertCount(0, $bv);
 		}
-		
+
 	}
 
 	public function testZusammenfuegungen() {
