@@ -1,6 +1,6 @@
 {
   "name": "stevenbuehner/bible-verse-bundle",
-  "description": "A library to parse, identify, merge store and work with bibleverses.",
+  "description": "A highly tested library to parse, identify, merge store and work with bibleverses.",
   "type": "library",
   "license": "MIT",
   "require": {
