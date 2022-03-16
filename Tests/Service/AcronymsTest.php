@@ -222,7 +222,6 @@ class AcronymsTest extends \PHPUnit_Framework_TestCase {
 			"1 chr"                    => 13,
 			"1 chronik"                => 13,
 			"1. Chronicles"            => 13,
-			"1. Chronicles"            => 13,
 			//	"1. Kron"                  => 13,
 			//	"1. Kron"                  => 13,
 			//	"1. Kronieken"             => 13,
@@ -244,7 +243,6 @@ class AcronymsTest extends \PHPUnit_Framework_TestCase {
 			//	"2 Kronieken"              => 14,
 			"2 chr"                    => 14,
 			"2 chronik"                => 14,
-			"2. Chronicles"            => 14,
 			"2. Chronicles"            => 14,
 			//	"2. Kron"                  => 14,
 			//	"2. Kron"                  => 14,
@@ -1134,8 +1132,10 @@ class AcronymsTest extends \PHPUnit_Framework_TestCase {
 			$recognized = FALSE;
 			foreach ($bd as $bookId => $bibleBookData) {
 
-				$matched     = preg_match($bibleBookData['pat'], $word);
-				$assertMatch = $this->getMappedBookId($acronymBookkId) == $bookId;
+				$matched         = preg_match($bibleBookData['pat'], $word);
+				$mappedBookId    = $this->getMappedBookId($acronymBookkId);
+				$assertMatch     = $mappedBookId == $bookId;
+				$assertMatchName = $bd[$mappedBookId]['desc']['en']['long'];
 
 				if ($assertMatch === TRUE) {
 					$recognized = TRUE;
@@ -1145,11 +1145,11 @@ class AcronymsTest extends \PHPUnit_Framework_TestCase {
 				}
 
 				$this->assertEquals($matched, $assertMatch,
-									"Expected '{$word}' (BB: {$acronymBookkId}) to be {$not}matched by {$bibleBookData['pat']} (BVS: {$bookId})");
+									"Expected '{$word}' (BB: {$acronymBookkId}/{$assertMatchName}) to be {$not}matched by {$bibleBookData['pat']} (BVS: {$bookId})");
 
 			}
 
-			$this->assertTrue($recognized, "Expected '{$word}' (BB: {$acronymBookkId}) to be matched by anything");
+			$this->assertTrue($recognized, "Expected '{$word}' (BB: {$acronymBookkId}/{$assertMatchName}) to be matched by anything");
 		}
 	}
 

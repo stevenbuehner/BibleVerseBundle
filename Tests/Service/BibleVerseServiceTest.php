@@ -18,6 +18,29 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 							'StevenBuehner\BibleVerseBundle\Service\BibleVerseService');
 	}
 
+	public function testPatternBrackets() {
+
+		// Jedes Pattern braucht genau so viele öffnende wie schließende Klammern
+		foreach ($this->bibleVerseService->getBibleData() as $bookId => $value) {
+
+			$pattern  = $value['pat'];
+			$bookName = $value['desc']['en']['long'];
+
+
+			$countOpen  = preg_match_all('~\(~', $pattern);
+			$countClose = preg_match_all('~\)~', $pattern);
+			$this->assertEquals($countClose, $countOpen,
+								'Mit dem Pattern aus Buch ' . $bookId . '/' . $bookName . ' stimmt was nicht. Die Anzahl öffnender und schließender runter Klammern ist unterschiedlich');
+
+			$countOpen  = preg_match_all('~\[~', $pattern);
+			$countClose = preg_match_all('~\]~', $pattern);
+			$this->assertEquals($countClose, $countOpen,
+								'Mit dem Pattern aus Buch ' . $bookId . '/' . $bookName . ' stimmt was nicht. Die Anzahl öffnender und schließender eckiger Klammern ist unterschiedlich');
+
+		}
+
+	}
+
 	public function testNormalBibleVerses() {
 		$bv     = $this->bibleVerseService->stringToBibleVerse('1Tim 2,3');
 		$bv_exp = new BibleVerse();
@@ -908,7 +931,62 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 
 	}
 
-	public function testZusammenfuegungen(){
+	public function testNumerationExamples() {
+
+		$booksFirst  = ['Thess' => 52, 'Tim' => 54, 'Petrus' => 60];
+
+		$bMuster = new BibleVerse();
+		$bMuster->setFromCombined(1, 1, 1);
+		$bMuster->setToCombined(1, 1, 1);
+		$verse = ' 1,1';
+
+		foreach ($booksFirst as $book => $bookId) {
+			$bMuster->setFromBookId($bookId);
+			$bMuster->setToBookId($bookId);
+
+			$bv = $this->bibleVerseService->stringToBibleVerse('1. ' . $book . $verse);
+			$this->assertCount(1, $bv);
+			$this->assertEquals($bMuster, $bv[0]);
+
+			$bv = $this->bibleVerseService->stringToBibleVerse('1' . $book . $verse);
+			$this->assertCount(1, $bv);
+			$this->assertEquals($bMuster, $bv[0]);
+
+			$bv = $this->bibleVerseService->stringToBibleVerse('First ' . $book . $verse);
+			$this->assertCount(1, $bv);
+			$this->assertEquals($bMuster, $bv[0]);
+
+			$bv = $this->bibleVerseService->stringToBibleVerse('First' . $book . $verse);
+			$this->assertCount(0, $bv);
+
+			$bv = $this->bibleVerseService->stringToBibleVerse('1st ' . $book . $verse);
+			$this->assertCount(1, $bv);
+			$this->assertEquals($bMuster, $bv[0]);
+
+			$bv = $this->bibleVerseService->stringToBibleVerse('1st' . $book . $verse);
+			$this->assertCount(0, $bv);
+
+			$bv = $this->bibleVerseService->stringToBibleVerse('I' . $book . $verse);
+			$this->assertCount(0, $bv);
+
+			$bv = $this->bibleVerseService->stringToBibleVerse('I.' . $book . $verse);
+			$this->assertCount(0, $bv);
+
+			$bv = $this->bibleVerseService->stringToBibleVerse('I ' . $book . $verse);
+			$this->assertCount(1, $bv);
+			$this->assertEquals($bMuster, $bv[0]);
+
+			$bv = $this->bibleVerseService->stringToBibleVerse('II ' . $book . $verse);
+			$this->assertCount(1, $bv);
+			$this->assertNotEquals($bMuster, $bv[0]);
+
+			$bv = $this->bibleVerseService->stringToBibleVerse('aI ' . $book . $verse);
+			$this->assertCount(0, $bv);
+		}
+		
+	}
+
+	public function testZusammenfuegungen() {
 
 		$bv = $this->bibleVerseService->stringToBibleVerse('2. Mose 15,22–27+2. Mose 16');
 		$this->assertCount(2, $bv);
