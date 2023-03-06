@@ -315,6 +315,13 @@ class BibleVerseServiceTest extends TestCase {
 		}
 	}
 
+	public function testMultipleBibleversesInStringWithMultipleSpaces() {
+
+		$back = $this->bibleVerseService->stringToBibleVerse('Joh 3:35; 10:17;  14:31; 15:9; 17:23');
+		$this->assertCount( 5, $back);
+
+	}
+
 	public function testStringToBibleVerseNegativ() {
 		$bh = $this->bibleVerseService;
 
