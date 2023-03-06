@@ -7,7 +7,7 @@
     "php": ">5.3"
   },
   "require-dev": {
-    "phpunit/phpunit": "^4.8",
+    "phpunit/phpunit": "^9.6",
     "phpdocumentor/reflection-docblock": "2.0",
     "symfony/yaml": "~2.1",
     "twig/twig": "^1.35"
@@ -21,6 +21,11 @@
   "autoload": {
     "psr-4": {
       "StevenBuehner\\BibleVerseBundle\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "StevenBuehner\\BibleVerseBundleTests\\": "Tests/"
     }
   }
 }

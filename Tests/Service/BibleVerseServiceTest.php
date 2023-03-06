@@ -1,11 +1,12 @@
 <?php
 
-namespace StevenBuehner\BibleVerseBundle\Tests\Service;
+namespace StevenBuehner\BibleVerseBundleTests\Service;
 
+use PHPUnit\Framework\TestCase;
 use StevenBuehner\BibleVerseBundle\Entity\BibleVerse;
 use StevenBuehner\BibleVerseBundle\Service\BibleVerseService;
 
-class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
+class BibleVerseServiceTest extends TestCase {
 
 	/**
 	 * @var BibleVerseService
@@ -933,7 +934,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 
 	public function testNumerationExamples() {
 
-		$booksFirst  = array('Thess' => 52, 'Tim' => 54, 'Petrus' => 60);
+		$booksFirst = array('Thess' => 52, 'Tim' => 54, 'Petrus' => 60);
 
 		$bMuster = new BibleVerse();
 		$bMuster->setFromCombined(1, 1, 1);
@@ -997,7 +998,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		fwrite(STDERR, print_r($obj, TRUE) . "\n");
 	}
 
-	protected function setUp() {
+	protected function setUp(): void {
 		//  self::bootKernel();
 
 //        $this->bibleVerseService = static::$kernel->getContainer()->get('bible_verse.helper');

@@ -1,11 +1,12 @@
 <?php
 
-namespace StevenBuehner\BibleVerseBundle\Tests\Service;
+namespace StevenBuehner\BibleVerseBundleTests\Service;
 
+use PHPUnit\Framework\TestCase;
 use StevenBuehner\BibleVerseBundle\Entity\BibleVerse;
 use StevenBuehner\BibleVerseBundle\Service\BibleVerseService;
 
-class BibleVerseMergingTest extends \PHPUnit_Framework_TestCase {
+class BibleVerseMergingTest extends TestCase {
 
 	/**
 	 * @var BibleVerseService
@@ -149,7 +150,7 @@ class BibleVerseMergingTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals($mergedResult, $v1);
 	}
 
-	protected function setUp() {
+	protected function setUp(): void {
 		$this->bibleVerseService = new BibleVerseService();
 	}
 }

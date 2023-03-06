@@ -1,10 +1,11 @@
 <?php
 
-namespace StevenBuehner\BibleVerseBundle\Tests\Service;
+namespace StevenBuehner\BibleVerseBundleTests\Service;
 
+use PHPUnit\Framework\TestCase;
 use StevenBuehner\BibleVerseBundle\Service\BibleVerseService;
 
-class AcronymsTest extends \PHPUnit_Framework_TestCase {
+class AcronymsTest extends TestCase {
 
 	/**
 	 * @var BibleVerseService
@@ -1214,10 +1215,11 @@ class AcronymsTest extends \PHPUnit_Framework_TestCase {
 		}
 	}
 
-	protected function setUp() {
-		//  self::bootKernel();
+	protected function setUp(): void {
+		parent::setUp();
 
 //        $this->bibleVerseService = static::$kernel->getContainer()->get('bible_verse.helper');
 		$this->bibleVerseService = new BibleVerseService();
 	}
+
 }
