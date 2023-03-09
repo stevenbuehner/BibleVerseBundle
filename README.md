@@ -30,14 +30,50 @@ For 1Tim 3,16-17 this would be:
 
 |  Parsed-Text  | Book-Id | From Chapter  | From Verse | To Chapter | To Verse |
 |:-------------:|:-------:|:-------------:|:----------:|:----------:|:--------:|
-| 1Tim 3,15-16  |      54 |       3       |     15     |     3      |    16    |
-|  1Tim 3,15f   |      54 |       3       |     15     |     3      |    16    |
-| 1Tim 3,16-4,2 |      54 |       3       |     16     |     4      |    2     |
-|    1Tim 3     |      54 |       3       |     1      |     3      |    16    |
-|   1Tim 3-4    |      54 |       3       |     1      |     4      |    16    |
+| 1Tim 3,15-16  |   54    |       3       |     15     |     3      |    16    |
+|  1Tim 3,15f   |   54    |       3       |     15     |     3      |    16    |
+| 1Tim 3,16-4,2 |   54    |       3       |     16     |     4      |    2     |
+|    1Tim 3     |   54    |       3       |     1      |     3      |    16    |
+|   1Tim 3-4    |   54    |       3       |     1      |     4      |    16    |
 
 
+# Storage and search optimization
+Internally the bibleverses are stored as two numbers which describe a range (start - end). This makes it possible so index bibleverses and search for intersecting bibleverses super quickly.
 
+START and END are set together as three digit codes:
+
+|           Book-ID           |       Chapter-Number        |        Verse-Number         | 
+|:---------------------------:|:---------------------------:|:---------------------------:|
+| (three digits, zero padded) | (three digits, zero padded) | (three digits, zero padded) |
+
+
+Which results in this indexing:
+
+|  Parsed-Text  | Book-Id | From Chapter | From Verse | To Chapter | To Verse |   **START**   |    **END**    |
+|:-------------:|:-------:|:------------:|:----------:|:----------:|:--------:|:-------------:|:-------------:|
+| 1Tim 3,15-16  |   54    |      3       |     15     |     3      |    16    | **054003015** | **054003016** |
+|  1Tim 3,15f   |   54    |      3       |     15     |     3      |    16    | **054003015** | **054003016** |
+| 1Tim 3,16-4,2 |   54    |      3       |     16     |     4      |    2     | **054003016** | **054004002** |
+|    1Tim 3     |   54    |      3       |     1      |     3      |    16    | **054003001** | **054003016** |
+|   1Tim 3-4    |   54    |      3       |     1      |     4      |    16    | **054003001** | **054004016** |
+
+You can access these numbers with the following functions:
+```php
+	/**
+	 * @return int
+	 */
+	public function getStart() {
+		return $this->start;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getEnd() {
+		return $this->end;
+	}
+
+```
 
 # Usage
 ## Parsing text to Bibleverses
