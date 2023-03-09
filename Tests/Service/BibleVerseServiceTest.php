@@ -1,11 +1,12 @@
 <?php
 
-namespace StevenBuehner\BibleVerseBundle\Tests\Service;
+namespace StevenBuehner\BibleVerseBundleTests\Service;
 
+use PHPUnit\Framework\TestCase;
 use StevenBuehner\BibleVerseBundle\Entity\BibleVerse;
 use StevenBuehner\BibleVerseBundle\Service\BibleVerseService;
 
-class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
+class BibleVerseServiceTest extends TestCase {
 
 	/**
 	 * @var BibleVerseService
@@ -303,15 +304,24 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 		$tests["Joh 5,5"]      = "Johannes 5,5";
 		$tests["Joh 5,1-47"]   = "Johannes 5";
 		$tests["Joh 5,1-8,59"] = "Johannes 5-8";
-
+		//	$tests["2. Mose 3+4"]  = "2Mo 3-4";
 
 		foreach ($tests as $input => $erwOutput) {
 			$back = $bh->stringToBibleVerse($input);
 
 			$this->assertNotNull($back, "Erwartet war: " . $erwOutput);
-			$this->assertTrue(count($back) == 1, "Erwartet war: " . $erwOutput);
+			$this->assertTrue(count($back) == 1,
+							  "Erwartet wurde: genau eine Bibelstelle als Ergebnis. Stattdessen waren es " . count($back) . " " . print_r($back,
+																																		  TRUE));
 			$this->assertEquals($bh->bibleVerseToString($back[0]), $erwOutput);
 		}
+	}
+
+	public function testMultipleBibleversesInStringWithMultipleSpaces() {
+
+		$back = $this->bibleVerseService->stringToBibleVerse('Joh 3:35; 10:17;  14:31; 15:9; 17:23');
+		$this->assertCount( 5, $back);
+
 	}
 
 	public function testStringToBibleVerseNegativ() {
@@ -933,7 +943,7 @@ class BibleVerseServiceTest extends \PHPUnit_Framework_TestCase {
 
 	public function testNumerationExamples() {
 
-		$booksFirst  = array('Thess' => 52, 'Tim' => 54, 'Petrus' => 60);
+		$booksFirst = array('Thess' => 52, 'Tim' => 54, 'Petrus' => 60);
 
 		$bMuster = new BibleVerse();
 		$bMuster->setFromCombined(1, 1, 1);
