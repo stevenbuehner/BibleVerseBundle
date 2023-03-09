@@ -1005,7 +1005,7 @@ class BibleVerseServiceTest extends TestCase {
 		fwrite(STDERR, print_r($obj, TRUE) . "\n");
 	}
 
-	protected function setUp(): void {
+	protected function setUp() {
 		//  self::bootKernel();
 
 //        $this->bibleVerseService = static::$kernel->getContainer()->get('bible_verse.helper');

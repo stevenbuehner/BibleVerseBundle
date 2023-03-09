@@ -1215,7 +1215,7 @@ class AcronymsTest extends TestCase {
 		}
 	}
 
-	protected function setUp(): void {
+	protected function setUp() {
 		parent::setUp();
 
 //        $this->bibleVerseService = static::$kernel->getContainer()->get('bible_verse.helper');
