@@ -2,6 +2,7 @@
   "name": "stevenbuehner/bible-verse-bundle",
   "description": "A highly tested library to parse, identify, merge store and work with bibleverses.",
   "type": "library",
+  "homepage": "https://github.com/stevenbuehner/BibleVerseBundle",
   "license": "MIT",
   "require": {
     "php": ">5.4"
