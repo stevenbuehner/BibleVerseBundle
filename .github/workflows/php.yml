@@ -4,9 +4,9 @@ on:
   push:
     tags:
       - '*'
-    branches: [ "master", "developp" ]
+    branches: [ "master", "develop" ]
   pull_request:
-    branches: [ "master", "developp" ]
+    branches: [ "master", "develop" ]
 
 permissions:
   contents: read
