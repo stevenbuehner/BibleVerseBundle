@@ -304,13 +304,15 @@ class BibleVerseServiceTest extends TestCase {
 		$tests["Joh 5,5"]      = "Johannes 5,5";
 		$tests["Joh 5,1-47"]   = "Johannes 5";
 		$tests["Joh 5,1-8,59"] = "Johannes 5-8";
-
+		//	$tests["2. Mose 3+4"]  = "2Mo 3-4";
 
 		foreach ($tests as $input => $erwOutput) {
 			$back = $bh->stringToBibleVerse($input);
 
 			$this->assertNotNull($back, "Erwartet war: " . $erwOutput);
-			$this->assertTrue(count($back) == 1, "Erwartet war: " . $erwOutput);
+			$this->assertTrue(count($back) == 1,
+							  "Erwartet wurde: genau eine Bibelstelle als Ergebnis. Stattdessen waren es " . count($back) . " " . print_r($back,
+																																		  TRUE));
 			$this->assertEquals($bh->bibleVerseToString($back[0]), $erwOutput);
 		}
 	}
