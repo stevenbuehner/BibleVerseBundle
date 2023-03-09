@@ -1,26 +1,26 @@
 # What is it?
 
-With this bundle you get an incredible powerfull backend to parse any text and identify bibleverses within it. It works with symphony but also with any other composer system.
-The bibleverses are not only recognized, but intelligently seperated into book, chapter and vers-ranges. 
+With this bundle you get an incredible powerful backend to parse any text and identify bible verses within it. It works with symphony but also with any other composer system.
+The bible verses are not only recognized, but intelligently seperated into book, chapter and vers-ranges. 
 
-I am using it in a big installation to store and index bibleverses in the database and perform very quick and complex searches.
+I am using it in a big installation to store and index bible verses in the database and perform very quick and complex searches.
 
 # Features
-The library recognizes all kind of different texts as bibleveres in german and in english. For example:
+The library recognizes all kind of different texts as bible verses in german and in english. For example:
 * 1Tim 3,16
 
 * 1 Tim 3,16f (one following verse)
 * 1 Tim 3,15-16 (multiple verses as range joined by "-")
 * 1 Tim 3,16ff (following verses with "ff" until to the chapters end)
-* 1 Timotheus 3,16 (long nameing convention)
+* 1 Timotheus 3,16 (long naming convention)
 * 1 Tim 3,15.16 (multiple verses joined with ".")
 * 1 Tim 3,15+16 (multiple verses joined with "+")
-* 1\. Timothy 3,16 (precreding "1." convention)
-* I Timothy 3,16 (precreding "I" convention / with or without ".")
-* First Timothy 3,16 (precreding "First" convention)
-* 1st Timothy 3,16 (precreding "1st" convention)
-* 1\.Timotheusbrief 3,16 (german long nameing convention)
-* 1 Ti 3,16 (different short nameing conventions)
+* 1\. Timothy 3,16 (preceding "1." convention)
+* I Timothy 3,16 (preceding "I" convention / with or without ".")
+* First Timothy 3,16 (preceding "First" convention)
+* 1st Timothy 3,16 (preceding "1st" convention)
+* 1\.Timotheusbrief 3,16 (german long naming convention)
+* 1 Ti 3,16 (different short naming conventions)
 * 1Tim 3,16-4,2 (ranges over multiple chapters)
 * 1Tim 3 (whole Chapter)
 
@@ -38,9 +38,9 @@ For 1Tim 3,16-17 this would be:
 
 
 # Storage and search optimization
-Internally the bibleverses are stored as two numbers which describe a range (start - end). This makes it possible so index bibleverses and search for intersecting bibleverses super quickly.
+Internally the bible verses are stored as two numbers which describe a range (start - end). This makes it possible so index bible verses and search for intersecting bible verses super quickly.
 
-START and END are set together as three digit codes:
+START and END are set together as three-digit codes:
 
 |           Book-ID           |       Chapter-Number        |        Verse-Number         | 
 |:---------------------------:|:---------------------------:|:---------------------------:|
@@ -59,13 +59,13 @@ Which results in this indexing:
 
 
 # Usage
-## Parsing text to Bibleverses
+## Parsing text to BibleVerses Entities
 ``` php 
 $service = new BibleVerseService();
 $found = $service->stringToBibleVerse('1Tim 3,16');
 ```
 
-## Formatting Bibleverses as Text
+## Formatting BibleVerses Entities as Text
 Language German and English are supported by default
 ``` php
 foreach($found as $bibleverse){
@@ -77,7 +77,7 @@ foreach($found as $bibleverse){
 }
 ```
 
-## Extracting bibleverses from larger texts
+## Extracting bible verses as BibleVerse entities from larger texts
 ``` php 
 $found = $service->stringToBibleVerse('Hello. I learned from 2Tim 3,16 that it differs from Gen 1,1');
 // --> $found will be an array with two recognized bibleverses
@@ -86,7 +86,7 @@ $rest = $service->getLastRestString();
 // --> $rest will be the remaining string, without the found bibleverses = "Hello. I learned from that it differs from "
 ```
 
-## Join multiple bibleverses together
+## Join multiple BibleVerse Entities together
 ``` php
 // Join biblevereses
 $found = $service->stringToBibleVerse('Hello. I learned from 2Tim 3,16 that it differs from 2Tim 3,17');
@@ -95,7 +95,7 @@ $merged = $service->mergeBibleverses($found);
 // --> $merged will be an array with ONE bibleverse. Both verses where merged into 2Tim 3,16-17
 ```
 
-## Accessing bibleverse start and end number
+## Accessing BibleVerse start and end number
 
 ```php
 	/**
@@ -113,8 +113,8 @@ $merged = $service->mergeBibleverses($found);
 	}
 ```
 
-## Bibleverse Interface
-Bibleverses are valid ``BibleVerseInterface`` instances. Which means they can be extended and come with theese default functions
+## BibleVerse Interface
+Bible verses are valid ``BibleVerseInterface`` instances. Which means they can be extended and come with these default functions
 ``` php
 	/**
 	 * Set From and To bookId
@@ -208,7 +208,7 @@ Bibleverses are valid ``BibleVerseInterface`` instances. Which means they can be
 ```
 
 # JavaScript
-There is also a JavaScript library for parsing bibleverses and use it i.e. for markdown purposes.
+There is also a JavaScript library for parsing bible verses and use it i.e. for markdown purposes.
 
 ## Generating Javascript-Library-Updates
 The JavaScript library is generated with the command:
