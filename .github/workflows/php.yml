@@ -2,6 +2,8 @@ name: CI with PHP Composer
 
 on:
   push:
+    tags:
+      - '*'
     branches: [ "master", "developp" ]
   pull_request:
     branches: [ "master", "developp" ]
