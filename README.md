@@ -57,23 +57,6 @@ Which results in this indexing:
 |    1Tim 3     |   54    |      3       |     1      |     3      |    16    | **054003001** | **054003016** |
 |   1Tim 3-4    |   54    |      3       |     1      |     4      |    16    | **054003001** | **054004016** |
 
-You can access these numbers with the following functions:
-```php
-	/**
-	 * @return int
-	 */
-	public function getStart() {
-		return $this->start;
-	}
-
-	/**
-	 * @return int
-	 */
-	public function getEnd() {
-		return $this->end;
-	}
-
-```
 
 # Usage
 ## Parsing text to Bibleverses
@@ -110,6 +93,24 @@ $found = $service->stringToBibleVerse('Hello. I learned from 2Tim 3,16 that it d
 // --> $found will be an array with two recognized bibleverses
 $merged = $service->mergeBibleverses($found);
 // --> $merged will be an array with ONE bibleverse. Both verses where merged into 2Tim 3,16-17
+```
+
+## Accessing bibleverse start and end number
+
+```php
+	/**
+	 * @return int
+	 */
+	public function getStart() {
+		return $this->start;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getEnd() {
+		return $this->end;
+	}
 ```
 
 ## Bibleverse Interface
