@@ -14,9 +14,10 @@ class Configuration implements ConfigurationInterface {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getConfigTreeBuilder() {
-		$treeBuilder = new TreeBuilder();
-		$rootNode    = $treeBuilder->root('bible_verse');
+	public function getConfigTreeBuilder(): TreeBuilder {
+
+		$treeBuilder = new TreeBuilder('bible_verse');
+		$rootNode    = $treeBuilder->getRootNode();
 
 		// Here you should define the parameters that are allowed to
 		// configure your bundle. See the documentation linked above for

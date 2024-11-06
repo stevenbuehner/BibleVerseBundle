@@ -15,12 +15,22 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 class BibleVerseExtension extends Extension {
 	/**
 	 * {@inheritdoc}
+	 * @throws \Exception
 	 */
 	public function load(array $configs, ContainerBuilder $container) {
+
 		$configuration = new Configuration();
 		$config        = $this->processConfiguration($configuration, $configs);
 
 		$loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-		$loader->load('services.yml');
+
+		// Überprüfe, ob die 'services.yml' Datei existiert
+		$servicesFile = __DIR__ . '/../Resources/config/services.yml';
+		if (file_exists($servicesFile)) {
+			$loader->load('services.yml');
+		} else {
+			throw new \RuntimeException("Die Datei 'services.yml' wurde nicht gefunden.");
+		}
+
 	}
 }

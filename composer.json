@@ -5,13 +5,18 @@
   "homepage": "https://github.com/stevenbuehner/BibleVerseBundle",
   "license": "MIT",
   "require": {
-    "php": ">7.0"
+    "php": ">8.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "^6.5",
+    "phpunit/phpunit": "^10.1",
     "phpdocumentor/reflection-docblock": "2.0",
-    "symfony/yaml": "~2.1",
-    "twig/twig": "^1.35"
+    "symfony/yaml": "^v7.1",
+    "twig/twig": "^v3.14"
+  },
+  "suggest": {
+    "symfony/config": "^7.1",
+    "symfony/dependency-injection": "^7.1",
+    "symfony/http-kernel": "^7.1"
   },
   "authors": [
     {
