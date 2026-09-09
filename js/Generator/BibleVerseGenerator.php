@@ -9,6 +9,10 @@
 namespace StevenBuehner\JS\Generator;
 
 use StevenBuehner\BibleVerseBundle\Service\BibleVerseService;
+use Twig\Environment;
+use Twig\Loader\ArrayLoader;
+use Twig\Loader\ChainLoader;
+use Twig\Loader\FilesystemLoader;
 
 class BibleVerseGenerator {
 
@@ -18,19 +22,20 @@ class BibleVerseGenerator {
 	public function __construct() {
 		$this->bibleVerseService = new BibleVerseService();
 
-		$loader1          = new \Twig_Loader_Filesystem(__DIR__ . '/../in');
-		$loader2          = new \Twig_Loader_Array([
+		$loader1          = new FilesystemLoader(__DIR__ . '/../in');
+		$loader2          = new ArrayLoader([
 													   'BibleVerse'   => "new Bibleverse({{verse.verseId}}, {{verse.fromChapter}}, {{verse.fromVerse}}, {{verse.toChapter}}, {{verse.toVerse}})",
 													   'BibleBook'    => "new BibleBook({{book.bookId}}, '{{book.nameLong | escape('js')}}', '{{book.nameShort | escape('js')}}', '{{book.namePattern | escape('js')}}', {{book.chapterSum}}, { {% for count in book.chapterCount %} '{{count.chapter}}' : {{count.verseCount}}, {% endfor %} })",
 													   'BookListing'  => "\n{% for book in data %}{{book.bookId}} : {{ include('BibleBook') }},\n{% endfor %}",
 													   'biblePattern' => '{{ biblePattern | raw}}'
 												   ]);
-		$loaderChain      = new \Twig_Loader_Chain([$loader1, $loader2]);
-		$this->twigEngine = new \Twig_Environment($loaderChain);
+		$loaderChain      = new ChainLoader([$loader1, $loader2]);
+		$this->twigEngine = new Environment($loaderChain);
 	}
 
-	public function run() {
-		$template = $this->twigEngine->loadTemplate('BibleVerseService.js');
+	public function run(?string $outputDirectory = null): void {
+		$template = $this->twigEngine->load('BibleVerseService.js');
+		$outputDirectory ??= __DIR__ . '/../out';
 		$langs    = ['de', 'en'];
 		$_data    = $this->bibleVerseService->getBibleData();
 		$_pattern = $this->bibleVerseService->getFirstSearchString();
@@ -67,15 +72,19 @@ class BibleVerseGenerator {
 				$bibleBooks[] = $book;
 			}
 
-			file_put_contents(__DIR__ . "/../out/BibleVerseService_{$lang}.js",
-							  $template->render(['data'                  => $bibleBooks,
-												 'biblePattern'          => $_pattern,
-												 'chapterVerseSeparator' => $chapterVerseSeparator]
-							  )
+			$outputFile = $outputDirectory . "/BibleVerseService_{$lang}.js";
+			$bytes = file_put_contents($outputFile,
+				$template->render(['data'                  => $bibleBooks,
+								   'biblePattern'          => $_pattern,
+								   'chapterVerseSeparator' => $chapterVerseSeparator]
+				)
 			);
+
+			if ($bytes === false) {
+				throw new \RuntimeException("Could not write generated JavaScript file: {$outputFile}");
+			}
 		}
 
 	}
 
 }
-

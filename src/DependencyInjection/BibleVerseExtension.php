@@ -17,7 +17,7 @@ class BibleVerseExtension extends Extension {
 	 * {@inheritdoc}
 	 * @throws \Exception
 	 */
-	public function load(array $configs, ContainerBuilder $container) {
+	public function load(array $configs, ContainerBuilder $container): void {
 
 		$configuration = new Configuration();
 		$config        = $this->processConfiguration($configuration, $configs);

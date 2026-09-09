@@ -150,7 +150,8 @@ class BibleVerseMergingTest extends TestCase {
 		$this->assertEquals($mergedResult, $v1);
 	}
 
-	protected function setUp() {
+	protected function setUp(): void {
+		parent::setUp();
 		$this->bibleVerseService = new BibleVerseService();
 	}
 }

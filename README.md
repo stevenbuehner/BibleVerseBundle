@@ -3,6 +3,24 @@
 With this bundle you get an incredible powerful backend to parse any text and identify bible verses within it. It works with symphony but also with any other composer system.
 The bible verses are not only recognized, but intelligently seperated into book, chapter and vers-ranges. 
 
+## Compatibility
+
+The current development line targets PHP 8.3 and 8.4 and is compatible with Laravel 13. The parsing and formatting services are framework-independent; Laravel applications use `BibleVerseService` directly and must not register the Symfony bundle class.
+
+The optional Symfony bundle integration supports Symfony 7.4 and 8.x. Symfony Config, DependencyInjection, HttpKernel and Yaml are development dependencies used to verify that integration, but remain optional for consumers that only use the framework-independent service. The JavaScript generator uses Twig 3.21 or newer.
+
+Because raising the minimum PHP version is a platform-level breaking change, this line should be released as version `3.0.0` rather than as a new 2.x tag. Before tagging, both the standalone test suite and the Materialpool integration test must pass under PHP 8.4.
+
+### Laravel 13
+
+Install the stable 3.x release after it has been tagged:
+
+```shell
+composer require stevenbuehner/bible-verse-bundle:^3.0
+```
+
+No Laravel service provider is required. `BibleVerseService` has no Illuminate dependency and can be resolved through Laravel's automatic container resolution or explicitly registered as a singleton when the application requires shared service state. The PHP namespaces and the generated files under `js/out/` remain the public integration contracts.
+
 I am using it in a big installation to store and index bible verses in the database and perform very quick and complex searches.
 
 # Features
@@ -214,4 +232,4 @@ There is also a JavaScript library for parsing bible verses and use it i.e. for 
 The JavaScript library is generated with the command:
 ``` shell 
 php ./js/Generator/cmd.php
-``` 
+```

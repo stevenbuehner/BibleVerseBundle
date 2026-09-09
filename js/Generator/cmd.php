@@ -5,10 +5,8 @@
  * All Rights reserved. No usage without written permission allowed.
  */
 
-include_once __DIR__ . '/../../vendor/autoload.php';
-include_once __DIR__ . '/BibleVerseGenerator.php';
+require __DIR__ . '/../../vendor/autoload.php';
 
 $runner = new \StevenBuehner\JS\Generator\BibleVerseGenerator();
 
 $runner->run();
-
